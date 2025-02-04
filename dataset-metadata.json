@@ -4,7 +4,17 @@
     "tables": [
         {
             "url": "eov.csv",
-            "tableSchema": "eov.schema-metadata.json",
+            "tableSchema": "property-value.schema.metadata.json",
+            "suppressOutput": true
+        },
+        {
+            "url": "eov-bio-geo-chem.csv",
+            "tableSchema": "property-value.schema.metadata.json",
+            "suppressOutput": true
+        },
+        {
+            "url": "eov-physics.csv",
+            "tableSchema": "property-value.schema.metadata.json",
             "suppressOutput": true
         },
         {
@@ -66,7 +76,6 @@
                             "base": "string"
                         }
                     },
-
                     {
                         "name": "notAccessibleReason",
                         "required": false,
@@ -97,10 +106,24 @@
                             "en": ["Essential Ocean Variable", "EOV"]
                         },
                         "propertyUrl": "schema:variableMeasured",
-                        "valueUrl": "https://w3id.org/marco-bolo/{+eov}"
+                        "valueUrl": "https://w3id.org/marco-bolo/{eov}"
                     },
-                    
-                    
+                    {
+                        "name": "eovBioGeoChem",
+                        "titles": {
+                            "en": ["Essential Ocean Variable (Bio-Geo-Chemsitry)", "EOV Bio-Geo-Chem"]
+                        },
+                        "propertyUrl": "schema:variableMeasured",
+                        "valueUrl": "https://w3id.org/marco-bolo/{eovBioGeoChem}"
+                    },
+                    {
+                        "name": "eovPhysics",
+                        "titles": {
+                            "en": ["Essential Ocean Variable (Physics)", "EOV Physics"]
+                        },
+                        "propertyUrl": "schema:variableMeasured",
+                        "valueUrl": "https://w3id.org/marco-bolo/{eovPhysics}"
+                    },
                     {
                         "virtual": true,
                         "propertyUrl": "rdf:type",
@@ -114,6 +137,20 @@
                         "columnReference": "eov",
                         "reference": {
                             "resource": "eov.csv",
+                            "columnReference": "propertyValuePid"
+                        }
+                    },
+                    {
+                        "columnReference": "eovBioGeoChem",
+                        "reference": {
+                            "resource": "eov-bio-geo-chem.csv",
+                            "columnReference": "propertyValuePid"
+                        }
+                    },
+                    {
+                        "columnReference": "eovPhysics",
+                        "reference": {
+                            "resource": "eov-physics.csv",
                             "columnReference": "propertyValuePid"
                         }
                     }

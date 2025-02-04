@@ -37,7 +37,8 @@ $ csv2rdf -u dataset-metadata.json -m minimal
   <http://schema.org/url> "https://example.com/some-landing-page"^^<https://schema.org/URL>,
     "https://example.com/some-other-landing-page"^^<https://schema.org/URL>;
   <https://w3id.org/marco-bolo/inProgressDataDate#TODO> "2026-01-01"^^<https://schema.org/Date>;
-  <http://schema.org/variableMeasured> <https://w3id.org/marco-bolo/mbo_TODO_EOV_2> .
+  <http://schema.org/variableMeasured> <https://w3id.org/marco-bolo/mbo_TODO_EOV_2>,
+    <https://w3id.org/marco-bolo/mbo_TODO_EOV_bio_8>, <https://w3id.org/marco-bolo/mbo_TODO_EOV_phys_3> .
 ```
 
 This could then be fairly trivially converted into a JSON-LD representation.

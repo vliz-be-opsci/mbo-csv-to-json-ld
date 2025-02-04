@@ -1,0 +1,13 @@
+PID, Name, Description, Permanent Identifier
+mbo_TODO_EOV_phys_1,Sea state,Sea state,https://goosocean.org/document/17462
+mbo_TODO_EOV_phys_2,Ocean surface stress,Ocean surface stress,https://goosocean.org/document/17463
+mbo_TODO_EOV_phys_3,Sea ice,Sea ice,https://goosocean.org/document/17464
+mbo_TODO_EOV_phys_4,Sea surface height,Sea surface height,https://goosocean.org/document/17465
+mbo_TODO_EOV_phys_5,Sea surface temperature,Sea surface temperature,https://goosocean.org/document/17466
+mbo_TODO_EOV_phys_6,Subsurface temperature,Subsurface temperature,https://goosocean.org/document/17467
+mbo_TODO_EOV_phys_7,Surface currents,Surface currents,https://goosocean.org/document/17468
+mbo_TODO_EOV_phys_8,Subsurface currents,Subsurface currents,https://goosocean.org/document/17469
+mbo_TODO_EOV_phys_9,Sea surface salinity,Sea surface salinity,https://goosocean.org/document/17470
+mbo_TODO_EOV_phys_10,Subsurface salinity,Subsurface salinity,https://goosocean.org/document/17471
+mbo_TODO_EOV_phys_11,Ocean surface heat flux,Ocean surface heat flux,https://goosocean.org/document/17472
+mbo_TODO_EOV_phys_12,Ocean bottom pressure,Ocean bottom pressure,https://goosocean.org/document/32488

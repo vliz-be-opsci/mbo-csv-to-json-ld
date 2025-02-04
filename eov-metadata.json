@@ -4,7 +4,7 @@
     "tables": [
         {
             "url": "eov.csv",
-            "tableSchema": "eov.schema-metadata.json"
+            "tableSchema": "property-value.schema.metadata.json"
         }
     ]
 }
