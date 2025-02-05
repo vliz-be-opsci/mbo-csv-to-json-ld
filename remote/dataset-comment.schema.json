@@ -1,0 +1,67 @@
+{
+    "@context": "http://www.w3.org/ns/csvw",
+    "columns": [
+        {
+            "name": "commentId",
+            "required": true,
+            "titles": {
+                "en": [
+                    "MBO PID",
+                    "MBO Permanent Identifier"
+                ]
+            },
+            "suppressOutput": true
+        },
+        {
+            "name": "datasetId",
+            "required": true,
+            "titles": {
+                "en": "Dataset MBO Identifier"
+            },
+            "propertyUrl": "schema:parentItem",
+            "valueUrl": "https://w3id.org/marco-bolo/{+datasetId}"
+        },
+        {
+            "name": "creator",
+            "required": true,
+            "titles": {
+                "en": [
+                    "Creator Identifier (you)",
+                    "Creator"
+                ]
+            },
+            "propertyUrl": "schema:creator",
+            "valueUrl": "{+creator}"
+        },
+        {
+            "name": "text",
+            "required": false,
+            "titles": {
+                "en": "Comment Text"
+            },
+            "datatype": {
+                "@id": "https://schema.org/Text",
+                "base": "string"
+            },
+            "propertyUrl": "schema:text"
+        },
+        {
+            "virtual": true,
+            "propertyUrl": "rdf:type",
+            "valueUrl": "schema:Comment"
+        }
+    ],
+    "aboutUrl": "https://w3id.org/marco-bolo/{+commentId}",
+    "primaryKey": [
+        "commentId"
+    ],
+    "foreignKeys": [
+        {
+            "columnReference": "datasetId",
+            "reference": {
+                "resource": "../dataset.csv",
+                "columnReference": "datasetId"
+            }
+        }
+    ]
+}

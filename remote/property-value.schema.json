@@ -2,10 +2,10 @@
     "@context": "http://www.w3.org/ns/csvw",
     "columns": [
         {
-            "name": "propertyValuePid",
+            "name": "propertyValueId",
             "required": true,
             "titles": {
-                "en": "PID"
+                "en": "MBO PID"
             },
             "suppressOutput": true
         },
@@ -49,8 +49,8 @@
             "valueUrl": "schema:PropertyValue"
         }
     ],
-    "aboutUrl": "https://w3id.org/marco-bolo/{+propertyValuePid}",
+    "aboutUrl": "https://w3id.org/marco-bolo/{+propertyValueId}",
     "primaryKey": [
-        "propertyValuePid"
+        "propertyValueId"
     ]
 }

@@ -1,0 +1,22 @@
+{
+    "@context": "http://www.w3.org/ns/csvw",
+    "columns": [
+        {
+            "name": "personId",
+            "required": true,
+            "titles": {
+                "en": ["Person Permanent Identifier", "Person PID"]
+            },
+            "suppressOutput": true
+        },        
+        {
+            "virtual": true,
+            "propertyUrl": "rdf:type",
+            "valueUrl": "schema:Person"
+        }
+    ],
+    "aboutUrl": "{+personId}",
+    "primaryKey": [
+        "personId"
+    ]
+}

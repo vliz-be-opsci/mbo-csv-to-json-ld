@@ -1,0 +1,18 @@
+
+{
+    "@context": "http://www.w3.org/ns/csvw",
+    "tables": [
+        {
+            "url": "eov.csv",
+            "tableSchema": "property-value.schema.json"
+        },
+        {
+            "url": "eov-bio-geo-chem.csv",
+            "tableSchema": "property-value.schema.json"
+        },
+        {
+            "url": "eov-physics.csv",
+            "tableSchema": "property-value.schema.json"
+        }
+    ]
+}

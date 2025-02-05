@@ -1,0 +1,34 @@
+
+{
+    "@context": "http://www.w3.org/ns/csvw",
+    "tables": [
+        {
+            "url": "../dataset.csv",
+            "tableSchema": "dataset.schema.json"
+        },
+        {
+            "url": "../dataset-comment.csv",
+            "tableSchema": "dataset-comment.schema.json"
+        },
+        {
+            "url": "eov.csv",
+            "tableSchema": "property-value.schema.json",
+            "suppressOutput": true
+        },
+        {
+            "url": "eov-bio-geo-chem.csv",
+            "tableSchema": "property-value.schema.json",
+            "suppressOutput": true
+        },
+        {
+            "url": "eov-physics.csv",
+            "tableSchema": "property-value.schema.json",
+            "suppressOutput": true
+        },
+        {
+            "url": "person.csv",
+            "tableSchema": "person.schema.json",
+            "suppressOutput": true
+        }
+    ]
+}

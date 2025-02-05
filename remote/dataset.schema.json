@@ -1,0 +1,169 @@
+{
+    "@context": "http://www.w3.org/ns/csvw",
+    "columns": [
+        {
+            "name": "datasetId",
+            "required": true,
+            "titles": {
+                "en": ["MBO ID", "MBO Identifier"]
+            },
+            "suppressOutput": true
+        },
+        {
+            "name": "describerId",
+            "required": true,
+            "titles": {
+                "en": ["Describer Identifier (you)", "Describer"]
+            },
+            "propertyUrl": "schema:sdPublisher",
+            "valueUrl": "{+describerId}"
+        },
+        {
+            "name": "title",
+            "required": false,
+            "titles": {
+                "en": "Title"
+            },
+            "datatype": {
+                "@id": "https://schema.org/Text",
+                "base": "string"
+            },
+            "propertyUrl": "schema:name"
+        },
+        {
+            "name": "description",
+            "required": false,
+            "titles": {
+                "en": "Description"
+            },
+            "datatype": {
+                "@id": "https://schema.org/Text",
+                "base": "string"
+            },
+            "propertyUrl": "schema:description"
+        },
+        {
+            "name": "landingPage",
+            "required": false,
+            "titles": {
+                "en": ["Data Landing Page URL", "Landing Page"]
+            },
+            "propertyUrl": "schema:url",
+            "ordered": false,
+            "separator": "|",
+            "datatype": {
+                "@id": "https://schema.org/URL",
+                "base": "string"
+            }
+        },
+        {
+            "name": "notAccessibleReason",
+            "required": false,
+            "titles": {
+                "en": "Data Not Accessible Reason"
+            },
+            "datatype": {
+                "@id": "https://schema.org/Text",
+                "base": "string"
+            },
+            "propertyUrl": "schema:conditionsOfAccess"
+        },
+        {
+            "name": "inProgressDataDate",
+            "required": false,
+            "titles": {
+                "en": "In Progress Data Date"
+            },
+            "propertyUrl": "https://w3id.org/marco-bolo/inProgressDataDate#TODO",
+            "datatype": {
+                "@id": "https://schema.org/Date",
+                "base": "date"
+            }
+        },
+        {
+            "name": "eov",
+            "required": false,
+            "titles": {
+                "en": ["Essential Ocean Variable", "EOV"]
+            },
+            "propertyUrl": "schema:variableMeasured",
+            "valueUrl": "https://w3id.org/marco-bolo/{eov}"
+        },
+        {
+            "name": "eovBioGeoChem",
+            "required": false,
+            "titles": {
+                "en": ["Essential Ocean Variable (Bio-Geo-Chemsitry)", "EOV Bio-Geo-Chem"]
+            },
+            "propertyUrl": "schema:variableMeasured",
+            "valueUrl": "https://w3id.org/marco-bolo/{eovBioGeoChem}"
+        },
+        {
+            "name": "eovPhysics",
+            "required": false,
+            "titles": {
+                "en": ["Essential Ocean Variable (Physics)", "EOV Physics"]
+            },
+            "propertyUrl": "schema:variableMeasured",
+            "valueUrl": "https://w3id.org/marco-bolo/{eovPhysics}"
+        },
+        {
+            "name": "basedOn",
+            "required": false,
+            "titles": {
+                "en": ["Based On PID", "Based On"]
+            },
+            "separator": "|",
+            "datatype": {
+                "@id": "https://schema.org/URL",
+                "base": "string"
+            },
+            "ordered": false,
+            "propertyUrl": "schema:isBasedOn"
+        },
+
+        {
+            "name": "comments",
+            "required": false,
+            "propertyUrl": "schema:comment"
+        },
+
+        {
+            "virtual": true,
+            "propertyUrl": "rdf:type",
+            "valueUrl": "schema:Dataset"
+        }
+    ],
+    "aboutUrl": "https://w3id.org/marco-bolo/{+datasetId}",
+    "primaryKey": ["datasetId"],
+    "foreignKeys": [
+        {
+            "columnReference": "eov",
+            "reference": {
+                "resource": "eov.csv",
+                "columnReference": "propertyValueId"
+            }
+        },
+        {
+            "columnReference": "eovBioGeoChem",
+            "reference": {
+                "resource": "eov-bio-geo-chem.csv",
+                "columnReference": "propertyValueId"
+            }
+        },
+        {
+            "columnReference": "eovPhysics",
+            "reference": {
+                "resource": "eov-physics.csv",
+                "columnReference": "propertyValueId"
+            }
+        },
+        {
+            "columnReference": "describerId",
+            "reference": {
+                "resource": "person.csv",
+                "columnReference": "personId"
+            }
+        }
+    ]
+}
