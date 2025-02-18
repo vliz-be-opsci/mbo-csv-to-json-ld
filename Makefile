@@ -1,27 +1,31 @@
-WORKING_DIR			= $(shell pwd)
+.PHONY: docker-pull output-directories jsonld split clean
+
+WORKING_DIR			:= $$(pwd)
 CSVW_CHECK_DOCKER	:= gsscogs/csvw-check:latest
 CSV2RDF_DOCKER		:= europe-west2-docker.pkg.dev/swirrl-devops-infrastructure-1/public/csv2rdf:v0.7.1
-RIOT_DOCKER			:= gsscogs/gss-jvm-build-tools:latest
+JENA_CLI_DOCKER		:= gsscogs/gss-jvm-build-tools:latest
 CSVW_CHECK			:= docker run --rm -v "$(WORKING_DIR)":/work -w /work $(CSVW_CHECK_DOCKER) /opt/docker/bin/csvw-check -s
 CSV2RDF				:= docker run --rm -v "$(WORKING_DIR)":/work -w /work $(CSV2RDF_DOCKER) csv2rdf -m minimal -u 
-RIOT				:= docker run --rm -v "$(WORKING_DIR)":/work -w /work $(RIOT_DOCKER) riot
+RIOT				:= docker run --rm -v "$(WORKING_DIR)":/work -w /work $(JENA_CLI_DOCKER) riot
+SPARQL				:= docker run --rm -v "$(WORKING_DIR)":/work -w /work $(JENA_CLI_DOCKER) sparql
 
-CSVW_METADATA_FILES = $(wildcard remote/*-metadata.json)
-TTL_FILES         	= $(CSVW_METADATA_FILES:remote/%-metadata.json=out/%.ttl)
-JSON_LD_FILES 		= $(CSVW_METADATA_FILES:remote/%-metadata.json=out/%.json)
+CSVW_METADATA_FILES 		:= $(wildcard remote/*-metadata.json)
+BULK_TTL_FILES    			:= $(CSVW_METADATA_FILES:remote/%-metadata.json=out/bulk/%.ttl)
+BULK_JSON_LD_FILES 			:= $(CSVW_METADATA_FILES:remote/%-metadata.json=out/bulk/%.json)
+INDIVIDUAL_TTL_FILE_NAMES	:= ()
 
 docker-pull:
 	@echo "=============================== Pulling latest required docker images. ==============================="
-	docker pull $(CSVW_CHECK_DOCKER)
-	docker pull $(CSV2RDF_DOCKER)
-	docker pull $(RIOT_DOCKER)
+	# docker pull $(CSVW_CHECK_DOCKER)
+	# docker pull $(CSV2RDF_DOCKER)
+	# docker pull $(JENA_CLI_DOCKER)
 	@echo "" ; 
 
 
-output-directory:
-	@mkdir -p out
+output-directories:
+	@mkdir -p out/bulk
 
-$(CSVW_METADATA_FILES): docker-pull output-directory
+$(CSVW_METADATA_FILES): docker-pull output-directories
 
 validate: $(CSVW_METADATA_FILES)
 	@for file in $(CSVW_METADATA_FILES) ; do \
@@ -30,27 +34,21 @@ validate: $(CSVW_METADATA_FILES)
 		echo "" ; \
 	done
 
-ttl: $(TTL_FILES)
+ttl: $(BULK_TTL_FILES)
 
-out/%.ttl: remote/%-metadata.json
+out/bulk/%.ttl: remote/%-metadata.json
 	@echo "=============================== Converting $< to ttl $@ ===============================" ;
 	$(CSV2RDF) "$<" -o "$@";
 	@echo "" ;
 
-jsonld: $(JSON_LD_FILES)
+jsonld: $(BULK_JSON_LD_FILES)
 
-out/%.json: out/%.ttl
-	@echo "=============================== Converting $< to JSON-LD $@ ===============================" ;
-	$(RIOT) --syntax ttl --out json-ld "$<" > "$@";
-	@echo "";
-
-# todo: Can I split these up into a bunch of deparate JSON-LD files for each of the entities contained therein?
-
+split: $(BULK_TTL_FILES)
+	$(MAKE) -f split/Makefile
 
 clean:
-	@rm -rf "$(OUT_DIR)"
-	@rm -f $(TTL_FILES)
-	@rm -f $(JSON_LD_FILES)
+	@$(MAKE) -f split/Makefile clean
+	@rm -rf out
 
 
 .DEFAULT_GOAL := jsonld
