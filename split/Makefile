@@ -29,9 +29,9 @@ $(foreach file,$(BULK_TTL_FILES),$(eval $(call SPLIT_TTL,$(file))))
 SPLIT_JSON_LD_FILES	:= $(SPLIT_TTL_FILES:out/%.ttl=out/%.json)
 
 ttl: $(SPLIT_TTL_FILES)
-json: $(SPLIT_JSON_LD_FILES)
+jsonld: $(SPLIT_JSON_LD_FILES)
 
 clean:
 	@rm -f $(SPLIT_TTL_FILES)
 
-.DEFAULT_GOAL := split
+.DEFAULT_GOAL := jsonld

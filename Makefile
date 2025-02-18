@@ -12,13 +12,12 @@ SPARQL				:= docker run --rm -v "$(WORKING_DIR)":/work -w /work $(JENA_CLI_DOCKE
 CSVW_METADATA_FILES 		:= $(wildcard remote/*-metadata.json)
 BULK_TTL_FILES    			:= $(CSVW_METADATA_FILES:remote/%-metadata.json=out/bulk/%.ttl)
 BULK_JSON_LD_FILES 			:= $(CSVW_METADATA_FILES:remote/%-metadata.json=out/bulk/%.json)
-INDIVIDUAL_TTL_FILE_NAMES	:= ()
 
 docker-pull:
 	@echo "=============================== Pulling latest required docker images. ==============================="
-	# docker pull $(CSVW_CHECK_DOCKER)
-	# docker pull $(CSV2RDF_DOCKER)
-	# docker pull $(JENA_CLI_DOCKER)
+	docker pull $(CSVW_CHECK_DOCKER)
+	docker pull $(CSV2RDF_DOCKER)
+	docker pull $(JENA_CLI_DOCKER)
 	@echo "" ; 
 
 
@@ -34,21 +33,22 @@ validate: $(CSVW_METADATA_FILES)
 		echo "" ; \
 	done
 
-ttl: $(BULK_TTL_FILES)
 
 out/bulk/%.ttl: remote/%-metadata.json
 	@echo "=============================== Converting $< to ttl $@ ===============================" ;
 	$(CSV2RDF) "$<" -o "$@";
 	@echo "" ;
 
-jsonld: $(BULK_JSON_LD_FILES)
+bulk-ttl: $(BULK_TTL_FILES)
+
+bulk-jsonld: $(BULK_JSON_LD_FILES)
 
 split: $(BULK_TTL_FILES)
-	$(MAKE) -f split/Makefile
+	$(MAKE) -f split/Makefile jsonld
 
 clean:
 	@$(MAKE) -f split/Makefile clean
 	@rm -rf out
 
 
-.DEFAULT_GOAL := jsonld
+.DEFAULT_GOAL := split
