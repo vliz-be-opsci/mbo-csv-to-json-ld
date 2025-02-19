@@ -21,12 +21,11 @@ output-directories:
 	@mkdir -p out/resources
 
 $(SCHEMA_ORG_FILE):
-	@curl --silent -H "Accept: application/json" --compressed --output "$(SCHEMA_ORG_FILE)" "$(SCHEMA_ORG_CONTEXT_URL)";
+	@curl --silent -H "Accept: application/json" --compressed --output "$(SCHEMA_ORG_FILE).tmp" "$(SCHEMA_ORG_CONTEXT_URL)";
 
 	@# remove the `id` and `type` properties since compaction replaces `@id` with `id` and similarly for `@type`.
-	@$(JQ) 'del(.["@context"].id) | del(.["@context"].type)' "$(SCHEMA_ORG_FILE)" > "$(SCHEMA_ORG_FILE)".tmp;
-	@rm -f "$(SCHEMA_ORG_FILE)"
-	@mv "$(SCHEMA_ORG_FILE)".tmp "$(SCHEMA_ORG_FILE)"
+	@$(JQ) 'del(.["@context"].id) | del(.["@context"].type)' "$(SCHEMA_ORG_FILE).tmp" > "$(SCHEMA_ORG_FILE)";
+	@rm -f "$(SCHEMA_ORG_FILE).tmp"
 
 	@echo ""
 
@@ -51,7 +50,23 @@ out/%.json: out/ttl/%.ttl
 	@echo "";
 
 define SPLIT_TTL =
-$(eval INDIVIDUAL_TTL_FILE_NAMES_$(1) = $(shell $(SPARQL) --data "$(1)" --results tsv 'SELECT DISTINCT ?s WHERE { ?s ?p ?o .}' | tail -n +2 |  cut -c 2- | rev | cut -c 2- | rev | xargs basename -a | sed -e 's/^\(.*\)$$/out\/ttl\/\\\1.ttl/' |  xargs))
+# The following line is a bit of a beast.
+# 	It creates a variable called `INDIVIDUAL_TTL_FILE_NAMES_$(1)` which is unique to each bulk TTL file.
+# 	This is necessary so we don't get conflicting variables in the same scope.
+#
+#   Overall it queries the bulk TTL file for the unique subjects defined therein, pulls out the slug
+#	from each of them and then converts that into an `out/ttl/file-name.ttl` which is where that subject's 
+#	data will be placed. 
+$(eval INDIVIDUAL_TTL_FILE_NAMES_$(1) = \
+  $(shell $(SPARQL) --data "$(1)" --results tsv 'SELECT DISTINCT ?s WHERE { ?s ?p ?o .}' \
+    | tail -n +2 \
+	| cut -c 2- \
+	| rev \
+	| cut -c 2- \
+	| rev \
+	| xargs basename -a \
+	| sed -e 's/^\(.*\)$$/out\/ttl\/\\\1.ttl/' \
+	| xargs ))
 $(eval SPLIT_TTL_FILES += $(INDIVIDUAL_TTL_FILE_NAMES_$(1)))
 
 $(INDIVIDUAL_TTL_FILE_NAMES_$(1)) &: $(1)
@@ -74,8 +89,9 @@ ttl: $(SPLIT_TTL_FILES)
 jsonld: $(SPLIT_JSON_LD_FILES)
 
 clean:
-	@rm -f $(SPLIT_TTL_FILES)
-	@rm -rf out/ttl
+	@rm -f $(SCHEMA_ORG_FILE)
 	@rm -rf out/resources
+	@rm -rf out/ttl
+	@rm -f $(SPLIT_JSON_LD_FILES)
 
 .DEFAULT_GOAL := jsonld

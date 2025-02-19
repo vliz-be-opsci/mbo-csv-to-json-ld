@@ -4,6 +4,7 @@ WORKING_DIR			:= $$(pwd)
 CSVW_CHECK_DOCKER	:= gsscogs/csvw-check:latest
 CSV2RDF_DOCKER		:= europe-west2-docker.pkg.dev/swirrl-devops-infrastructure-1/public/csv2rdf:v0.7.1
 JENA_CLI_DOCKER		:= gsscogs/gss-jvm-build-tools:latest
+
 CSVW_CHECK			:= docker run --rm -v "$(WORKING_DIR)":/work -w /work $(CSVW_CHECK_DOCKER) /opt/docker/bin/csvw-check -s
 CSV2RDF				:= docker run --rm -v "$(WORKING_DIR)":/work -w /work $(CSV2RDF_DOCKER) csv2rdf -m minimal -u 
 RIOT				:= docker run --rm -v "$(WORKING_DIR)":/work -w /work $(JENA_CLI_DOCKER) riot
@@ -31,6 +32,7 @@ validate: $(CSVW_METADATA_FILES)
 	done
 
 out/bulk/%.ttl: remote/%-metadata.json
+	# TODO: I want to make this dependent on the CSV files as well so that this will be built on a change in one of them.
 	@echo "=============================== Converting $< to ttl $@ ===============================" ;
 	@$(CSV2RDF) "$<" -o "$@";
 	@echo "" ;
