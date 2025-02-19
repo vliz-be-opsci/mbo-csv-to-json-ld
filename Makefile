@@ -39,6 +39,11 @@ out/bulk/%.ttl: remote/%-metadata.json
 	$(CSV2RDF) "$<" -o "$@";
 	@echo "" ;
 
+out/bulk/%.json: out/bulk/%.ttl
+	@echo "=============================== Converting $< to JSON-LD $@ ===============================" ;
+	$(RIOT) --syntax ttl --out json-ld "$<" > "$@";
+	@echo "";
+
 bulk-ttl: $(BULK_TTL_FILES)
 
 bulk-jsonld: $(BULK_JSON_LD_FILES)
