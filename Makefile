@@ -1,6 +1,6 @@
 .PHONY: docker-pull output-directories split clean bulk-ttl bulk-jsonld all init
 
-WORKING_DIR			:= $$(pwd)
+WORKING_DIR			:= $(shell pwd)
 CSVW_CHECK_DOCKER	:= gsscogs/csvw-check:latest
 CSV2RDF_DOCKER		:= europe-west2-docker.pkg.dev/swirrl-devops-infrastructure-1/public/csv2rdf:v0.7.1
 JENA_CLI_DOCKER		:= gsscogs/gss-jvm-build-tools:latest
@@ -31,12 +31,6 @@ validate: $(CSVW_METADATA_FILES)
 		echo "" ; \
 	done
 
-out/bulk/%.ttl: remote/%-metadata.json
-	# TODO: I want to make this dependent on the CSV files as well so that this will be built on a change in one of them.
-	@echo "=============================== Converting $< to ttl $@ ===============================" ;
-	@$(CSV2RDF) "$<" -o "$@";
-	@echo "" ;
-
 out/bulk/%.json: out/bulk/%.ttl
 	@echo "=============================== Converting $< to JSON-LD $@ ===============================" ;
 	@$(RIOT) --syntax ttl --out json-ld "$<" > "$@";
@@ -62,3 +56,29 @@ clean:
 
 
 .DEFAULT_GOAL := all
+
+define CSVW_TO_TTL =
+# Defines the target to convert a CSV-W into TTL
+#  Importantly it makes sure that its local CSV files are listed as dependencies for make.
+$(eval CSVW_FILE_NAME := $(shell basename "$(1)"))
+$(eval TTL_FILE_$(1) := $(CSVW_FILE_NAME:%-metadata.json=out/bulk/%.ttl))
+$(eval CSVW_DIR_NAME_$(1) := $(shell dirname $$(realpath $(1))))
+
+# todo: At some point the below SPARQL query needs to filter out CSV paths which are genuine URLs (e.g. start with http:// or https://)
+$(eval INDIVIDUAL_CSV_DEPENDENCIES_COMMAND_$(1) := $(RIOT) --syntax jsonld --formatted ttl "$(1)" > "$(1).tmp.ttl"; \
+		$(SPARQL) --data "$(1).tmp.ttl" --results tsv "SELECT (str(?url) as ?csv) WHERE { [] <http://www.w3.org/ns/csvw\#url> ?url.}" \
+			| tail -n +2 \
+			| sed 's/"\(.*\)"/\1/g' \
+			| awk '{print "$(CSVW_DIR_NAME_$(1))/" $$$$0}' \
+			| xargs -l realpath --relative-to "$(WORKING_DIR)" \
+			| xargs;)
+$(eval INDIVIDUAL_CSV_DEPENDENCIES_$(1) = $(shell $(INDIVIDUAL_CSV_DEPENDENCIES_COMMAND_$(1)) ))
+$(eval $(shell rm -rf "$(1).tmp.ttl"))
+
+$(TTL_FILE_$(1)): $(1) $(INDIVIDUAL_CSV_DEPENDENCIES_$(1))
+	@echo "=============================== Converting $$< to ttl $$@ ===============================" ;
+	@$$(CSV2RDF) "$$<" -o "$$@";
+	@echo "" ;
+endef
+
+$(foreach file,$(CSVW_METADATA_FILES),$(eval $(call CSVW_TO_TTL,$(file))))
