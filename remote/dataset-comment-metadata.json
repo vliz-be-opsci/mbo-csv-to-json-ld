@@ -3,12 +3,12 @@
     "@context": "http://www.w3.org/ns/csvw",
     "tables": [
         {
-            "url": "../dataset.csv",
-            "tableSchema": "dataset.schema.json"
+            "url": "../dataset-comment.csv",
+            "tableSchema": "dataset-comment.schema.json"
         },
         {
-            "url": "../dataset-comment.csv",
-            "tableSchema": "dataset-comment.schema.json",
+            "url": "../dataset.csv",
+            "tableSchema": "dataset.schema.json",
             "suppressOutput": true
         },
         {

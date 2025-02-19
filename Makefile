@@ -1,4 +1,4 @@
-.PHONY: docker-pull output-directories split clean bulk-ttl bulk-jsonld all init
+.PHONY: docker-pull output-directories jsonld clean bulk-ttl bulk-jsonld all init
 
 WORKING_DIR			:= $(shell pwd)
 CSVW_CHECK_DOCKER	:= gsscogs/csvw-check:latest
@@ -13,6 +13,7 @@ SPARQL				:= docker run --rm -v "$(WORKING_DIR)":/work -w /work $(JENA_CLI_DOCKE
 CSVW_METADATA_FILES 		:= $(wildcard remote/*-metadata.json)
 BULK_TTL_FILES    			:= $(CSVW_METADATA_FILES:remote/%-metadata.json=out/bulk/%.ttl)
 BULK_JSON_LD_FILES 			:= $(CSVW_METADATA_FILES:remote/%-metadata.json=out/bulk/%.json)
+REFERENCED_CSVS_QUERY_FILE	:= remote/csvs-referenced-by-csvw.sparql
 
 docker-pull:
 	@echo "=============================== Pulling latest required docker images. ==============================="
@@ -40,7 +41,7 @@ bulk-ttl: $(BULK_TTL_FILES)
 
 bulk-jsonld: $(BULK_JSON_LD_FILES)
 
-split: $(BULK_TTL_FILES)
+jsonld: $(BULK_TTL_FILES)
 	@$(MAKE) -f split/Makefile jsonld
 
 init:
@@ -64,9 +65,8 @@ $(eval CSVW_FILE_NAME := $(shell basename "$(1)"))
 $(eval TTL_FILE_$(1) := $(CSVW_FILE_NAME:%-metadata.json=out/bulk/%.ttl))
 $(eval CSVW_DIR_NAME_$(1) := $(shell dirname $$(realpath $(1))))
 
-# todo: At some point the below SPARQL query needs to filter out CSV paths which are genuine URLs (e.g. start with http:// or https://)
 $(eval INDIVIDUAL_CSV_DEPENDENCIES_COMMAND_$(1) := $(RIOT) --syntax jsonld --formatted ttl "$(1)" > "$(1).tmp.ttl"; \
-		$(SPARQL) --data "$(1).tmp.ttl" --results tsv "SELECT (str(?url) as ?csv) WHERE { [] <http://www.w3.org/ns/csvw\#url> ?url.}" \
+		$(SPARQL) --data "$(1).tmp.ttl" --results tsv --query "$(REFERENCED_CSVS_QUERY_FILE)" \
 			| tail -n +2 \
 			| sed 's/"\(.*\)"/\1/g' \
 			| awk '{print "$(CSVW_DIR_NAME_$(1))/" $$$$0}' \
