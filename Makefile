@@ -1,4 +1,4 @@
-.PHONY: docker-pull output-directories jsonld split clean
+.PHONY: docker-pull output-directories split clean bulk-ttl bulk-jsonld all
 
 WORKING_DIR			:= $$(pwd)
 CSVW_CHECK_DOCKER	:= gsscogs/csvw-check:latest
@@ -20,11 +20,8 @@ docker-pull:
 	docker pull $(JENA_CLI_DOCKER)
 	@echo "" ; 
 
-
 output-directories:
 	@mkdir -p out/bulk
-
-$(CSVW_METADATA_FILES): docker-pull output-directories
 
 validate: $(CSVW_METADATA_FILES)
 	@for file in $(CSVW_METADATA_FILES) ; do \
@@ -32,7 +29,6 @@ validate: $(CSVW_METADATA_FILES)
 		$(CSVW_CHECK) "$$file" ; \
 		echo "" ; \
 	done
-
 
 out/bulk/%.ttl: remote/%-metadata.json
 	@echo "=============================== Converting $< to ttl $@ ===============================" ;
@@ -49,11 +45,14 @@ bulk-ttl: $(BULK_TTL_FILES)
 bulk-jsonld: $(BULK_JSON_LD_FILES)
 
 split: $(BULK_TTL_FILES)
-	$(MAKE) -f split/Makefile jsonld
+	$(MAKE) -f split/Makefile output-directories jsonld
+
+all:
+	$(MAKE) output-directories docker-pull validate bulk-jsonld split
 
 clean:
 	@$(MAKE) -f split/Makefile clean
 	@rm -rf out
 
 
-.DEFAULT_GOAL := split
+.DEFAULT_GOAL := all
