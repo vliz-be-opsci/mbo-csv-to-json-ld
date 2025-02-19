@@ -15,7 +15,7 @@
             "titles": {
                 "en": ["Describer Identifier (you)", "Describer"]
             },
-            "propertyUrl": "schema:sdPublisher",
+            "propertyUrl": "https://schema.org/sdPublisher",
             "valueUrl": "{+describerId}"
         },
         {
@@ -28,7 +28,7 @@
                 "@id": "https://schema.org/Text",
                 "base": "string"
             },
-            "propertyUrl": "schema:name"
+            "propertyUrl": "https://schema.org/name"
         },
         {
             "name": "description",
@@ -40,7 +40,7 @@
                 "@id": "https://schema.org/Text",
                 "base": "string"
             },
-            "propertyUrl": "schema:description"
+            "propertyUrl": "https://schema.org/description"
         },
         {
             "name": "landingPage",
@@ -48,7 +48,7 @@
             "titles": {
                 "en": ["Data Landing Page URL", "Landing Page"]
             },
-            "propertyUrl": "schema:url",
+            "propertyUrl": "https://schema.org/url",
             "ordered": false,
             "separator": "|",
             "datatype": {
@@ -66,7 +66,7 @@
                 "@id": "https://schema.org/Text",
                 "base": "string"
             },
-            "propertyUrl": "schema:conditionsOfAccess"
+            "propertyUrl": "https://schema.org/conditionsOfAccess"
         },
         {
             "name": "inProgressDataDate",
@@ -86,7 +86,7 @@
             "titles": {
                 "en": ["Essential Ocean Variable", "EOV"]
             },
-            "propertyUrl": "schema:variableMeasured",
+            "propertyUrl": "https://schema.org/variableMeasured",
             "valueUrl": "https://w3id.org/marco-bolo/{eov}"
         },
         {
@@ -95,7 +95,7 @@
             "titles": {
                 "en": ["Essential Ocean Variable (Bio-Geo-Chemsitry)", "EOV Bio-Geo-Chem"]
             },
-            "propertyUrl": "schema:variableMeasured",
+            "propertyUrl": "https://schema.org/variableMeasured",
             "valueUrl": "https://w3id.org/marco-bolo/{eovBioGeoChem}"
         },
         {
@@ -104,7 +104,7 @@
             "titles": {
                 "en": ["Essential Ocean Variable (Physics)", "EOV Physics"]
             },
-            "propertyUrl": "schema:variableMeasured",
+            "propertyUrl": "https://schema.org/variableMeasured",
             "valueUrl": "https://w3id.org/marco-bolo/{eovPhysics}"
         },
         {
@@ -119,19 +119,19 @@
                 "base": "string"
             },
             "ordered": false,
-            "propertyUrl": "schema:isBasedOn"
+            "propertyUrl": "https://schema.org/isBasedOn"
         },
 
         {
             "name": "comments",
             "required": false,
-            "propertyUrl": "schema:comment"
+            "propertyUrl": "https://schema.org/comment"
         },
 
         {
             "virtual": true,
             "propertyUrl": "rdf:type",
-            "valueUrl": "schema:Dataset"
+            "valueUrl": "https://schema.org/Dataset"
         }
     ],
     "aboutUrl": "https://w3id.org/marco-bolo/{+datasetId}",

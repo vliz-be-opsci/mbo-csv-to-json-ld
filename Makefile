@@ -1,4 +1,4 @@
-.PHONY: docker-pull output-directories split clean bulk-ttl bulk-jsonld all
+.PHONY: docker-pull output-directories split clean bulk-ttl bulk-jsonld all init
 
 WORKING_DIR			:= $$(pwd)
 CSVW_CHECK_DOCKER	:= gsscogs/csvw-check:latest
@@ -15,9 +15,9 @@ BULK_JSON_LD_FILES 			:= $(CSVW_METADATA_FILES:remote/%-metadata.json=out/bulk/%
 
 docker-pull:
 	@echo "=============================== Pulling latest required docker images. ==============================="
-	docker pull $(CSVW_CHECK_DOCKER)
-	docker pull $(CSV2RDF_DOCKER)
-	docker pull $(JENA_CLI_DOCKER)
+	@docker pull $(CSVW_CHECK_DOCKER)
+	@docker pull $(CSV2RDF_DOCKER)
+	@docker pull $(JENA_CLI_DOCKER)
 	@echo "" ; 
 
 output-directories:
@@ -32,12 +32,12 @@ validate: $(CSVW_METADATA_FILES)
 
 out/bulk/%.ttl: remote/%-metadata.json
 	@echo "=============================== Converting $< to ttl $@ ===============================" ;
-	$(CSV2RDF) "$<" -o "$@";
+	@$(CSV2RDF) "$<" -o "$@";
 	@echo "" ;
 
 out/bulk/%.json: out/bulk/%.ttl
 	@echo "=============================== Converting $< to JSON-LD $@ ===============================" ;
-	$(RIOT) --syntax ttl --out json-ld "$<" > "$@";
+	@$(RIOT) --syntax ttl --out json-ld "$<" > "$@";
 	@echo "";
 
 bulk-ttl: $(BULK_TTL_FILES)
@@ -45,10 +45,14 @@ bulk-ttl: $(BULK_TTL_FILES)
 bulk-jsonld: $(BULK_JSON_LD_FILES)
 
 split: $(BULK_TTL_FILES)
-	$(MAKE) -f split/Makefile output-directories jsonld
+	@$(MAKE) -f split/Makefile jsonld
+
+init:
+	@$(MAKE) output-directories docker-pull 
+	@$(MAKE) -f split/Makefile init
 
 all:
-	$(MAKE) output-directories docker-pull validate bulk-jsonld split
+	@$(MAKE) init validate bulk-jsonld split
 
 clean:
 	@$(MAKE) -f split/Makefile clean

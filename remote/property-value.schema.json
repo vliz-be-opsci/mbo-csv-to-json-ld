@@ -19,7 +19,7 @@
                 "@id": "https://schema.org/Text",
                 "base": "string"
             },
-            "propertyUrl": "schema:name"
+            "propertyUrl": "https://schema.org/name"
         },
         {
             "name": "description",
@@ -31,7 +31,7 @@
                 "@id": "https://schema.org/Text",
                 "base": "string"
             },
-            "propertyUrl": "schema:description"
+            "propertyUrl": "https://schema.org/description"
         },
         {
             "name": "pid",
@@ -39,14 +39,14 @@
             "titles": {
                 "en": ["Permanent Identifier", "PID"]
             },
-            "propertyUrl": "schema:propertyID",
+            "propertyUrl": "https://schema.org/propertyID",
             "valueUrl": "{+pid}"
         },
         
         {
             "virtual": true,
             "propertyUrl": "rdf:type",
-            "valueUrl": "schema:PropertyValue"
+            "valueUrl": "https://schema.org/PropertyValue"
         }
     ],
     "aboutUrl": "https://w3id.org/marco-bolo/{+propertyValueId}",

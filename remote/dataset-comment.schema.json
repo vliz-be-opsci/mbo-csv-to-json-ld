@@ -18,7 +18,7 @@
             "titles": {
                 "en": "Dataset MBO Identifier"
             },
-            "propertyUrl": "schema:parentItem",
+            "propertyUrl": "https://schema.org/parentItem",
             "valueUrl": "https://w3id.org/marco-bolo/{+datasetId}"
         },
         {
@@ -30,7 +30,7 @@
                     "Creator"
                 ]
             },
-            "propertyUrl": "schema:creator",
+            "propertyUrl": "https://schema.org/creator",
             "valueUrl": "{+creator}"
         },
         {
@@ -43,12 +43,12 @@
                 "@id": "https://schema.org/Text",
                 "base": "string"
             },
-            "propertyUrl": "schema:text"
+            "propertyUrl": "https://schema.org/text"
         },
         {
             "virtual": true,
             "propertyUrl": "rdf:type",
-            "valueUrl": "schema:Comment"
+            "valueUrl": "https://schema.org/Comment"
         }
     ],
     "aboutUrl": "https://w3id.org/marco-bolo/{+commentId}",
