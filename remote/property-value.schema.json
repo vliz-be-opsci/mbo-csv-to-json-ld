@@ -35,14 +35,79 @@
         },
         {
             "name": "pid",
-            "required": true,
+            "required": false,
             "titles": {
                 "en": ["Permanent Identifier", "PID"]
             },
             "propertyUrl": "https://schema.org/propertyID",
             "valueUrl": "{+pid}"
         },
-        
+        {
+            "name": "measurementMethod",
+            "required": false,
+            "titles": {
+                "en": ["Measurement Method"]
+            },
+            "datatype": {
+                "@id": "https://schema.org/Text",
+                "base": "string"
+            },
+            "propertyUrl": "https://schema.org/measurementMethod"
+        },
+        {
+            "name": "measurementTechnique",
+            "required": false,
+            "titles": {
+                "en": ["Measurement Technique"]
+            },
+            "datatype": {
+                "@id": "https://schema.org/Text",
+                "base": "string"
+            },
+            "propertyUrl": "https://schema.org/measurementTechnique"
+        },
+        {
+            "name": "minValue",
+            "required": false,
+            "titles": {
+                "en": ["Minimum Value"]
+            },
+            "datatype": "decimal",
+            "propertyUrl": "https://schema.org/minValue"
+        },
+        {
+            "name": "maxValue",
+            "required": false,
+            "titles": {
+                "en": ["Maximum Value"]
+            },
+            "datatype": "decimal",
+            "propertyUrl": "https://schema.org/maxValue"
+        },
+        {
+            "name": "unitCode",
+            "required": false,
+            "titles": {
+                "en": ["Unit Code"]
+            },
+            "datatype": {
+                "@id": "https://schema.org/Text",
+                "base": "string"
+            },
+            "propertyUrl": "https://schema.org/unitCode"
+        },
+        {
+            "name": "unitText",
+            "required": false,
+            "titles": {
+                "en": ["Unit Text"]
+            },
+            "datatype": {
+                "@id": "https://schema.org/Text",
+                "base": "string"
+            },
+            "propertyUrl": "https://schema.org/unitText"
+        },
         {
             "virtual": true,
             "propertyUrl": "rdf:type",

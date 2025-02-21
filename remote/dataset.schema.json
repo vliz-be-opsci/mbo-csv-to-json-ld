@@ -81,31 +81,18 @@
             }
         },
         {
-            "name": "eov",
+            "name": "variablesMeasured",
             "required": false,
             "titles": {
-                "en": ["Essential Ocean Variable", "EOV"]
+                "en": ["Variables Measured"]
             },
             "propertyUrl": "https://schema.org/variableMeasured",
-            "valueUrl": "https://w3id.org/marco-bolo/{eov}"
-        },
-        {
-            "name": "eovBioGeoChem",
-            "required": false,
-            "titles": {
-                "en": ["Essential Ocean Variable (Bio-Geo-Chemsitry)", "EOV Bio-Geo-Chem"]
+            "separator": "|",
+            "datatype": {
+                "@id": "https://w3id.org/marco-bolo/ConvertMboIdToNode",
+                "base": "string"
             },
-            "propertyUrl": "https://schema.org/variableMeasured",
-            "valueUrl": "https://w3id.org/marco-bolo/{eovBioGeoChem}"
-        },
-        {
-            "name": "eovPhysics",
-            "required": false,
-            "titles": {
-                "en": ["Essential Ocean Variable (Physics)", "EOV Physics"]
-            },
-            "propertyUrl": "https://schema.org/variableMeasured",
-            "valueUrl": "https://w3id.org/marco-bolo/{eovPhysics}"
+            "ordered": false
         },
         {
             "name": "basedOn",
@@ -121,13 +108,6 @@
             "ordered": false,
             "propertyUrl": "https://schema.org/isBasedOn"
         },
-
-        {
-            "name": "comments",
-            "required": false,
-            "propertyUrl": "https://schema.org/comment"
-        },
-
         {
             "virtual": true,
             "propertyUrl": "rdf:type",
@@ -137,27 +117,6 @@
     "aboutUrl": "https://w3id.org/marco-bolo/{+datasetId}",
     "primaryKey": ["datasetId"],
     "foreignKeys": [
-        {
-            "columnReference": "eov",
-            "reference": {
-                "resource": "eov.csv",
-                "columnReference": "propertyValueId"
-            }
-        },
-        {
-            "columnReference": "eovBioGeoChem",
-            "reference": {
-                "resource": "eov-bio-geo-chem.csv",
-                "columnReference": "propertyValueId"
-            }
-        },
-        {
-            "columnReference": "eovPhysics",
-            "reference": {
-                "resource": "eov-physics.csv",
-                "columnReference": "propertyValueId"
-            }
-        },
         {
             "columnReference": "describerId",
             "reference": {

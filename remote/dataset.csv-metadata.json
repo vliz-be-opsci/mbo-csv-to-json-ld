@@ -12,17 +12,7 @@
             "suppressOutput": true
         },
         {
-            "url": "eov.csv",
-            "tableSchema": "property-value.schema.json",
-            "suppressOutput": true
-        },
-        {
-            "url": "eov-bio-geo-chem.csv",
-            "tableSchema": "property-value.schema.json",
-            "suppressOutput": true
-        },
-        {
-            "url": "eov-physics.csv",
+            "url": "../variable-measured.csv",
             "tableSchema": "property-value.schema.json",
             "suppressOutput": true
         },
