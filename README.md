@@ -47,40 +47,44 @@ Example dataset output:
     "@import": "https://schema.org/",
     "schema": "https://schema.org/"
   },
-  "@id": "https://w3id.org/marco-bolo/mbo_TODO_DATASET_2",
+  "@id": "https://w3id.org/marco-bolo/mbo_TODO_DATASET_10",
   "@type": "Dataset",
   "description": {
     "@type": "Text",
-    "@value": "Some second description"
+    "@value": "Some description"
   },
-  "schema:isBasedOn": [
+  "schema:isBasedOn": {
+    "@type": "URL",
+    "@value": "https://example.com/some-existing-dataset"
+  },
+  "name": {
+    "@type": "Text",
+    "@value": "Some title"
+  },
+  "sdPublisher": {
+    "@id": "https://oceanexpert.org/expert/27172"
+  },
+  "schema:url": [
     {
       "@type": "URL",
-      "@value": "https://w3id.org/marco-bolo/mbo_TODO_DATASET_1"
+      "@value": "https://example.com/some-other-landing-page"
     },
     {
       "@type": "URL",
-      "@value": "https://example.com/some-existing-dataset"
+      "@value": "https://example.com/some-landing-page"
     }
   ],
-  "name": {
-    "@type": "Text",
-    "@value": "Some second title"
-  },
-  "sdPublisher": {
-    "@id": "https://oceanexpert.org/expert/32820"
-  },
-  "schema:url": {
-    "@type": "URL",
-    "@value": "https://example.com/some-further-landing-page"
-  },
-  "variableMeasured": {
-    "@type": "https://w3id.org/marco-bolo/ConvertMboIdToNode",
-    "@value": "MBO_variable_measured_1"
-  },
+  "variableMeasured": [
+    {
+      "@id": "https://w3id.org/marco-bolo/MBO_variable_measured_eov_4"
+    },
+    {
+      "@id": "https://w3id.org/marco-bolo/MBO_variable_measured_eov_15"
+    }
+  ],
   "https://w3id.org/marco-bolo/inProgressDataDate#TODO": {
     "@type": "Date",
-    "@value": "2025-10-13"
+    "@value": "2026-01-01"
   }
 }
 ```
