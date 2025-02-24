@@ -96,7 +96,7 @@ $(eval CSVW_DIR_NAME_$(1) := $(shell dirname $$(realpath $(1))))
 # The above using SPARQL is more general and correct, but the below using jq is far more performant and should meet our needs.
 
 $(eval INDIVIDUAL_CSV_DEPENDENCIES_COMMAND_$(1) := cat "$(1)" \
-			| jq '.tables[].url' \
+			| jq '.tables[] | select(.suppressOutput != true) | .url' \
 			| sed 's/"\(.*\)"/\1/g' \
 			| awk '{print "$(CSVW_DIR_NAME_$(1))/" $$$$0}' \
 			| xargs -l realpath --relative-to "$(WORKING_DIR)" \
