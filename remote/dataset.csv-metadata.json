@@ -17,8 +17,18 @@
             "suppressOutput": true
         },
         {
-            "url": "person.csv",
-            "tableSchema": "person.schema.json",
+            "url": "person-or-organisation.csv",
+            "tableSchema": "person-or-organisation.schema.json",
+            "suppressOutput": true
+        },
+        {
+            "url": "../data-download.csv",
+            "tableSchema": "data-download.schema.json",
+            "suppressOutput": true
+        },
+        {
+            "url": "license.csv",
+            "tableSchema": "license.schema.json",
             "suppressOutput": true
         }
     ]

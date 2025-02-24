@@ -5,18 +5,24 @@
             "name": "datasetId",
             "required": true,
             "titles": {
-                "en": ["MBO ID", "MBO Identifier"]
+                "en": [
+                    "MBO ID",
+                    "MBO Identifier"
+                ]
             },
             "suppressOutput": true
         },
         {
-            "name": "describerId",
+            "name": "sdPublisherId",
             "required": true,
             "titles": {
-                "en": ["Describer Identifier (you)", "Describer"]
+                "en": [
+                    "Metadata Publisher PID (you)",
+                    "Metadata Publisher PID"
+                ]
             },
             "propertyUrl": "https://schema.org/sdPublisher",
-            "valueUrl": "{+describerId}"
+            "valueUrl": "{+sdPublisherId}"
         },
         {
             "name": "title",
@@ -46,7 +52,10 @@
             "name": "landingPage",
             "required": false,
             "titles": {
-                "en": ["Data Landing Page URL", "Landing Page"]
+                "en": [
+                    "Data Landing Page URL",
+                    "Landing Page"
+                ]
             },
             "propertyUrl": "https://schema.org/url",
             "ordered": false,
@@ -84,7 +93,9 @@
             "name": "variablesMeasured",
             "required": false,
             "titles": {
-                "en": ["Variables Measured"]
+                "en": [
+                    "Variables Measured"
+                ]
             },
             "propertyUrl": "https://schema.org/variableMeasured",
             "separator": "|",
@@ -98,7 +109,10 @@
             "name": "basedOn",
             "required": false,
             "titles": {
-                "en": ["Based On PID", "Based On"]
+                "en": [
+                    "Based On PID",
+                    "Based On"
+                ]
             },
             "separator": "|",
             "datatype": {
@@ -109,19 +123,37 @@
             "propertyUrl": "https://schema.org/isBasedOn"
         },
         {
+            "name": "distributions",
+            "required": false,
+            "titles": {
+                "en": [
+                    "Distributions"
+                ]
+            },
+            "separator": "|",
+            "datatype": {
+                "@id": "https://w3id.org/marco-bolo/ConvertMboIdToNode",
+                "base": "string"
+            },
+            "ordered": false,
+            "propertyUrl": "https://schema.org/distribution"
+        },
+        {
             "virtual": true,
             "propertyUrl": "rdf:type",
             "valueUrl": "https://schema.org/Dataset"
         }
     ],
     "aboutUrl": "https://w3id.org/marco-bolo/{+datasetId}",
-    "primaryKey": ["datasetId"],
+    "primaryKey": [
+        "datasetId"
+    ],
     "foreignKeys": [
         {
-            "columnReference": "describerId",
+            "columnReference": "sdPublisherId",
             "reference": {
-                "resource": "person.csv",
-                "columnReference": "personId"
+                "resource": "person-or-organisation.csv",
+                "columnReference": "personOrOrganisationId"
             }
         }
     ]

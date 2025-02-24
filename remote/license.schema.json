@@ -1,0 +1,17 @@
+{
+    "@context": "http://www.w3.org/ns/csvw",
+    "columns": [
+        {
+            "name": "licenseId",
+            "required": true,
+            "titles": {
+                "en": ["License PID"]
+            },
+            "suppressOutput": true
+        }
+    ],
+    "aboutUrl": "{+licenseId}",
+    "primaryKey": [
+        "licenseId"
+    ]
+}

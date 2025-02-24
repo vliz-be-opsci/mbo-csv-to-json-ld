@@ -2,10 +2,10 @@
     "@context": "http://www.w3.org/ns/csvw",
     "columns": [
         {
-            "name": "personId",
+            "name": "personOrOrganisationId",
             "required": true,
             "titles": {
-                "en": ["Person Permanent Identifier", "Person PID"]
+                "en": ["Person Or Organisation PID"]
             },
             "suppressOutput": true
         },        
@@ -15,8 +15,8 @@
             "valueUrl": "https://schema.org/Person"
         }
     ],
-    "aboutUrl": "{+personId}",
+    "aboutUrl": "{+personOrOrganisationId}",
     "primaryKey": [
-        "personId"
+        "personOrOrganisationId"
     ]
 }

@@ -1,14 +1,18 @@
-
 {
     "@context": "http://www.w3.org/ns/csvw",
     "tables": [
         {
-            "url": "../dataset-comment.csv",
-            "tableSchema": "dataset-comment.schema.json"
+            "url": "../data-download.csv",
+            "tableSchema": "data-download.schema.json"
         },
         {
             "url": "../dataset.csv",
             "tableSchema": "dataset.schema.json",
+            "suppressOutput": true
+        },
+        {
+            "url": "../dataset-comment.csv",
+            "tableSchema": "dataset-comment.schema.json",
             "suppressOutput": true
         },
         {
@@ -19,11 +23,6 @@
         {
             "url": "person-or-organisation.csv",
             "tableSchema": "person-or-organisation.schema.json",
-            "suppressOutput": true
-        },
-        {
-            "url": "../data-download.csv",
-            "tableSchema": "data-download.schema.json",
             "suppressOutput": true
         },
         {

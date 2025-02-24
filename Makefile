@@ -32,6 +32,7 @@ dockersetup:
 
 output-directories:
 	@mkdir -p out/bulk
+	@mkdir -p out/cache
 
 validate: $(CSVW_METADATA_FILES)
 	@for file in $(CSVW_METADATA_FILES) ; do \
@@ -83,15 +84,23 @@ $(eval CSVW_FILE_NAME := $(shell basename "$(1)"))
 $(eval TTL_FILE_$(1) := $(CSVW_FILE_NAME:%.csv-metadata.json=out/bulk/%.ttl))
 $(eval CSVW_DIR_NAME_$(1) := $(shell dirname $$(realpath $(1))))
 
-$(eval INDIVIDUAL_CSV_DEPENDENCIES_COMMAND_$(1) := $(RIOT) --syntax jsonld --formatted ttl "$(1)" > "$(1).tmp.ttl"; \
-		$(SPARQL) --data "$(1).tmp.ttl" --results tsv --query "$(REFERENCED_CSVS_QUERY_FILE)" \
-			| tail -n +2 \
+# $(eval INDIVIDUAL_CSV_DEPENDENCIES_COMMAND_$(1) := $(RIOT) --syntax jsonld --formatted ttl "$(1)" > "$(1).tmp.ttl"; \
+# 		$(SPARQL) --data "$(1).tmp.ttl" --results tsv --query "$(REFERENCED_CSVS_QUERY_FILE)" \
+# 			| tail -n +2 \
+# 			| sed 's/"\(.*\)"/\1/g' \
+# 			| awk '{print "$(CSVW_DIR_NAME_$(1))/" $$$$0}' \
+# 			| xargs -l realpath --relative-to "$(WORKING_DIR)" \
+# 			| xargs;)
+# $(eval $(shell rm -rf "$(1).tmp.ttl"))
+# The above using SPARQL is more general and correct, but the below using jq is far more performant and should meet our needs.
+
+$(eval INDIVIDUAL_CSV_DEPENDENCIES_COMMAND_$(1) := cat "$(1)" \
+			| jq '.tables[].url' \
 			| sed 's/"\(.*\)"/\1/g' \
 			| awk '{print "$(CSVW_DIR_NAME_$(1))/" $$$$0}' \
 			| xargs -l realpath --relative-to "$(WORKING_DIR)" \
 			| xargs;)
 $(eval INDIVIDUAL_CSV_DEPENDENCIES_$(1) = $(shell $(INDIVIDUAL_CSV_DEPENDENCIES_COMMAND_$(1)) ))
-$(eval $(shell rm -rf "$(1).tmp.ttl"))
 
 $(TTL_FILE_$(1)): $(1) $(INDIVIDUAL_CSV_DEPENDENCIES_$(1))
 	@echo "=============================== Converting $$< to ttl $$@ ===============================" ;
