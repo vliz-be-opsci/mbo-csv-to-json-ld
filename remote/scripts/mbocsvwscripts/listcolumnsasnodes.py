@@ -1,6 +1,6 @@
 """
-list-columns-as-nodes
----------------------
+listcolumnsasnodes
+------------------
 
 Converts literals of type <https://w3id.org/marco-bolo/ConvertMboIdToNode> into references to nodes in the graph.
 
@@ -29,12 +29,16 @@ def _convert_literals_to_nodes_in_file(ttl_file: Path) -> None:
 
     num_to_be_converted = _get_number_to_be_converted_in_graph(graph)
 
-    if (num_to_be_converted > 0):
+    if num_to_be_converted > 0:
         graph = _update_literals_to_nodes_in_graph_assert_success(graph)
         graph.serialize(ttl_file, format="ttl")
 
-def _update_literals_to_nodes_in_graph_assert_success(graph: rdflib.Graph) -> rdflib.Graph:
-    graph.update("""
+
+def _update_literals_to_nodes_in_graph_assert_success(
+    graph: rdflib.Graph,
+) -> rdflib.Graph:
+    graph.update(
+        """
         DELETE {
             ?s ?p ?mboNodePID.
         }
@@ -46,26 +50,33 @@ def _update_literals_to_nodes_in_graph_assert_success(graph: rdflib.Graph) -> rd
             FILTER(datatype(?mboNodePID) = <https://w3id.org/marco-bolo/ConvertMboIdToNode>).
             BIND (URI( CONCAT("https://w3id.org/marco-bolo/", STR(?mboNodePID))) as ?uriNode).
         }
-    """)
+    """
+    )
 
     num_remaining = _get_number_to_be_converted_in_graph(graph)
     if num_remaining != 0:
-        raise Exception(f"Failed to convert {len(results)} <https://w3id.org/marco-bolo/ConvertMboIdToNode> literals in {ttl_file}.")
+        raise Exception(
+            f"Failed to convert {len(results)} <https://w3id.org/marco-bolo/ConvertMboIdToNode> literals in {ttl_file}."
+        )
 
     return graph
 
+
 def _get_number_to_be_converted_in_graph(graph: rdflib.Graph) -> int:
     results = list(
-        graph.query("""
+        graph.query(
+            """
         SELECT *
         WHERE {
             ?s ?p ?mboNodePID.
             FILTER(datatype(?mboNodePID) = <https://w3id.org/marco-bolo/ConvertMboIdToNode>).
         }
-        """)
+        """
+        )
     )
 
     return len(results)
+
 
 if __name__ == "__main__":
     main()
