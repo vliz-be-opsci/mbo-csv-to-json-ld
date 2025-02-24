@@ -37,6 +37,14 @@ $ make
 ....
 ```
 
+### Speed build
+
+If you want speedy outputs, have multiple cores at your disposal, and don't mind incoherently timed log outputs then consider running make with a degree of parallelism (`p`): 
+
+```bash
+$ p=4 && make -j "$p" init && make -j "$p" validate jsonld
+```
+
 Files are output in the `out` directory.
 
 Example dataset output: 

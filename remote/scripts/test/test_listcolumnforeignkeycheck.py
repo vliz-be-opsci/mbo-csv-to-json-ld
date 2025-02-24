@@ -39,4 +39,4 @@ def test_list_column_foreign_key_success_comma_separator():
     assert not any(invalid_values)
 
 if __name__ == "__main__":
-    pytest.run()
+    pytest.main()

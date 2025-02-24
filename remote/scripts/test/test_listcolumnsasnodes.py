@@ -32,4 +32,4 @@ def test_list_columns_values_converted_to_node_references():
 
 
 if __name__ == "__main__":
-    pytest.run()
+    pytest.main()

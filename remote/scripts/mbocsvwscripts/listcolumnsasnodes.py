@@ -18,7 +18,7 @@ def main(ttl_file: click.Path):
     """
     Loads the TTL_FILE and transforms all literals of type <https://w3id.org/marco-bolo/ConvertMboIdToNode> into references to nodes in the graph.
     """
-    _convert_literals_to_nodes_in_file(Path(ttl_file))
+    _convert_literals_to_nodes_in_file(Path(str(ttl_file)))
 
 
 def _convert_literals_to_nodes_in_file(ttl_file: Path) -> None:
@@ -56,7 +56,7 @@ def _update_literals_to_nodes_in_graph_assert_success(
     num_remaining = _get_number_to_be_converted_in_graph(graph)
     if num_remaining != 0:
         raise Exception(
-            f"Failed to convert {len(results)} <https://w3id.org/marco-bolo/ConvertMboIdToNode> literals in {ttl_file}."
+            f"Failed to convert {num_remaining} <https://w3id.org/marco-bolo/ConvertMboIdToNode> literals."
         )
 
     return graph

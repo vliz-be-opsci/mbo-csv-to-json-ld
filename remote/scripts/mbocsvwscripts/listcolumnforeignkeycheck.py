@@ -92,8 +92,8 @@ def _get_invalid_list_column_values(
 def _get_unique_parent_values(column_title_in_parent_table, csv_parent_table):
     parent_table = pd.read_csv(csv_parent_table)
     parent_table_column = parent_table[column_title_in_parent_table]
-    non_null_parent_values = parent_table_column[~parent_table_column.isnull()]
-    unique_parent_values = {value for (_, value) in non_null_parent_values.items()}
+    non_null_parent_values: pd.Series = parent_table_column[~parent_table_column.isnull()] # type: ignore
+    unique_parent_values = {str(value) for (_, value) in non_null_parent_values.items()}
     return unique_parent_values
 
 
@@ -102,11 +102,11 @@ def _get_unique_child_table_values(
 ) -> Set[Any]:
     child_table = pd.read_csv(csv_child_table)
     child_table_column = child_table[list_column_title_in_child_table]
-    non_null_child_values = child_table_column[~child_table_column.isnull()]
+    non_null_child_values: pd.Series = child_table_column[~child_table_column.isnull()] # type: ignore
     return {
         individual_value
         for (_, cell_value) in non_null_child_values.items()
-        for individual_value in str.split(cell_value, separator)
+        for individual_value in str.split(str(cell_value), separator)
     }
 
 

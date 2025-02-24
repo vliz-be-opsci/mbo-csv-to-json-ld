@@ -23,7 +23,7 @@ BULK_TTL_FILES    				:= $(CSVW_METADATA_FILES:remote/%.csv-metadata.json=out/bu
 BULK_JSON_LD_FILES 				:= $(CSVW_METADATA_FILES:remote/%.csv-metadata.json=out/bulk/%.json)
 REFERENCED_CSVS_QUERY_FILE		:= remote/csvs-referenced-by-csvw.sparql
 
-dockersetup:
+dockersetup: $(MBO_PYTHON_DOCKER_FILE) $(MBO_PYTHON_SCRIPTS_DIR)
 	@echo "=============================== Pulling & Building required docker images. ==============================="
 	@docker pull $(CSVW_CHECK_DOCKER)
 	@docker pull $(CSV2RDF_DOCKER)
