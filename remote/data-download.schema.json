@@ -34,6 +34,30 @@
             "valueUrl": "https://w3id.org/marco-bolo/{+datasetId}"
         },
         {
+            "name": "title",
+            "required": false,
+            "titles": {
+                "en": "Title"
+            },
+            "datatype": {
+                "@id": "https://schema.org/Text",
+                "base": "string"
+            },
+            "propertyUrl": "https://schema.org/name"
+        },
+        {
+            "name": "description",
+            "required": false,
+            "titles": {
+                "en": "Description"
+            },
+            "datatype": {
+                "@id": "https://schema.org/Text",
+                "base": "string"
+            },
+            "propertyUrl": "https://schema.org/description"
+        },
+        {
             "name": "contentUrl",
             "required": false,
             "titles": {

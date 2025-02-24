@@ -17,10 +17,11 @@ SPARQL							:= docker run --rm -v "$(WORKING_DIR)":/work -w /work $(JENA_CLI_DO
 CONVERT_LIST_VALUES_TO_NODES	:= docker run --rm -v "$(WORKING_DIR)":/work -w /work "$(MBO_PYTHON_DOCKER_TAG)" listcolumnsasnodes
 LIST_COLUMN_FOREIGN_KEY_CHECK	:= docker run --rm -v "$(WORKING_DIR)":/work -w /work "$(MBO_PYTHON_DOCKER_TAG)" listcolumnforeignkeycheck
 
-CSVW_METADATA_FILES 		:= $(wildcard remote/*.csv-metadata.json)
-BULK_TTL_FILES    			:= $(CSVW_METADATA_FILES:remote/%.csv-metadata.json=out/bulk/%.ttl)
-BULK_JSON_LD_FILES 			:= $(CSVW_METADATA_FILES:remote/%.csv-metadata.json=out/bulk/%.json)
-REFERENCED_CSVS_QUERY_FILE	:= remote/csvs-referenced-by-csvw.sparql
+CSVW_METADATA_FILES 			:= $(wildcard remote/*.csv-metadata.json)
+CSVW_METADATA_VALIDATION_FILES	:= $(CSVW_METADATA_FILES:remote/%.csv-metadata.json=out/validation/%.log)
+BULK_TTL_FILES    				:= $(CSVW_METADATA_FILES:remote/%.csv-metadata.json=out/bulk/%.ttl)
+BULK_JSON_LD_FILES 				:= $(CSVW_METADATA_FILES:remote/%.csv-metadata.json=out/bulk/%.json)
+REFERENCED_CSVS_QUERY_FILE		:= remote/csvs-referenced-by-csvw.sparql
 
 dockersetup:
 	@echo "=============================== Pulling & Building required docker images. ==============================="
@@ -32,20 +33,21 @@ dockersetup:
 
 output-directories:
 	@mkdir -p out/bulk
-	@mkdir -p out/cache
+	@mkdir -p out/validation
 
-validate: $(CSVW_METADATA_FILES)
-	@for file in $(CSVW_METADATA_FILES) ; do \
-		echo "=============================== Validating $$file ===============================" ; \
-		$(CSVW_CHECK) "$$file" ; \
-		echo "" ; \
-	done
 
+validate: $(CSVW_METADATA_VALIDATION_FILES) out/validation/list-column-foreign-key-checks.log
+
+out/validation/list-column-foreign-key-checks.log: dataset.csv variable-measured.csv
 	@# Now we perform some more manual foreign key checks on the values inside particular list columns. 
 	@# The detection of these could be automated in future, but they are so limited in scope at the moment that it probably isn't worth it.
 
-	@echo "=============================== Validating values in dataset.csv['Variables Measured'] ==============================="
-	@$(LIST_COLUMN_FOREIGN_KEY_CHECK) dataset.csv "Variables Measured" variable-measured.csv "MBO PID" --separator "|"
+	@echo "" > out/validation/list-column-foreign-key-checks.log
+
+	@echo "=============================== Validating values in dataset.csv['Variables Measured'] ===============================" >> out/validation/list-column-foreign-key-checks.log
+	@$(LIST_COLUMN_FOREIGN_KEY_CHECK) dataset.csv "Variables Measured" variable-measured.csv "MBO PID" --separator "|" >> out/validation/list-column-foreign-key-checks.log
+
+	@cat out/validation/list-column-foreign-key-checks.log
 
 	@echo ""
 
@@ -77,11 +79,12 @@ clean:
 
 .DEFAULT_GOAL := all
 
-define CSVW_TO_TTL =
+define CSVW_TO_TARGETS =
 # Defines the target to convert a CSV-W into TTL
 #  Importantly it makes sure that its local CSV files are listed as dependencies for make.
 $(eval CSVW_FILE_NAME := $(shell basename "$(1)"))
 $(eval TTL_FILE_$(1) := $(CSVW_FILE_NAME:%.csv-metadata.json=out/bulk/%.ttl))
+$(eval CSVW_LOG_FILE_$(1) := $(CSVW_FILE_NAME:%.csv-metadata.json=out/validation/%.log))
 $(eval CSVW_DIR_NAME_$(1) := $(shell dirname $$(realpath $(1))))
 
 # $(eval INDIVIDUAL_CSV_DEPENDENCIES_COMMAND_$(1) := $(RIOT) --syntax jsonld --formatted ttl "$(1)" > "$(1).tmp.ttl"; \
@@ -102,6 +105,12 @@ $(eval INDIVIDUAL_CSV_DEPENDENCIES_COMMAND_$(1) := cat "$(1)" \
 			| xargs;)
 $(eval INDIVIDUAL_CSV_DEPENDENCIES_$(1) = $(shell $(INDIVIDUAL_CSV_DEPENDENCIES_COMMAND_$(1)) ))
 
+$(CSVW_LOG_FILE_$(1)): $(1) $(INDIVIDUAL_CSV_DEPENDENCIES_$(1))
+	@echo "=============================== Validating $$< ===============================" ;
+	@$(CSVW_CHECK) "$$<" > "$(CSVW_LOG_FILE_$(1))";
+	@cat "$(CSVW_LOG_FILE_$(1))";
+	@echo "" ;
+
 $(TTL_FILE_$(1)): $(1) $(INDIVIDUAL_CSV_DEPENDENCIES_$(1))
 	@echo "=============================== Converting $$< to ttl $$@ ===============================" ;
 	@$$(CSV2RDF) "$$<" -o "$$@";
@@ -109,4 +118,5 @@ $(TTL_FILE_$(1)): $(1) $(INDIVIDUAL_CSV_DEPENDENCIES_$(1))
 	@echo "" ;
 endef
 
-$(foreach file,$(CSVW_METADATA_FILES),$(eval $(call CSVW_TO_TTL,$(file))))
+
+$(foreach file,$(CSVW_METADATA_FILES),$(eval $(call CSVW_TO_TARGETS,$(file))))
