@@ -42,13 +42,11 @@ out/validation/list-column-foreign-key-checks.log: dataset.csv variable-measured
 	@# Now we perform some more manual foreign key checks on the values inside particular list columns. 
 	@# The detection of these could be automated in future, but they are so limited in scope at the moment that it probably isn't worth it.
 
-	@echo "" > out/validation/list-column-foreign-key-checks.log
 
-	@echo "=============================== Validating values in dataset.csv['Variables Measured'] ===============================" >> out/validation/list-column-foreign-key-checks.log
-	@$(LIST_COLUMN_FOREIGN_KEY_CHECK) dataset.csv "Variables Measured" variable-measured.csv "MBO PID" --separator "|" >> out/validation/list-column-foreign-key-checks.log
+	@echo "=============================== Validating values in dataset.csv['Variables Measured'] ==============================="
+	@$(LIST_COLUMN_FOREIGN_KEY_CHECK) dataset.csv "Variables Measured" variable-measured.csv "MBO PID" --separator "|"
 
-	@cat out/validation/list-column-foreign-key-checks.log
-
+	@echo "" > out/validation/list-column-foreign-key-checks.log # Let the build know we've done this validation now.
 	@echo ""
 
 
@@ -107,8 +105,8 @@ $(eval INDIVIDUAL_CSV_DEPENDENCIES_$(1) = $(shell $(INDIVIDUAL_CSV_DEPENDENCIES_
 
 $(CSVW_LOG_FILE_$(1)): $(1) $(INDIVIDUAL_CSV_DEPENDENCIES_$(1))
 	@echo "=============================== Validating $$< ===============================" ;
-	@$(CSVW_CHECK) "$$<" > "$(CSVW_LOG_FILE_$(1))";
-	@cat "$(CSVW_LOG_FILE_$(1))";
+	@$(CSVW_CHECK) "$$<";
+	@echo "" > "$(CSVW_LOG_FILE_$(1))"; # Let the build know that we've validated this file now.
 	@echo "" ;
 
 $(TTL_FILE_$(1)): $(1) $(INDIVIDUAL_CSV_DEPENDENCIES_$(1))
