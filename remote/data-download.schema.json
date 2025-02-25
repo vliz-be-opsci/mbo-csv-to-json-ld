@@ -61,11 +61,11 @@
                 ]
             },
             "datatype": {
-                "@id": "https://schema.org/URL",
                 "base": "string",
                 "format": "^(https?|s?ftp)://.*$"
             },
-            "propertyUrl": "https://schema.org/contentUrl"
+            "propertyUrl": "https://schema.org/contentUrl",
+            "valueUrl": "{+contentUrl}"
         },
         {
             "name": "version",
