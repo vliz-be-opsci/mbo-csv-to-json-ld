@@ -15,10 +15,7 @@
             "titles": {
                 "en": "Name"
             },
-            "datatype": {
-                "@id": "https://schema.org/Text",
-                "base": "string"
-            },
+            "datatype": "string",
             "propertyUrl": "https://schema.org/name"
         },
         {
@@ -27,10 +24,7 @@
             "titles": {
                 "en": "Description"
             },
-            "datatype": {
-                "@id": "https://schema.org/Text",
-                "base": "string"
-            },
+            "datatype": "string",
             "propertyUrl": "https://schema.org/description"
         },
         {
@@ -48,10 +42,7 @@
             "titles": {
                 "en": ["Measurement Method"]
             },
-            "datatype": {
-                "@id": "https://schema.org/Text",
-                "base": "string"
-            },
+            "datatype": "string",
             "propertyUrl": "https://schema.org/measurementMethod"
         },
         {
@@ -60,10 +51,7 @@
             "titles": {
                 "en": ["Measurement Technique"]
             },
-            "datatype": {
-                "@id": "https://schema.org/Text",
-                "base": "string"
-            },
+            "datatype": "string",
             "propertyUrl": "https://schema.org/measurementTechnique"
         },
         {
@@ -90,10 +78,7 @@
             "titles": {
                 "en": ["Unit Code"]
             },
-            "datatype": {
-                "@id": "https://schema.org/Text",
-                "base": "string"
-            },
+            "datatype": "string",
             "propertyUrl": "https://schema.org/unitCode"
         },
         {
@@ -102,10 +87,7 @@
             "titles": {
                 "en": ["Unit Text"]
             },
-            "datatype": {
-                "@id": "https://schema.org/Text",
-                "base": "string"
-            },
+            "datatype": "string",
             "propertyUrl": "https://schema.org/unitText"
         },
         {

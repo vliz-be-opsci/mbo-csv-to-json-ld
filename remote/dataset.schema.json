@@ -30,10 +30,7 @@
             "titles": {
                 "en": "Title"
             },
-            "datatype": {
-                "@id": "https://schema.org/Text",
-                "base": "string"
-            },
+            "datatype": "string",
             "propertyUrl": "https://schema.org/name"
         },
         {
@@ -42,10 +39,7 @@
             "titles": {
                 "en": "Description"
             },
-            "datatype": {
-                "@id": "https://schema.org/Text",
-                "base": "string"
-            },
+            "datatype": "string",
             "propertyUrl": "https://schema.org/description"
         },
         {
@@ -61,7 +55,7 @@
             "ordered": false,
             "separator": "|",
             "datatype": {
-                "@id": "https://schema.org/URL",
+                "@id": "https://w3id.org/marco-bolo/ConvertIriToNode",
                 "base": "string"
             }
         },
@@ -71,10 +65,7 @@
             "titles": {
                 "en": "Data Not Accessible Reason"
             },
-            "datatype": {
-                "@id": "https://schema.org/Text",
-                "base": "string"
-            },
+            "datatype": "string",
             "propertyUrl": "https://schema.org/conditionsOfAccess"
         },
         {
@@ -116,7 +107,7 @@
             },
             "separator": "|",
             "datatype": {
-                "@id": "https://schema.org/URL",
+                "@id": "https://w3id.org/marco-bolo/ConvertIriToNode",
                 "base": "string"
             },
             "ordered": false,
@@ -147,11 +138,8 @@
                     "License Permanent Identifier"
                 ]
             },
-            "datatype": {
-                "@id": "https://schema.org/URL",
-                "base": "string"
-            },
-            "propertyUrl": "https://schema.org/license"
+            "propertyUrl": "https://schema.org/license",
+            "valueUrl": "{+licenseId}"
         },
         {
             "virtual": true,
@@ -167,8 +155,8 @@
         {
             "columnReference": "sdPublisherId",
             "reference": {
-                "resource": "person-or-organisation.csv",
-                "columnReference": "personOrOrganisationId"
+                "resource": "person-or-organization.csv",
+                "columnReference": "personOrOrganizationId"
             }
         },
         {

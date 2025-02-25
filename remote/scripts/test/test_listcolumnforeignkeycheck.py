@@ -7,9 +7,9 @@ from .utils import TEST_CASES_DIR
 def test_list_column_foreign_key_failure():
     invalid_values = _get_invalid_list_column_values(
         TEST_CASES_DIR / "child_table_invalid.csv",
-        "Associated Organisations",
+        "Associated Organizations",
         TEST_CASES_DIR / "parent_table.csv",
-        "Known Organisations",
+        "Known Organizations",
         separator="|",
     )
 
@@ -19,9 +19,9 @@ def test_list_column_foreign_key_failure():
 def test_list_column_foreign_key_success():
     invalid_values = _get_invalid_list_column_values(
         TEST_CASES_DIR / "child_table_valid.csv",
-        "Associated Organisations",
+        "Associated Organizations",
         TEST_CASES_DIR / "parent_table.csv",
-        "Known Organisations",
+        "Known Organizations",
         separator="|",
     )
 
@@ -30,9 +30,9 @@ def test_list_column_foreign_key_success():
 def test_list_column_foreign_key_success_comma_separator():
     invalid_values = _get_invalid_list_column_values(
         TEST_CASES_DIR / "child_table_valid_comma.csv",
-        "Associated Organisations",
+        "Associated Organizations",
         TEST_CASES_DIR / "parent_table.csv",
-        "Known Organisations",
+        "Known Organizations",
         separator=",",
     )
 

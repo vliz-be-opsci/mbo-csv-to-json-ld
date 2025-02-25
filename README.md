@@ -55,49 +55,35 @@ Example dataset output:
     "@import": "https://schema.org/",
     "schema": "https://schema.org/"
   },
-  "@id": "https://w3id.org/marco-bolo/mbo_TODO_DATASET_10",
+  "@id": "https://w3id.org/marco-bolo/mbo_TODO_DATASET_2",
   "@type": "Dataset",
-  "description": {
-    "@type": "Text",
-    "@value": "Some description"
+  "description": "Some second description",
+  "distribution": {
+    "@id": "https://w3id.org/marco-bolo/MBO_TODO_data_download_1"
   },
-  "schema:isBasedOn": {
-    "@type": "URL",
-    "@value": "https://example.com/some-existing-dataset"
-  },
-  "name": {
-    "@type": "Text",
-    "@value": "Some title"
-  },
+  "isBasedOn": [
+    "https://example.com/some-existing-dataset",
+    "https://w3id.org/marco-bolo/mbo_TODO_DATASET_1"
+  ],
+  "license": "https://spdx.org/licenses/CC0-1.0",
+  "name": "Some second title",
   "sdPublisher": {
-    "@id": "https://oceanexpert.org/expert/27172"
+    "@id": "https://oceanexpert.org/expert/32820"
   },
-  "schema:url": [
-    {
-      "@type": "URL",
-      "@value": "https://example.com/some-other-landing-page"
-    },
-    {
-      "@type": "URL",
-      "@value": "https://example.com/some-landing-page"
-    }
-  ],
-  "variableMeasured": [
-    {
-      "@id": "https://w3id.org/marco-bolo/MBO_variable_measured_eov_4"
-    },
-    {
-      "@id": "https://w3id.org/marco-bolo/MBO_variable_measured_eov_15"
-    }
-  ],
+  "url": "https://example.com/some-further-landing-page",
+  "variableMeasured": {
+    "@id": "https://w3id.org/marco-bolo/MBO_variable_measured_1"
+  },
   "https://w3id.org/marco-bolo/inProgressDataDate#TODO": {
     "@type": "Date",
-    "@value": "2026-01-01"
+    "@value": "2025-10-13"
   }
 }
 ```
 
 ## <https://w3id.org/marco-bolo/ConvertMboIdToNode>
 
-This is an identifier which is used in CSV-W metadata documents and is necessary due to limitations in the CSV on the web standard. The CSV-W standard supports delimited list columns, however only supports the serialisation of these to RDF literals and does not allow them to point to RDF Nodes. As a result, we use <https://w3id.org/marco-bolo/ConvertMboIdToNode> as the datatype in the CSV-W and later convert all of these literals into resource/node references in the build process.
+This is an identifier which is used in CSV-W metadata documents and is necessary due to limitations in the CSV on the web standard. The CSV-W standard supports delimited list columns, however only supports the serialisation of these to RDF literals and does not allow them to point to RDF Nodes. As a result, we use <https://w3id.org/marco-bolo/ConvertMboIdToNode> as the datatype in the CSV-W and later convert all of these literals into resource/node references in the build process. This process also sticks `https://w3id.org/marco-bolo/` on front of the value in the column.
+
+N.B. <https://w3id.org/marco-bolo/ConvertIriToNode> provides a similar function but more generally for IRIs.
 

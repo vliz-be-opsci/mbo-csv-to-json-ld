@@ -21,8 +21,8 @@
             "suppressOutput": true
         },
         {
-            "url": "person-or-organisation.csv",
-            "tableSchema": "person-or-organisation.schema.json",
+            "url": "person-or-organization.csv",
+            "tableSchema": "person-or-organization.schema.json",
             "suppressOutput": true
         },
         {

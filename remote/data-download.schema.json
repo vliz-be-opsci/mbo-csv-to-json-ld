@@ -39,10 +39,7 @@
             "titles": {
                 "en": "Title"
             },
-            "datatype": {
-                "@id": "https://schema.org/Text",
-                "base": "string"
-            },
+            "datatype": "string",
             "propertyUrl": "https://schema.org/name"
         },
         {
@@ -51,10 +48,7 @@
             "titles": {
                 "en": "Description"
             },
-            "datatype": {
-                "@id": "https://schema.org/Text",
-                "base": "string"
-            },
+            "datatype": "string",
             "propertyUrl": "https://schema.org/description"
         },
         {
@@ -81,10 +75,7 @@
                     "Version"
                 ]
             },
-            "datatype": {
-                "@id": "https://schema.org/Text",
-                "base": "string"
-            },
+            "datatype": "string",
             "propertyUrl": "https://schema.org/version"
         },
         {
@@ -96,10 +87,7 @@
                     "Content Size"
                 ]
             },
-            "datatype": {
-                "@id": "https://schema.org/Text",
-                "base": "string"
-            },
+            "datatype": "string",
             "propertyUrl": "https://schema.org/contentSize"
         },
         {
@@ -112,7 +100,6 @@
                 ]
             },
             "datatype": {
-                "@id": "https://schema.org/Text",
                 "base": "string",
                 "format": "^(.+)/(.+)$"
             },
@@ -127,10 +114,7 @@
                     "sha256 Hash"
                 ]
             },
-            "datatype": {
-                "@id": "https://schema.org/Text",
-                "base": "string"
-            },
+            "datatype": "string",
             "propertyUrl": "https://schema.org/sha256"
         },
         {
@@ -222,10 +206,7 @@
                     "Status"
                 ]
             },
-            "datatype": {
-                "@id": "https://schema.org/Text",
-                "base": "string"
-            },
+            "datatype": "string",
             "propertyUrl": "https://schema.org/creativeWorkStatus"
         },
         {
@@ -237,11 +218,8 @@
                     "License Permanent Identifier"
                 ]
             },
-            "datatype": {
-                "@id": "https://schema.org/URL",
-                "base": "string"
-            },
-            "propertyUrl": "https://schema.org/license"
+            "propertyUrl": "https://schema.org/license",
+            "valueUrl": "{+licenseId}"
         },
         {
             "virtual": true,
@@ -264,29 +242,29 @@
         {
             "columnReference": "sdPublisherId",
             "reference": {
-                "resource": "person-or-organisation.csv",
-                "columnReference": "personOrOrganisationId"
+                "resource": "person-or-organization.csv",
+                "columnReference": "personOrOrganizationId"
             }
         },
         {
             "columnReference": "authorId",
             "reference": {
-                "resource": "person-or-organisation.csv",
-                "columnReference": "personOrOrganisationId"
+                "resource": "person-or-organization.csv",
+                "columnReference": "personOrOrganizationId"
             }
         },
         {
             "columnReference": "publisherId",
             "reference": {
-                "resource": "person-or-organisation.csv",
-                "columnReference": "personOrOrganisationId"
+                "resource": "person-or-organization.csv",
+                "columnReference": "personOrOrganizationId"
             }
         },
         {
             "columnReference": "producerId",
             "reference": {
-                "resource": "person-or-organisation.csv",
-                "columnReference": "personOrOrganisationId"
+                "resource": "person-or-organization.csv",
+                "columnReference": "personOrOrganizationId"
             }
         },
         {

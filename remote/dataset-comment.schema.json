@@ -39,10 +39,7 @@
             "titles": {
                 "en": "Comment Text"
             },
-            "datatype": {
-                "@id": "https://schema.org/Text",
-                "base": "string"
-            },
+            "datatype": "string",
             "propertyUrl": "https://schema.org/text"
         },
         {
