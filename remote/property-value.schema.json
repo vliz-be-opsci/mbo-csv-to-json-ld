@@ -13,7 +13,7 @@
             "name": "name",
             "required": true,
             "titles": {
-                "en": "Name"
+                "en": "Title"
             },
             "datatype": "string",
             "propertyUrl": "https://schema.org/name"

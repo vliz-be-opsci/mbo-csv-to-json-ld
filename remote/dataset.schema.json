@@ -162,7 +162,7 @@
         {
             "columnReference": "licenseId",
             "reference": {
-                "resource": "license.csv",
+                "resource": "../license.csv",
                 "columnReference": "licenseId"
             }
         }

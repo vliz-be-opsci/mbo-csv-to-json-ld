@@ -104,16 +104,16 @@ $(eval INDIVIDUAL_CSV_DEPENDENCIES_COMMAND_$(1) := cat "$(1)" \
 $(eval INDIVIDUAL_CSV_DEPENDENCIES_$(1) = $(shell $(INDIVIDUAL_CSV_DEPENDENCIES_COMMAND_$(1)) ))
 
 $(CSVW_LOG_FILE_$(1)): $(1) $(INDIVIDUAL_CSV_DEPENDENCIES_$(1))
-	@echo "=============================== Validating $$< ===============================" ;
-	@$(CSVW_CHECK) "$$<";
+	@echo "=============================== Validating $$< ===============================" 
+	@$(CSVW_CHECK) "$$<"
 	@echo "" > "$(CSVW_LOG_FILE_$(1))"; # Let the build know that we've validated this file now.
-	@echo "" ;
+	@echo ""
 
 $(TTL_FILE_$(1)): $(1) $(INDIVIDUAL_CSV_DEPENDENCIES_$(1))
-	@echo "=============================== Converting $$< to ttl $$@ ===============================" ;
-	@$$(CSV2RDF) "$$<" -o "$$@";
-	@$$(CONVERT_LIST_VALUES_TO_NODES) "$$@";
-	@echo "" ;
+	@echo "=============================== Converting $$< to ttl $$@ ==============================="
+	@$$(CSV2RDF) "$$<" -o "$$@"
+	@$$(CONVERT_LIST_VALUES_TO_NODES) "$$@"
+	@echo "" 
 endef
 
 
