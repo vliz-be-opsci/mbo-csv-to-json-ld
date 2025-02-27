@@ -13,7 +13,7 @@
             "suppressOutput": true
         },
         {
-            "name": "sdPublisherId",
+            "name": "metadataPublisherId",
             "required": true,
             "titles": {
                 "en": [
@@ -22,7 +22,7 @@
                 ]
             },
             "propertyUrl": "https://schema.org/sdPublisher",
-            "valueUrl": "{+sdPublisherId}"
+            "valueUrl": "{+metadataPublisherId}"
         },
         {
             "name": "title",
@@ -153,7 +153,7 @@
     ],
     "foreignKeys": [
         {
-            "columnReference": "sdPublisherId",
+            "columnReference": "metadataPublisherId",
             "reference": {
                 "resource": "person-or-organization.csv",
                 "columnReference": "personOrOrganizationId"

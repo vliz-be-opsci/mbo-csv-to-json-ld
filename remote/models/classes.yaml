@@ -45,6 +45,7 @@ classes:
     class_uri: schema:CreativeWork
     slots:
       - mboPermanentIdentifier
+      - metadataPublisherId
       - title
       - url
       - description
@@ -60,6 +61,7 @@ classes:
     class_uri: schema:PropertyValue
     slots:
       - mboPermanentIdentifier
+      - metadataPublisherId
       - title
       - description
       - propertyId
@@ -75,6 +77,7 @@ classes:
 
   VariableMeasured:
     is_a: PropertyValue
+    class_uri: schema:PropertyValue
     description: 'A variable that you measured, along with relevant methodology.'
 
   DataDownload:
@@ -83,8 +86,8 @@ classes:
     slots:
       - mboPermanentIdentifier
       - metadataPublisherId
-      - datasetId
       - title
+      - datasetId
       - description
       - contentUrl
       - version
@@ -108,6 +111,7 @@ classes:
     class_uri: schema:Comment
     slots:
       - mboPermanentIdentifier
+      - metadataPublisherId
       - datasetId
       - creatorId
       - commentText

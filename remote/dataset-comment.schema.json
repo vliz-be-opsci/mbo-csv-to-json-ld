@@ -13,6 +13,18 @@
             "suppressOutput": true
         },
         {
+            "name": "metadataPublisherId",
+            "required": true,
+            "titles": {
+                "en": [
+                    "Metadata Publisher PID (you)",
+                    "Metadata Publisher PID"
+                ]
+            },
+            "propertyUrl": "https://schema.org/sdPublisher",
+            "valueUrl": "{+metadataPublisherId}"
+        },
+        {
             "name": "datasetId",
             "required": true,
             "titles": {
@@ -58,6 +70,13 @@
             "reference": {
                 "resource": "../dataset.csv",
                 "columnReference": "datasetId"
+            }
+        },
+        {
+            "columnReference": "metadataPublisherId",
+            "reference": {
+                "resource": "person-or-organization.csv",
+                "columnReference": "personOrOrganizationId"
             }
         }
     ]

@@ -13,7 +13,7 @@
             "suppressOutput": true
         },
         {
-            "name": "sdPublisherId",
+            "name": "metadataPublisherId",
             "required": true,
             "titles": {
                 "en": [
@@ -22,16 +22,7 @@
                 ]
             },
             "propertyUrl": "https://schema.org/sdPublisher",
-            "valueUrl": "{+sdPublisherId}"
-        },
-        {
-            "name": "datasetId",
-            "required": true,
-            "titles": {
-                "en": "Dataset MBO Identifier"
-            },
-            "propertyUrl": "https://schema.org/encodesCreativeWork",
-            "valueUrl": "https://w3id.org/marco-bolo/{+datasetId}"
+            "valueUrl": "{+metadataPublisherId}"
         },
         {
             "name": "title",
@@ -41,6 +32,15 @@
             },
             "datatype": "string",
             "propertyUrl": "https://schema.org/name"
+        },
+        {
+            "name": "datasetId",
+            "required": true,
+            "titles": {
+                "en": "Dataset MBO Identifier"
+            },
+            "propertyUrl": "https://schema.org/encodesCreativeWork",
+            "valueUrl": "https://w3id.org/marco-bolo/{+datasetId}"
         },
         {
             "name": "description",
@@ -240,7 +240,7 @@
             }
         },
         {
-            "columnReference": "sdPublisherId",
+            "columnReference": "metadataPublisherId",
             "reference": {
                 "resource": "person-or-organization.csv",
                 "columnReference": "personOrOrganizationId"
