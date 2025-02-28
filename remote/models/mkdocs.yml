@@ -11,6 +11,7 @@ nav:
     - Dataset: Dataset.md
     - HowTo: HowTo.md
     - HowToStep: HowToStep.md
+    - HowToTip: HowToTip.md
     - License: License.md
     - SoftwareApplication: SoftwareApplication.md
     - SoftwareSourceCode: SoftwareSourceCode.md

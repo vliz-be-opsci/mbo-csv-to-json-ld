@@ -21,10 +21,12 @@ classes:
       - mboId
       - metadataPublisherId
       - title
+      - abstract
       - description
       - howToPerformActionMboId
       - agentId
       - participantIds
+      - actionInputPids
       - resultingDatasetMboIds
 
   HowTo:
@@ -47,6 +49,8 @@ classes:
       There must be a single 'primary' HowToStep which groups all of your sub-steps together; 
       your `HowTo` should link to the identifier of the primary step.
 
+      Make sure to describe any configuration or parameters in a HowToTip.
+
       TODO: I haven't quite figured out a good way to link the parameters/configuration to a step.
             Also, I'm not 100% confident in the way I'm linking source code / software to the step.
     class_uri: schema:HowToStep
@@ -55,12 +59,29 @@ classes:
       - metadataPublisherId
       - title
       - positionInParent
+      - abstract
       - description
       - contributorIds
       - providerId
       - citeSourceCodeMboIds
       - citeSoftwareApplicationMboIds
       - childStepMboIds
+      - howToImplementTipMboIds
+
+  HowToTip:
+    description: >
+      A 'tip' which should be used to describe the runtime configuration or parameters which were
+      necessary in achieving the parent `HowToStep`. 
+
+      Can be linked to specific configuration files and other documents via the `url` property.
+    class_uri: schema:HowToTip
+    slots:
+      - mboId
+      - metadataPublisherId
+      - title
+      - positionInParent
+      - description
+      - url
 
   Dataset:
     description: A dataset either produced as part of MBO or used in the process of producing an MBO dataset.
@@ -86,6 +107,7 @@ classes:
       - notAccessibleReason
       - inProgressDataDate
       - licenseMboId
+      - keywords
 
 
   PersonOrOrganization:
@@ -189,6 +211,7 @@ classes:
       - dateCreated
       - dateModified
       - datePublished
+      - keywords
   
   SoftwareApplication:
     description: >
@@ -215,6 +238,7 @@ classes:
       - dateCreated
       - dateModified
       - datePublished
+      - keywords
     
   WebApplication:
     is_a: SoftwareApplication

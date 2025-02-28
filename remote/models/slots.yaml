@@ -27,6 +27,7 @@ slots:
     range: string
     pattern: '^mbo_\\d{7}$'
     implicit_prefix: mbo
+    slot_uri: schema:identifier
 
   # Generic schema:Thing slots
   title:
@@ -59,6 +60,18 @@ slots:
     range: string
     pattern: '(Incomplete|Draft|Published|Embargoed)'
     slot_uri: schema:creativeWorkStatus
+  keywords:
+    description: 'Key words classifying this entity.'
+    required: false
+    multivalued: true
+    range: string
+    slot_uri: schema:keywords
+  abstract:
+    description: 'A short description summarising this entity.'
+    required: false
+    multivalued: false
+    range: string
+    slot_uri: schema:abstract
 
   # People or organization slots
   authorId:
@@ -252,6 +265,12 @@ slots:
     slot_uri: schema:text
 
   # Action slots
+  actionInputPids:
+    description: 'Inputs to the `Action`; for example datasets or other data sources.'
+    required: false
+    multivalued: true
+    range: uri
+    slot_uri: schema:object
   howToPerformActionMboId:
     description: 'How the action was performed.'
     required: true
@@ -276,7 +295,6 @@ slots:
     multivalued: true
     range: Dataset
     slot_uri: schema:result
-
 
   # HowTo slots
   howToStepMboId:
@@ -311,8 +329,17 @@ slots:
     multivalued: true
     range: HowToStep
     slot_uri: schema:itemListElement
+  howToImplementTipMboIds:
+    description: >
+      MBO identifiers pointing to tips which detail parameters and other configuration used in the step.
 
-  # SoftwareSourceCode
+      TODO: This could be `schema:itemListElement`, but I prefer `schema:usageInfo` for our use-case.
+    required: false
+    multivalued: true
+    range: HowToTip
+    slot_uri: schema:usageInfo
+
+  # SoftwareSourceCode slots
   codeRepositoryUrl:
       description: 'The URL of the source code repository.'
       required: true
@@ -331,7 +358,6 @@ slots:
       multivalued: false
       range: string
       slot_uri: schema:runtimePlatform
-
 
   # SoftwareApplication
   isWebApplication:
