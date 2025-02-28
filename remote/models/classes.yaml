@@ -1,5 +1,5 @@
-id: https://w3id.org/marco-bolo/modelling-classes
-name: modelling-classes
+id: https://w3id.org/marco-bolo/csv-input-classes
+name: csv-input-classes
 prefixes:
   linkml: https://w3id.org/linkml/
   schema: https://schema.org/
@@ -10,31 +10,84 @@ imports:
 default_prefix: mbo
 
 classes:
+  Action:
+    title: Act of Creation
+    description: >
+      The act of creation of one or more MBO datasets.
+
+      todo: Should we merge this with `HowTo` into one CSV?
+    class_uri: schema:CreateAction
+    slots:
+      - mboId
+      - metadataPublisherId
+      - title
+      - description
+      - howToPerformActionMboId
+      - agentId
+      - participantIds
+      - resultingDatasetMboIds
+
+  HowTo:
+    description: >
+      How the Act(ion) of Creation was performed.
+
+      todo: Should we merge this with `Action` into one CSV?
+    class_uri: schema:HowTo
+    slots:
+      - mboId
+      - metadataPublisherId
+      - title
+      - description
+      - howToStepMboId
+
+  HowToStep:
+    description: >
+      An individual step which is part of a `HowTo`.
+      
+      There must be a single 'primary' HowToStep which groups all of your sub-steps together; 
+      your `HowTo` should link to the identifier of the primary step.
+
+      TODO: I haven't quite figured out a good way to link the parameters/configuration to a step.
+            Also, I'm not 100% confident in the way I'm linking source code / software to the step.
+    class_uri: schema:HowToStep
+    slots:
+      - mboId
+      - metadataPublisherId
+      - title
+      - positionInParent
+      - description
+      - contributorIds
+      - providerId
+      - citeSourceCodeMboIds
+      - citeSoftwareApplicationMboIds
+      - childStepMboIds
+
   Dataset:
     description: A dataset either produced as part of MBO or used in the process of producing an MBO dataset.
     class_uri: schema:Dataset
     slots:
-      - mboPermanentIdentifier
+      - mboId
       - metadataPublisherId
       - title
       - description
-      - url
+      - landingPage
+      - publishingStatus
+      - variablesMeasured
+      - distributions
+      - authorId
+      - contributorIds
+      - ownerId
+      - maintainerId
+      - publisherId
+      - basedOn
+      - dateCreated
+      - dateModified
+      - datePublished
       - notAccessibleReason
       - inProgressDataDate
-      - variableMeasured
-      - basedOn
-      - distribution
-      - licenseId
-      # todo:
-      - creatorId
-      - ownerId
-      - contactId
-    slot_usage:
-      mboPermanentIdentifier:
-        alias: datasetId
-      url:
-        alias: landingPage
-        
+      - licenseMboId
+
+
   PersonOrOrganization:
     description: A person or organization recognised by the MBO project
     slots:
@@ -44,23 +97,17 @@ classes:
     description: A person or organization recognised by the MBO project
     class_uri: schema:CreativeWork
     slots:
-      - mboPermanentIdentifier
+      - mboId
       - metadataPublisherId
       - title
-      - url
+      - licenseUrl
       - description
-    slot_usage:
-      mboPermanentIdentifier:
-        alias: licenseId
-      url:
-        alias: licenseURL
 
   PropertyValue:
-    abstract: true
     description: 'A property value.'
     class_uri: schema:PropertyValue
     slots:
-      - mboPermanentIdentifier
+      - mboId
       - metadataPublisherId
       - title
       - description
@@ -71,9 +118,6 @@ classes:
       - maxValue
       - unitCode
       - unitText
-    slot_usage:
-      mboPrermanentIdentifier:
-        alias: propertyValueId
 
   VariableMeasured:
     is_a: PropertyValue
@@ -84,38 +128,96 @@ classes:
     description: 'A distribution of a Dataset, e.g. a CSV version of the dataset, or a PDF containing the dataset.'
     class_uri: schema:DataDownload
     slots:
-      - mboPermanentIdentifier
+      - mboId
       - metadataPublisherId
       - title
-      - datasetId
+      - datasetMboId
       - description
-      - contentUrl
+      - publishingStatus
+      - downloadUrl
       - version
-      - contentSize
       - encodingFormat
-      - sha256
       - dateCreated
       - dateModified
       - datePublished
       - authorId
+      - contributorIds
+      - ownerId
+      - maintainerId
       - publisherId
-      - producerId
-      - creativeWorkStatus
-      - licenseId
+      - licenseMboId
+      - sha256
+      - contentSize
     slot_usage:
-      mboPermanentIdentifier:
-        alias: dataDownloadId
+      datasetMboId:
+        slot_uri: schema:encodesCreativeWork
 
   DatasetComment:
     description: 'A comment on a Dataset'
     class_uri: schema:Comment
     slots:
-      - mboPermanentIdentifier
+      - mboId
       - metadataPublisherId
-      - datasetId
-      - creatorId
+      - datasetMboId
+      - authorId
       - commentText
     slot_usage:
-      mboPermanentIdentifier:
-        alias: commentId
-        
+      datasetMboId:
+        slot_uri: schema:parentItem
+
+  SoftwareSourceCode:
+    description: > 
+      The location and description of the spreadsheet, script, or whole application 
+      that you used when creating your dataset. If you used a commercial or open 
+      source application managed by others then consider using `SoftwareApplication`
+      to represent it instead.
+    class_uri: schema:SoftwareSourceCode
+    slots:
+      - mboId
+      - metadataPublisherId
+      - title
+      - codeRepositoryUrl
+      - description
+      - publishingStatus
+      - programmingLanguage
+      - runtimePlatform
+      - authorId
+      - contributorIds
+      - maintainerId
+      - ownerId
+      - publisherId
+      - dateCreated
+      - dateModified
+      - datePublished
+  
+  SoftwareApplication:
+    description: >
+      A description of the software used in the generation of your dataset.
+      If you wrote or used a spreadsheet, script or software that you created
+      yourself or is otherwise not publicly available then consider using
+      `SoftwareSourceCode` to represent it instead.
+    class_uri: schema:SoftwareApplication
+    slots:
+      - mboId
+      - metadataPublisherId
+      - title
+      - softwareVersion
+      - description
+      - publishingStatus
+      - softwareDownloadUrl
+      - isWebApplication
+      - authorId
+      - contributorIds
+      - maintainerId
+      - ownerId
+      - providerId
+      - publisherId
+      - dateCreated
+      - dateModified
+      - datePublished
+    
+  WebApplication:
+    is_a: SoftwareApplication
+    description: 'A web application, a specialisation of a `SoftwareApplication`.'
+    class_uri: schema:WebApplication
+  

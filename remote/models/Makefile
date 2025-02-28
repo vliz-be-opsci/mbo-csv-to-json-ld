@@ -27,7 +27,7 @@ init: #docker-pull
 
 validate: $(LINKML_SCHEMA_FILES)
 	@$(foreach file,$(LINKML_SCHEMA_FILES), echo "======================> Validating $(file)\n"; \
-		$(LINKML) lint --validate "$(file)"; \
+		$(LINKML) lint --validate --ignore-warnings "$(file)"; \
 		echo "\n"; \
 	)
 
@@ -49,9 +49,7 @@ markdown-docs: $(LINKML_SCHEMA_FILES)
 docs: markdown-docs
 	$(eval DOCS := $(wildcard docs/*.md))
 	@echo "Converting mermaid diagrams to SVG in Markdown docs"
-	for doc in $(DOCS); do \
-		$(MERMAID_CLI) -i "$$doc" -o "$$doc"; \
-	done;
+	$(foreach doc,$(DOCS),$(MERMAID_CLI) -i "$(doc)" -o "$(doc)";)
 	@echo "Building Mkdocs site"
 	@$(MKDOCS) build
 

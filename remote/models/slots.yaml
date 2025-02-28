@@ -16,12 +16,17 @@ slots:
     identifier: true
     required: true
     range: uri
-  mboPermanentIdentifier:
+  mboId:
     identifier: true
     required: true
-    description: 'MBO Permanent Identifier'
+    title: 'MBO Identifier'
+    description: > 
+      An identifier chosen from the range given to your work package by WP1. 
+      Note that when inputting into CSV files this should not be the full URI, 
+      but just the last part, e.g. 'mbo_0000001'.
     range: string
     pattern: '^mbo_\\d{7}$'
+    implicit_prefix: mbo
 
   # Generic schema:Thing slots
   title:
@@ -40,49 +45,64 @@ slots:
     range: uri
     slot_uri: schema:url  
     multivalued: true
-  licenseId:
+  licenseMboId:
     required: false
     description: 'The MBO PID of the license which covers the entity you are describing.'
     slot_uri: schema:license
     range: License 
 
+  # Generic creative work slots
+  publishingStatus:
+    description: 'The publishing status of the entity.'
+    required: false
+    multivalued: false
+    range: string
+    pattern: '(Incomplete|Draft|Published|Embargoed)'
+    slot_uri: schema:creativeWorkStatus
+
   # People or organization slots
   authorId:
+    description: 'The Permanent Identifier of person or organization who created this entity.'
     required: false
-    multivalued: true
+    multivalued: false
     range: PersonOrOrganization
     slot_uri: schema:author
-  creatorId:
-    required: false
-    multivalued: true
-    description: 'The Permanent Identifier of an person or organization who created the entity.'
-    range: PersonOrOrganization
-    slot_uri: schema:TODO
   ownerId:
     required: false
-    description: 'The Permanent Identifier of an person or organization who owns the entity.'
+    description: >
+      The Permanent Identifier of an person or organization who owns the entity.
+
+      TODO: I'm not sure `schema:copyrightHolder` is the right choice here. 
+            Could use `schema:sourceOrganization` but that isn't that good either.
     range: PersonOrOrganization
-    slot_uri: schema:TODO
-  contactId:
-    required: false
-    description: 'The Permanent Identifier of an person to contact about this dataset.'
-    range: PersonOrOrganization
-    slot_uri: schema:TODO
+    slot_uri: schema:copyrightHolder
   publisherId:
     required: false
     multivalued: false
     description: 'The Permanent Identifier of an person or organization who created the entity.'
     range: PersonOrOrganization
     slot_uri: schema:publisher
-  producerId:
+  providerId:
     required: false
     multivalued: false
-    description: 'The Permanent Identifier of an person or organization who created the entity.'
+    description: 'The Permanent Identifier of an person or organization who provides or provided the service.'
     range: PersonOrOrganization
-    slot_uri: schema:publisher
+    slot_uri: schema:provider
+  contributorIds:
+    required: false
+    multivalued: true
+    description: 'The Permanent Identifiers of people or organizations who contributed to the entity.'
+    range: PersonOrOrganization
+    slot_uri: schema:contributor
+  maintainerId:
+    required: false
+    multivalued: false
+    description: 'The Permanent Identifier of an person or organization who maintains this entity.'
+    range: PersonOrOrganization
+    slot_uri: schema:maintainer
   metadataPublisherId:
     required: true
-    description: 'The Ocean Expert identifier of the person who wrote this metadata record.'
+    description: 'The Ocean Expert identifier of the person who wrote this metadata record (you).'
     range: PersonOrOrganization
     slot_uri: schema:sdPublisher
   
@@ -124,44 +144,50 @@ slots:
     slot_uri: schema:unitText
 
   # Dataset slots
+  landingPage:
+    subproperty_of: url
+    slot_uri: schema:url
+    required: false
+    description: 'The location where the dataset can be acquired.'
+    range: uri
+    multivalued: true
   notAccessibleReason:
     required: false
     description: 'Why the dataset isn''t available'
     range: string
     slot_uri: schema:conditionsOfAccess
   inProgressDataDate:
+    description: 'The point in time when you expect that the data will be accessible.'
     required: false
     range: date
-  variableMeasured:
+  variablesMeasured:
+    description: 'The variables measured in your dataset; these should include EBVs, EOVs, etc.'
     required: false
     multivalued: true
     range: VariableMeasured
     slot_uri: schema:variableMeasured
   basedOn:
+    description: 'The URI PID of any datasets which yours is based on.'
     required: false
     multivalued: true
     range: uri
     slot_uri: schema:isBasedOn
-  distribution:
+  distributions:
+    description: 'The different formats in which the dataset can be accessed or downloaded.'
     required: false
     multivalued: true
     range: DataDownload
     slot_uri: schema:distribution
 
-
-  datasetId:
+  datasetMboId:
+    description: 'The MBO ID of the dataset.'
     required: false
     multivalued: false
     range: Dataset
-    slot_uri: schema:encodesCreativeWork
 
   # DataDownload slots
-  contentUrl:
-    required: false
-    multivalued: false
-    range: uri
-    slot_uri: schema:contentUrl
   version:
+    description: 'The version of this entity, for example `1.0`.'
     required: false
     multivalued: false
     range: string
@@ -173,6 +199,7 @@ slots:
     range: string
     slot_uri: schema:contentSize
   encodingFormat:
+    description: 'The MIME type of the content.'
     required: false
     multivalued: false
     range: string
@@ -182,12 +209,22 @@ slots:
     multivalued: false
     range: string
     slot_uri: schema:sha256
-  creativeWorkStatus:
-    required: false
+  downloadUrl:
+    subproperty_of: url
+    description: 'The URL where the data can be accessed.'
+    required: true
     multivalued: false
-    range: string
-    slot_uri: schema:creativeWorkStatus
+    range: uri
+    slot_uri: schema:url
 
+  # License slots
+  licenseUrl:
+    subproperty_of: url
+    slot_uri: schema:url
+    required: true
+    description: 'The location where the dataset can be acquired.'
+    range: uri
+    multivalued: false
 
   # Date slots
   dateCreated:
@@ -213,3 +250,104 @@ slots:
     multivalued: false
     range: string
     slot_uri: schema:text
+
+  # Action slots
+  howToPerformActionMboId:
+    description: 'How the action was performed.'
+    required: true
+    multivalued: false
+    range: HowTo
+    slot_uri: schema:actionProcess
+  agentId:
+    description: 'The person or organization who performed the action.'
+    required: true
+    multivalued: false
+    range: PersonOrOrganization
+    slot_uri: schema:agent
+  participantIds:
+    description: 'The IDs of the people or organizations who collaborated in the action.'
+    required: false
+    multivalued: true
+    range: PersonOrOrganization
+    slot_uri: schema:participant
+  resultingDatasetMboIds:
+    description: 'The MBO identifiers of any datasets created in this action.'
+    required: true
+    multivalued: true
+    range: Dataset
+    slot_uri: schema:result
+
+
+  # HowTo slots
+  howToStepMboId:
+    description: 'The MBO identifier for the all-encompasing ''primary'' step.'
+    required: true
+    multivalued: false
+    range: HowToStep
+    slot_uri: schema:step
+
+  # HowToStep slots
+  positionInParent:
+    description: 'A sort order for this step with respect to other steps in its parent.'
+    required: true
+    multivalued: false
+    range: integer
+    slot_uri: schema:position
+  citeSourceCodeMboIds:
+    description: 'The MBO identifiers for source code used in this HowToStep.'
+    required: false
+    multivalued: true
+    range: SoftwareSourceCode
+    slot_uri: schema:citation
+  citeSoftwareApplicationMboIds:
+    description: 'The MBO identifiers for software or web applications used in this HowToStep.'
+    required: false
+    multivalued: true
+    range: SoftwareApplication
+    slot_uri: schema:citation  
+  childStepMboIds:
+    description: 'The MBO identifiers for steps which are children of this one.'
+    required: false
+    multivalued: true
+    range: HowToStep
+    slot_uri: schema:itemListElement
+
+  # SoftwareSourceCode
+  codeRepositoryUrl:
+      description: 'The URL of the source code repository.'
+      required: true
+      multivalued: false
+      range: uri
+      slot_uri: schema:codeRepository
+  programmingLanguage:
+      description: 'The programming languages primarily used in the source code.'
+      required: false
+      multivalued: true
+      range: string
+      slot_uri: schema:programmingLanguage
+  runtimePlatform:
+      description: 'The runtime on which the code runs (for example Java 17, .NET Framework 4.6, Python 3.6, etc.)'
+      required: false
+      multivalued: false
+      range: string
+      slot_uri: schema:runtimePlatform
+
+
+  # SoftwareApplication
+  isWebApplication:
+    description: 'Whether it is a web application or a software application for download.'
+    required: true
+    multivalued: false
+    range: boolean
+  softwareVersion:
+    description: 'The version of a software or web application.'
+    required: false
+    multivalued: false
+    range: string
+    slot_uri: schema:softwareVersion
+  softwareDownloadUrl:
+    description: 'The download url of a software application.'
+    required: false
+    multivalued: false
+    range: uri
+    slot_uri: schema:downloadUrl

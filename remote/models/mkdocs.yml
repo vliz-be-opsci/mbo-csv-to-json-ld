@@ -2,4 +2,17 @@ site_name: Marco-bolo CSV models
 theme:
   name: readthedocs
 use_directory_urls: false
-docs:
+nav:
+  - Overview: index.md
+  - Classes:
+    - Action: Action.md
+    - DataDownload: DataDownload.md
+    - DatasetComment: DatasetComment.md
+    - Dataset: Dataset.md
+    - HowTo: HowTo.md
+    - HowToStep: HowToStep.md
+    - License: License.md
+    - SoftwareApplication: SoftwareApplication.md
+    - SoftwareSourceCode: SoftwareSourceCode.md
+    - VariableMeasured: VariableMeasured.md
+    - WebApplication: WebApplication.md
