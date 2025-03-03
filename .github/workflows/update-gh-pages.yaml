@@ -28,7 +28,7 @@ jobs:
       - name: Docs artifact generation
         uses: actions/upload-artifact@v4
         with:
-          name: modeldocs
+          name: github-pages
           path: |
             remote/models/site/*
             remote/models/site/**/*
