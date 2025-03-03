@@ -24,6 +24,8 @@ jobs:
         run: |
           make init docker-pull
           make docs -j 2
+          sudo chmod -R 644 site/*
+          sudo chown -R "$USER" site/*
 
       - name: Docs artifact generation
         uses: actions/upload-artifact@v4
