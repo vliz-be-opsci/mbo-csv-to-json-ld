@@ -1,8 +1,8 @@
 FROM python:3.13-alpine
 
-RUN apk add bash
-
-RUN pip install poetry
+# Install bash, jq and jsonld-cli to support more general build functionality in the top-level Makefile.
+RUN apk update && apk add bash jq npm
+RUN npm install -g jsonld-cli
 
 RUN mkdir -p /scripts
 

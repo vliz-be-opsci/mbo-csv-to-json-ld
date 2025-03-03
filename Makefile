@@ -1,21 +1,25 @@
 .PHONY: dockersetup output-directories jsonld clean bulk-ttl bulk-jsonld all init
 
 WORKING_DIR			:= $(shell pwd)
+
 CSVW_CHECK_DOCKER	:= roblinksdata/csvw-check:latest
 CSV2RDF_DOCKER		:= europe-west2-docker.pkg.dev/swirrl-devops-infrastructure-1/public/csv2rdf:v0.7.1
 JENA_CLI_DOCKER		:= gsscogs/gss-jvm-build-tools:latest
 
-MBO_PYTHON_SCRIPTS_DIR	:= remote/scripts
-MBO_PYTHON_DOCKER_FILE	:= $(MBO_PYTHON_SCRIPTS_DIR)/Dockerfile
-MBO_PYTHON_DOCKER_TAG	:= mbo-csvw-python-poetry
+MBO_TOOLS_SCRIPTS_DIR	:= remote/scripts
+MBO_TOOLS_DOCKER_FILE	:= $(MBO_TOOLS_SCRIPTS_DIR)/Dockerfile
+MBO_TOOLS_DOCKER		:= mbo-tools
 
-CSVW_CHECK			:= docker run --rm -v "$(WORKING_DIR)":/work -w /work $(CSVW_CHECK_DOCKER) -s
-
+CSVW_CHECK						:= docker run --rm -v "$(WORKING_DIR)":/work -w /work $(CSVW_CHECK_DOCKER) -s
 CSV2RDF							:= docker run --rm -v "$(WORKING_DIR)":/work -w /work $(CSV2RDF_DOCKER) csv2rdf -m minimal -u 
 RIOT							:= docker run --rm -v "$(WORKING_DIR)":/work -w /work $(JENA_CLI_DOCKER) riot
 SPARQL							:= docker run --rm -v "$(WORKING_DIR)":/work -w /work $(JENA_CLI_DOCKER) sparql
-CONVERT_LIST_VALUES_TO_NODES	:= docker run --rm -v "$(WORKING_DIR)":/work -w /work "$(MBO_PYTHON_DOCKER_TAG)" listcolumnsasnodes
-LIST_COLUMN_FOREIGN_KEY_CHECK	:= docker run --rm -v "$(WORKING_DIR)":/work -w /work "$(MBO_PYTHON_DOCKER_TAG)" listcolumnforeignkeycheck
+
+MBO_TOOLS_DOCKER_RUN			:= docker run -i --rm -v "$(WORKING_DIR)":/work -w /work "$(MBO_TOOLS_DOCKER)"
+CONVERT_LIST_VALUES_TO_NODES	:= $(MBO_TOOLS_DOCKER_RUN) listcolumnsasnodes
+LIST_COLUMN_FOREIGN_KEY_CHECK	:= $(MBO_TOOLS_DOCKER_RUN) listcolumnforeignkeycheck
+JQ								:= $(MBO_TOOLS_DOCKER_RUN) jq
+JSONLD_CLI						:= $(MBO_TOOLS_DOCKER_RUN) jsonld
 
 CSVW_METADATA_FILES 			:= $(wildcard remote/*.csv-metadata.json)
 CSVW_METADATA_VALIDATION_FILES	:= $(CSVW_METADATA_FILES:remote/%.csv-metadata.json=out/validation/%.log)
@@ -23,12 +27,12 @@ BULK_TTL_FILES    				:= $(CSVW_METADATA_FILES:remote/%.csv-metadata.json=out/bu
 BULK_JSON_LD_FILES 				:= $(CSVW_METADATA_FILES:remote/%.csv-metadata.json=out/bulk/%.json)
 REFERENCED_CSVS_QUERY_FILE		:= remote/csvs-referenced-by-csvw.sparql
 
-dockersetup: $(MBO_PYTHON_DOCKER_FILE) $(MBO_PYTHON_SCRIPTS_DIR)
+dockersetup: $(MBO_TOOLS_DOCKER_FILE) $(MBO_TOOLS_SCRIPTS_DIR)
 	@echo "=============================== Pulling & Building required docker images. ==============================="
 	@docker pull $(CSVW_CHECK_DOCKER)
 	@docker pull $(CSV2RDF_DOCKER)
 	@docker pull $(JENA_CLI_DOCKER)
-	@docker build -f "$(MBO_PYTHON_DOCKER_FILE)" -t "$(MBO_PYTHON_DOCKER_TAG)" "$(MBO_PYTHON_SCRIPTS_DIR)"
+	@docker build -f "$(MBO_TOOLS_DOCKER_FILE)" -t "$(MBO_TOOLS_DOCKER)" "$(MBO_TOOLS_SCRIPTS_DIR)"
 	@echo "" ; 
 
 output-directories:
@@ -96,11 +100,12 @@ $(eval CSVW_DIR_NAME_$(1) := $(shell dirname $$(realpath $(1))))
 # The above using SPARQL is more general and correct, but the below using jq is far more performant and should meet our needs.
 
 $(eval INDIVIDUAL_CSV_DEPENDENCIES_COMMAND_$(1) := cat "$(1)" \
-			| jq '.tables[] | select(.suppressOutput != true) | .url' \
+			| $(JQ) '.tables[] | select(.suppressOutput != true) | .url' \
 			| sed 's/"\(.*\)"/\1/g' \
 			| awk '{print "$(CSVW_DIR_NAME_$(1))/" $$$$0}' \
 			| xargs -l realpath --relative-to "$(WORKING_DIR)" \
 			| xargs;)
+
 $(eval INDIVIDUAL_CSV_DEPENDENCIES_$(1) = $(shell $(INDIVIDUAL_CSV_DEPENDENCIES_COMMAND_$(1)) ))
 
 $(CSVW_LOG_FILE_$(1)): $(1) $(INDIVIDUAL_CSV_DEPENDENCIES_$(1))

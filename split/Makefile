@@ -2,18 +2,18 @@
 
 WORKING_DIR				:= $(shell pwd)
 JENA_CLI_DOCKER			:= gsscogs/gss-jvm-build-tools:latest
+MBO_TOOLS_DOCKER		:= mbo-tools
+
 
 RIOT					:= docker run --rm -v "$(WORKING_DIR)":/work -w /work $(JENA_CLI_DOCKER) riot
 SPARQL					:= docker run --rm -v "$(WORKING_DIR)":/work -w /work $(JENA_CLI_DOCKER) sparql
-JSONLD					:= jsonld
-JQ						:= jq
-# TODO: need to find a docker container which contains the jsonld cli tooling.
-# TODO: need to find a docker container which contains the jq tooling.
+JQ						:= docker run -i --rm -v "$(WORKING_DIR)":/work -w /work "$(MBO_TOOLS_DOCKER)" jq
+JSONLD_CLI				:= docker run -i --rm -v "$(WORKING_DIR)":/work -w /work "$(MBO_TOOLS_DOCKER)" jsonld
 
 SCHEMA_ORG_CONTEXT_URL 	:= https://schema.org/docs/jsonldcontext.json
 SCHEMA_ORG_FILE			:= out/resources/schema-context.json
 
-BULK_TTL_FILES 				:= $(wildcard out/bulk/*.ttl)
+BULK_TTL_FILES 			:= $(wildcard out/bulk/*.ttl)
 	
 
 output-directories:
@@ -44,7 +44,7 @@ out/%.json: out/ttl/%.ttl
 	
 	@$(RIOT) --syntax ttl --out json-ld "$<" \
 		| sed 's/https:\/\/schema.org\//http:\/\/schema.org\//g' \
-		| $(JSONLD) compact --context "$(SCHEMA_ORG_FILE)" --allow all \
+		| $(JSONLD_CLI) compact --context "$(SCHEMA_ORG_FILE)" --allow all \
 		| $(JQ) '.["@context"] = { "@import": "https://schema.org/", "schema": "https://schema.org/" }' > "$@";
 
 	@echo "";

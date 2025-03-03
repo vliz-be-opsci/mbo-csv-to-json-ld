@@ -57,9 +57,6 @@ rebuild: clean init all
 
 all: diagrams docs
 
-# todo: Probably want to generate some web documentation at some point.
-# it'll be easier to navigate.
-
 clean:
 	@rm -rf diagrams
 	@rm -rf docs
