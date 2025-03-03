@@ -1,0 +1,54 @@
+name: Build
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-docs:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install mkdocs
+        run: | 
+          sudo apt-get update
+          sudo apt-get install -y mkdocs
+
+      - name: Build docs
+        working-directory: remote/models
+        run: |
+          make init docker-pull
+          make docs -j 2
+
+      - name: Docs artifact generation
+        uses: actions/upload-artifact@v4
+        with:
+          name: modeldocs
+          path: |
+            remote/models/site/*
+            remote/models/site/**/*
+
+  deploy-docs:
+    needs: build-docs
+
+    permissions:
+      pages: write
+      id-token: write
+      contents: read
+
+    # Deploy to the github-pages environment
+    environment:
+      # environment created automatically by GitHub
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
