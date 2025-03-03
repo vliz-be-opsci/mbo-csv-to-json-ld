@@ -14,6 +14,14 @@ For editing by users (except for maybe the eov.csv table):
 
 End-users would ignore (or perhaps not see) all of the other files which arecurrently stored in [remote](./remote/). But they're necessary for validating the data and converting it to an RDF representation.
 
+## Before doing anything
+
+Make sure you run the `init` command so that it can create the right output directories as well as pulling the required docker containers.
+
+```bash
+$ make init
+```
+
 ## Validating the data
 
 ```bash
