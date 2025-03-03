@@ -26,10 +26,10 @@ jobs:
           make docs -j 2
           sudo chmod -R a+rX site
 
-      - name: Docs artifact generation
-        uses: actions/upload-artifact@v4
+      - name: Upload static files as artifact
+        id: deployment
+        uses: actions/upload-pages-artifact@v3
         with:
-          name: github-pages
           path: |
             remote/models/site/*
             remote/models/site/**/*
