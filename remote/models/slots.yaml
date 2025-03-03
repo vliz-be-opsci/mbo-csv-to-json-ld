@@ -191,6 +191,12 @@ slots:
     multivalued: true
     range: DataDownload
     slot_uri: schema:distribution
+  conditionsOfAccess:
+    description: 'A description of how the data may be accessed; for use when data is not publicly accessible.'
+    required: false
+    multivalued: false
+    range: string
+    slot_uri: schema:conditionsOfAccess
 
   datasetMboId:
     description: 'The MBO ID of the dataset.'
@@ -378,7 +384,7 @@ slots:
     range: uri
     slot_uri: schema:downloadUrl
 
-  # EmbargoArchiveComponent
+  # EmbargoStatement
   embargoExpires:
     description: 'The date when the embargo expires.'
     required: true

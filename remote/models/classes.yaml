@@ -107,6 +107,7 @@ classes:
       - datePublished
       - inProgressDataDate
       - licenseMboId
+      - conditionsOfAccess
       - keywords
 
   PersonOrOrganization:
@@ -255,16 +256,19 @@ classes:
       - embargoExpires
       - embargoDescription
 
-  PublishingStatusDefinedTerm:
+  DefinedTerm:
     class_uri: schema:DefinedTerm
-    description: >
-      `DefinedTerm`s which describe the status of publication, 
-      for example (Incomplete|Draft|Published|Embargoed)
-
-      TODO: Should these be an end-user configurable item, or centrally controlled?
     slots:
       - mboId
       - termCode
       - inDefinedTermSetMboId
       - existingTermId
       - description
+
+  PublishingStatusDefinedTerm:
+    is_a: DefinedTerm
+    description: >
+      `DefinedTerm`s which describe the status of publication, 
+      for example (Incomplete|Draft|Published|Embargoed)
+
+      TODO: Should these be an end-user configurable item, or centrally controlled?
