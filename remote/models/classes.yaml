@@ -92,7 +92,6 @@ classes:
       - title
       - description
       - landingPage
-      - publishingStatus
       - variablesMeasured
       - distributions
       - authorId
@@ -101,14 +100,14 @@ classes:
       - maintainerId
       - publisherId
       - basedOn
+      - publishingStatusMboId
+      - embargoStatementMboId
       - dateCreated
       - dateModified
       - datePublished
-      - notAccessibleReason
       - inProgressDataDate
       - licenseMboId
       - keywords
-
 
   PersonOrOrganization:
     description: A person or organization recognised by the MBO project
@@ -155,7 +154,7 @@ classes:
       - title
       - datasetMboId
       - description
-      - publishingStatus
+      - publishingStatusMboId
       - downloadUrl
       - version
       - encodingFormat
@@ -200,7 +199,7 @@ classes:
       - title
       - codeRepositoryUrl
       - description
-      - publishingStatus
+      - publishingStatusMboId
       - programmingLanguage
       - runtimePlatform
       - authorId
@@ -226,7 +225,7 @@ classes:
       - title
       - softwareVersion
       - description
-      - publishingStatus
+      - publishingStatusMboId
       - softwareDownloadUrl
       - isWebApplication
       - authorId
@@ -245,3 +244,27 @@ classes:
     description: 'A web application, a specialisation of a `SoftwareApplication`.'
     class_uri: schema:WebApplication
   
+  EmbargoStatement:
+    class_uri: schema:Statement
+    description: >
+      A record describing why a dataset has been embargoed and when it will be released.
+    slots:
+      - mboId
+      - metadataPublisherId
+      - embargoedDatasetMboId
+      - embargoExpires
+      - embargoDescription
+
+  PublishingStatusDefinedTerm:
+    class_uri: schema:DefinedTerm
+    description: >
+      `DefinedTerm`s which describe the status of publication, 
+      for example (Incomplete|Draft|Published|Embargoed)
+
+      TODO: Should these be an end-user configurable item, or centrally controlled?
+    slots:
+      - mboId
+      - termCode
+      - inDefinedTermSetMboId
+      - existingTermId
+      - description

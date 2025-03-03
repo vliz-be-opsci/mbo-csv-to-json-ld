@@ -7,8 +7,8 @@ CLASSES				:= "Dataset" "PersonOrOrganization" "License" "VariableMeasured" "Dat
 LINKML_DOCKER			:= linkml/linkml:latest
 MERMAID_CLI_DOCKER		:= minlag/mermaid-cli:latest
 
-LINKML					:= docker run --rm -v "$(WORKING_DIR)":/work -w /work $(LINKML_DOCKER) linkml
-MERMAID_CLI				:= docker run --rm -v "$(WORKING_DIR)":/work -w /work -u root $(MERMAID_CLI_DOCKER)
+LINKML					:= docker run --rm -v "$(WORKING_DIR)":/work -w /work -u $(CURRENT_UID) $(LINKML_DOCKER) linkml
+MERMAID_CLI				:= docker run --rm -v "$(WORKING_DIR)":/work -w /work -u $(CURRENT_UID) $(MERMAID_CLI_DOCKER)
 MKDOCS					:= mkdocs
 
 LINKML_SCHEMA_FILES		:= $(wildcard *.yaml)
@@ -50,6 +50,7 @@ docs: markdown-docs
 	$(eval DOCS := $(wildcard docs/*.md))
 	@echo "Converting mermaid diagrams to SVG in Markdown docs"
 	$(foreach doc,$(DOCS),$(MERMAID_CLI) -i "$(doc)" -o "$(doc)";)
+
 	@echo "Building Mkdocs site"
 	@$(MKDOCS) build
 

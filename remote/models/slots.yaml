@@ -29,7 +29,7 @@ slots:
     implicit_prefix: mbo
     slot_uri: schema:identifier
 
-  # Generic schema:Thing slots
+  # Generic Thing slots
   title:
     required: true
     description: 'A name/title'
@@ -53,12 +53,11 @@ slots:
     range: License 
 
   # Generic creative work slots
-  publishingStatus:
+  publishingStatusMboId:
     description: 'The publishing status of the entity.'
     required: false
     multivalued: false
-    range: string
-    pattern: '(Incomplete|Draft|Published|Embargoed)'
+    range: PublishingStatusDefinedTerm
     slot_uri: schema:creativeWorkStatus
   keywords:
     description: 'Key words classifying this entity.'
@@ -164,15 +163,16 @@ slots:
     description: 'The location where the dataset can be acquired.'
     range: uri
     multivalued: true
-  notAccessibleReason:
+  embargoStatementMboId:
     required: false
-    description: 'Why the dataset isn''t available'
-    range: string
-    slot_uri: schema:conditionsOfAccess
+    description: 'Embargo information.'
+    range: EmbargoStatement
+    slot_uri: schema:usageInfo
   inProgressDataDate:
     description: 'The point in time when you expect that the data will be accessible.'
     required: false
     range: date
+    slot_uri: mbo:inProgressDataDate
   variablesMeasured:
     description: 'The variables measured in your dataset; these should include EBVs, EOVs, etc.'
     required: false
@@ -377,3 +377,47 @@ slots:
     multivalued: false
     range: uri
     slot_uri: schema:downloadUrl
+
+  # EmbargoArchiveComponent
+  embargoExpires:
+    description: 'The date when the embargo expires.'
+    required: true
+    multivalued: false
+    range: date
+    slot_uri: schema:expires
+  embargoedDatasetMboId:
+    description: 'The dataset that this embargo statement describes.'
+    required: true
+    multivalued: false
+    range: Dataset
+    slot_uri: schema:mainEntity
+  embargoDescription:
+    description: 'The textual description of the embargo.'
+    required: true
+    multivalued: false
+    range: string
+    slot_uri: schema:text
+
+  # DefinedTerm slots
+  termCode: 
+    description: 'A code that identifies this DefinedTerm within a DefinedTermSet.'
+    required: true
+    multivalued: false
+    range: string
+    slot_uri: schema:termCode
+  inDefinedTermSetMboId:
+    description: > 
+      The (hardcoded) value of the `DefinedTermSet` that this `DefinedTerm` is in.
+
+      It will not be configurable, or a column in the table. It is only here for 
+      information purposes.
+    required: true
+    multivalued: false
+    range: uri
+    slot_uri: schema:indefinedTermSet
+  existingTermId: 
+    description: 'An existing URI PID which describes what this term represents.'
+    required: false
+    multivalued: false
+    range: uri
+    slot_uri: schema:identifier
