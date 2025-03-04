@@ -1,5 +1,10 @@
 id: https://w3id.org/marco-bolo/csv-input-classes
 name: csv-input-classes
+description: "
+  This documentation makes use of linkml for the purposes of automatic model documentation and diagram generation.
+  
+  The MARCO-BOLO project does not intend to depend on the linkml tooling in the long term.
+  "
 prefixes:
   linkml: https://w3id.org/linkml/
   schema: https://schema.org/
@@ -12,7 +17,7 @@ default_prefix: mbo
 classes:
   Action:
     title: Act of Creation
-    description: >
+    description: |
       The act of creation of one or more MBO datasets.
 
       todo: Should we merge this with `HowTo` into one CSV?
@@ -30,7 +35,7 @@ classes:
       - resultingDatasetMboIds
 
   HowTo:
-    description: >
+    description: |
       How the Act(ion) of Creation was performed.
 
       todo: Should we merge this with `Action` into one CSV?
@@ -43,7 +48,7 @@ classes:
       - howToStepMboId
 
   HowToStep:
-    description: >
+    description: |
       An individual step which is part of a `HowTo`.
       
       There must be a single 'primary' HowToStep which groups all of your sub-steps together; 
@@ -52,7 +57,7 @@ classes:
       Make sure to describe any configuration or parameters in a HowToTip.
 
       TODO: I haven't quite figured out a good way to link the parameters/configuration to a step.
-            Also, I'm not 100% confident in the way I'm linking source code / software to the step.
+      Also, I'm not 100% confident in the way I'm linking source code / software to the step.
     class_uri: schema:HowToStep
     slots:
       - mboId
@@ -69,7 +74,7 @@ classes:
       - howToImplementTipMboIds
 
   HowToTip:
-    description: >
+    description: |
       A 'tip' which should be used to describe the runtime configuration or parameters which were
       necessary in achieving the parent `HowToStep`. 
 
@@ -92,7 +97,8 @@ classes:
       - title
       - description
       - landingPage
-      - variablesMeasured
+      - variablesMeasuredMboIds
+      - spatialCoveragePlaceMboId
       - distributions
       - authorId
       - contributorIds
@@ -188,7 +194,7 @@ classes:
         slot_uri: schema:parentItem
 
   SoftwareSourceCode:
-    description: > 
+    description: | 
       The location and description of the spreadsheet, script, or whole application 
       that you used when creating your dataset. If you used a commercial or open 
       source application managed by others then consider using `SoftwareApplication`
@@ -214,7 +220,7 @@ classes:
       - keywords
   
   SoftwareApplication:
-    description: >
+    description: |
       A description of the software used in the generation of your dataset.
       If you wrote or used a spreadsheet, script or software that you created
       yourself or is otherwise not publicly available then consider using
@@ -247,7 +253,7 @@ classes:
   
   EmbargoStatement:
     class_uri: schema:Statement
-    description: >
+    description: |
       A record describing why a dataset has been embargoed and when it will be released.
     slots:
       - mboId
@@ -258,17 +264,48 @@ classes:
 
   DefinedTerm:
     class_uri: schema:DefinedTerm
+    description: A defined vocabulary term.
     slots:
       - mboId
+      - metadataPublisherId
       - termCode
       - inDefinedTermSetMboId
       - existingTermId
       - description
 
   PublishingStatusDefinedTerm:
+    class_uri: schema:DefinedTerm
     is_a: DefinedTerm
-    description: >
+    description: |
       `DefinedTerm`s which describe the status of publication, 
       for example (Incomplete|Draft|Published|Embargoed)
 
       TODO: Should these be an end-user configurable item, or centrally controlled?
+
+  Place:
+    class_uri: schema:Place
+    description: |
+      A location where something occurred.
+    slots:
+      - mboId
+      - metadataPublisherId
+      - title
+      - description
+      - geoShapeMboId
+
+  GeoShape:
+    class_uri: schema:GeoShape
+    description: |
+      The geographic coordinates describing a Place.
+
+      Choose one of box/cirtcle/line/polygon to express the location.
+    slots:
+      - mboId
+      - metadataPublisherId
+      - title
+      - description
+      - box
+      - circle
+      - elevation
+      - line
+      - polygon

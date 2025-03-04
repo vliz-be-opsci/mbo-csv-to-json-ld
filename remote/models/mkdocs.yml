@@ -10,10 +10,12 @@ nav:
     - DatasetComment: DatasetComment.md
     - Dataset: Dataset.md
     - EmbargoStatement: EmbargoStatement.md
+    - GeoShape: GeoShape.md
     - HowTo: HowTo.md
     - HowToStep: HowToStep.md
     - HowToTip: HowToTip.md
     - License: License.md
+    - Place: Place.md
     - PublishingStatusDefinedTerm: PublishingStatusDefinedTerm.md
     - SoftwareApplication: SoftwareApplication.md
     - SoftwareSourceCode: SoftwareSourceCode.md

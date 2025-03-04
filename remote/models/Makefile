@@ -44,7 +44,13 @@ diagrams: $(SVG_FILES)
 
 markdown-docs: $(LINKML_SCHEMA_FILES)
 	@echo "Generating Markdown Docs"
-	@$(LINKML) generate doc --directory docs --sort-by rank classes.yaml
+	@$(LINKML) generate doc \
+		--directory docs \
+		--sort-by rank \
+		--no-render-imports \
+		--stacktrace \
+		--use-class-uris \
+		classes.yaml 
 
 docs: markdown-docs
 	$(eval DOCS := $(wildcard docs/*.md))

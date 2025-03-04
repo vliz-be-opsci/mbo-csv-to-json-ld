@@ -1,8 +1,8 @@
 # Experimental CSV-W representation of data for MBO
 
-## Necessary tools
+## Prerequisites
 
-You need to have docker installed and running for this to work.
+N.B. This requires that the build system has [make](https://www.gnu.org/software/make/) and [docker](https://www.docker.com/) installed.
 
 ## Data CSVs
 
@@ -11,6 +11,7 @@ For editing by users (except for maybe the eov.csv table):
 * [dataset.csv](./dataset.csv)
 * [dataset-comment.csv](./dataset-comment.csv)
 * [variable-measured.csv](./variable-measured.csv)
+... and a number of others.
 
 End-users would ignore (or perhaps not see) all of the other files which arecurrently stored in [remote](./remote/). But they're necessary for validating the data and converting it to an RDF representation.
 
