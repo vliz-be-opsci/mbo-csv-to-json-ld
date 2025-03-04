@@ -97,8 +97,9 @@ classes:
       - title
       - description
       - landingPage
-      - variablesMeasuredMboIds
+      - variableMeasuredMboIds
       - spatialCoveragePlaceMboId
+      - temporalCoverage
       - distributions
       - authorId
       - contributorIds

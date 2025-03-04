@@ -16,7 +16,6 @@ MMD_FILES				:= $(CLASSES:"%"=diagrams/%.mmd)
 SVG_FILES				:= $(CLASSES:"%"=diagrams/%.svg)
 
 
-
 docker-pull:
 	@docker pull "$(MERMAID_CLI_DOCKER)"
 	@docker pull "$(LINKML_DOCKER)"
@@ -49,7 +48,6 @@ markdown-docs: $(LINKML_SCHEMA_FILES)
 		--sort-by rank \
 		--no-render-imports \
 		--stacktrace \
-		--use-class-uris \
 		classes.yaml 
 
 docs: markdown-docs

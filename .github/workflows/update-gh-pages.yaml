@@ -22,7 +22,7 @@ jobs:
       - name: Build docs
         working-directory: remote/models
         run: |
-          make init docker-pull
+          make clean init docker-pull
           make docs -j 2
           sudo chmod -R a+rX site
 
