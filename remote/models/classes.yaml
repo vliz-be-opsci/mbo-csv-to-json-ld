@@ -133,8 +133,8 @@ classes:
       - metadataPublisherId
       - givenName
       - familyName
-      - worksForOrganizationIds 
-      - affiliatedOrganizationIds
+      - worksForOrganizationMboIds 
+      - affiliatedOrganizationMboIds
       - contactPointMboIds
 
   Organization:
@@ -143,13 +143,21 @@ classes:
     slots:
       - mboId
       - metadataPublisherId
+      - organizationType
       - title
       - legalName
+      - alternateName
+      - identifier
+      - url
       - description
+      - foundingDate
+      - dissolutionDate
       - contactPointMboIds
       - parentOrganizationMboId
       - memberOfOrganizationMboIds
       - departmentMboIds
+      - fundingGrantMboIds
+      - keywords
 
   ContactPoint:
     description: A contact point for a person or organization
@@ -354,3 +362,16 @@ classes:
       - polygon
 
   
+  MonetaryGrant:
+    class_uri: schema:MonetaryGrant
+    description: A source of money awarded to an organization or project.
+    slots:
+      - mboId
+      - metadataPublisherId
+      - title
+      - amount
+      - currency
+      - funderOrganizationMboIds
+      - sponsorOrganizationMboIds
+      - description
+      - url 
