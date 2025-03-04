@@ -118,9 +118,51 @@ classes:
       - keywords
 
   PersonOrOrganization:
-    description: A person or organization recognised by the MBO project
+    description: |
+      A collection of people or organization identifiers recognised by the MBO project.
+
+      todo: How do we apply foreign key constraints on fields which are unions of types like these?
     slots:
       - personOrOrganizationId
+
+  Person:
+    description: A person.
+    class_uri: schema:Person
+    slots:
+      - mboId
+      - metadataPublisherId
+      - givenName
+      - familyName
+      - worksForOrganizationIds 
+      - affiliatedOrganizationIds
+      - contactPointMboIds
+
+  Organization:
+    description: An organization.
+    class_uri: schema:Organization
+    slots:
+      - mboId
+      - metadataPublisherId
+      - title
+      - legalName
+      - description
+      - contactPointMboIds
+      - parentOrganizationMboId
+      - memberOfOrganizationMboIds
+      - departmentMboIds
+
+  ContactPoint:
+    description: A contact point for a person or organization
+    class_uri: schema:ContactPoint
+    slots:
+      - mboId
+      - metadataPublisherId
+      - contactType
+      - title
+      - email
+      - telephone
+      - availableLanguages
+      - description
 
   License:
     description: A person or organization recognised by the MBO project
@@ -299,7 +341,7 @@ classes:
     description: |
       The geographic coordinates describing a Place.
 
-      Choose one of box/cirtcle/line/polygon to express the location.
+      Choose one of box/circle/line/polygon to express the location.
     slots:
       - mboId
       - metadataPublisherId
@@ -310,3 +352,5 @@ classes:
       - elevation
       - line
       - polygon
+
+  

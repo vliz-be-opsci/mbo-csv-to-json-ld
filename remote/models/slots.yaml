@@ -506,3 +506,100 @@ slots:
     range: string
     slot_uri: schema:polygon
     pattern: '^([+-]?[\\d.]+\\ [+-]?[\\d.]+)\\ ([+-]?[\\d.]+\\ [+-]?[\\d.]+\\ ){2,}(\\1)$'
+
+  # Person slots
+  givenName: 
+    description: 'The person''s first name.'
+    required: true
+    multivalued: false
+    range: string
+    slot_uri: schema:givenName
+  familyName: 
+    description: 'The person''s surname.'
+    required: true
+    multivalued: false
+    range: string
+    slot_uri: schema:familyName
+  worksForOrganizationIds:
+    description: 'The PIDs of organizations which that the person works for.'
+    required: false
+    multivalued: true
+    range: uri
+    slot_uri: schema:worksFor
+  affiliatedOrganizationIds:
+    description: 'The PIDs of organizations which that the person is affiliated with.'
+    required: false
+    multivalued: true
+    range: uri
+    slot_uri: schema:affiliation
+  contactPointMboIds:
+    description: The MBO identifiers of contact points for this person or organization.
+    required: false
+    multivalued: true
+    range: ContactPoint
+    slot_uri: schema:contactPoint
+
+  # Organization slots
+  departmentMboIds:
+    description: A department within the organization.
+    required: false
+    multivalued: true
+    range: Organization
+    slot_uri: schema:department
+  parentOrganizationMboId:
+    description: Parent organization of this one (inverse of `subOrganizationMboIds`).
+    required: false
+    multivalued: true
+    range: Organization
+    slot_uri: schema:parentOrganization
+  memberOfOrganizationMboIds:
+    description: Other organizations that this one is part of.
+    required: false
+    multivalued: true
+    range: Organization
+    slot_uri: schema:memberOf
+  subOrganizationMboIds:
+    description: Organizations which are subsidiaries of this one (inverse of `parentOrganizationMboId`).
+    required: false
+    multivalued: true
+    range: Organization
+    slot_uri: schema:memberOf
+  legalName:
+    description: The legal name of an organization.
+    required: false
+    multivalued: false
+    range: string
+    slot_uri: schema:legalName
+
+  # ContactPoint slots
+  contactType:
+    description: The intended purpose of this ContactPoint, e.g. PR for an Organization, or Tech support.
+    required: true
+    multivalued: false
+    range: string
+    slot_uri: schema:contactType
+  email:
+    description: The email address on which this contact can be reached.
+    required: false
+    multivalued: false
+    range: string
+    slot_uri: schema:email
+  telephone:
+    description: The phone number on which this contact can be reached.
+    required: false
+    multivalued: false
+    range: string
+    slot_uri: schema:telephone
+  availableLanguages:
+    description: |
+      The languages in which it is possible to communicate with this contact.
+
+      Languages should be supplied as [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language sub-tags.
+
+      There is no currently no validation performed on this field, please make sure it is accurate.
+
+      https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry
+    required: false
+    multivalued: true
+    range: string
+    slot_uri: schema:availableLanguage
