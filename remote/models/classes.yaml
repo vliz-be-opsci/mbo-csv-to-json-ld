@@ -126,6 +126,7 @@ classes:
       - personOrOrganizationId
 
   Person:
+    is_a: PersonOrOrganization
     description: A person.
     class_uri: schema:Person
     slots:
@@ -138,6 +139,7 @@ classes:
       - contactPointMboIds
 
   Organization:
+    is_a: PersonOrOrganization
     description: An organization.
     class_uri: schema:Organization
     slots:

@@ -139,7 +139,7 @@
                 ]
             },
             "propertyUrl": "https://schema.org/license",
-            "valueUrl": "{+licenseId}"
+            "valueUrl": "https://w3id.org/marco-bolo/{+licenseId}"
         },
         {
             "virtual": true,
