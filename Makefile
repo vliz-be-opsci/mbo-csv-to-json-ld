@@ -39,13 +39,17 @@ output-directories:
 
 validate: $(CSVW_METADATA_VALIDATION_FILES) out/validation/list-column-foreign-key-checks.log
 
-out/validation/list-column-foreign-key-checks.log: dataset.csv variable-measured.csv
+out/validation/list-column-foreign-key-checks.log: dataset.csv variable-measured.csv data-download.csv
 	@# Now we perform some more manual foreign key checks on the values inside particular list columns. 
 	@# The detection of these could be automated in future, but they are so limited in scope at the moment that it probably isn't worth it.
 
 
 	@echo "=============================== Validating values in dataset.csv['Variables Measured'] ==============================="
 	@$(LIST_COLUMN_FOREIGN_KEY_CHECK) dataset.csv "Variables Measured" variable-measured.csv "MBO PID" --separator "|"
+
+	@echo "=============================== Validating values in dataset.csv['Distributions'] ==============================="
+	@$(LIST_COLUMN_FOREIGN_KEY_CHECK) dataset.csv "Distributions" data-download.csv "MBO Permanent Identifier" --separator "|"
+
 
 	@echo "" > out/validation/list-column-foreign-key-checks.log # Let the build know we've done this validation now.
 	@echo ""

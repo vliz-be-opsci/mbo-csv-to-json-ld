@@ -61,7 +61,7 @@ def main(
     if any(invalid_values):
         print(
             f"Unexpected values found in {csv_child_table}['{list_column_title_in_child_table}'] but not in "
-            f"{csv_parent_table}['column_title_in_parent_table']:\n{"\n".join([f"'{v}'" for v in invalid_values])}"
+            f"{csv_parent_table}['{column_title_in_parent_table}']:\n{"\n".join([f"'{v}'" for v in invalid_values])}"
         )
         sys.exit(1)
     else:
