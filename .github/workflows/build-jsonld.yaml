@@ -1,0 +1,45 @@
+name: Build
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  
+jobs:
+  validate-csvws-build-jsonld:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # Fix timestamps - this is necessary for the differential build to know what's changed since last time.
+      - name: restore timestamps
+        uses: chetan/git-restore-mtime-action@v2
+
+      - name: Load previous outputs from cache for differential build.
+        uses: actions/cache@v4
+        with:
+          path: out/
+          key: ${{ github.ref }}
+
+      - name: Initialise make
+        run: make init
+        # It turns out that caching docker images doesn't save any real time.
+
+      - name: Validate CSV-Ws
+        run: make validate
+      
+      - name: Build JSON-LD
+        # Doing a little bit of parallelisation here to speed everything up.
+        # This will result in incoherent log outputs which aren't suitable for debugging.
+        run: make jsonld -j 2
+
+      - name: Generate JSON-LD artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: schema-org-jsonld-outputs
+          path: out/*.json
+        
