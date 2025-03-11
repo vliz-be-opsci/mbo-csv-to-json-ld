@@ -12,11 +12,6 @@ default_prefix: mbo
 slots: 
   # Identifier slots
   mboId:
-    description: 'The URI PID of the person or organization.'
-    identifier: true
-    required: true
-    range: uri
-  mboId:
     identifier: true
     required: true
     title: 'MBO Identifier'

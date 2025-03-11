@@ -130,7 +130,6 @@ classes:
     description: A person.
     class_uri: schema:Person
     slots:
-      - mboId
       - metadataPublisherId
       - givenName
       - familyName
@@ -143,13 +142,12 @@ classes:
     description: An organization.
     class_uri: schema:Organization
     slots:
-      - mboId
       - metadataPublisherId
       - organizationType
       - title
       - legalName
       - alternateName
-      - identifier
+      - identifiers
       - url
       - description
       - foundingDate
