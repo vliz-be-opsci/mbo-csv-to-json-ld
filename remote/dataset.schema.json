@@ -22,7 +22,7 @@
                 ]
             },
             "propertyUrl": "https://schema.org/sdPublisher",
-            "valueUrl": "{+metadataPublisherId}"
+            "valueUrl": "https://w3id.org/marco-bolo/{+metadataPublisherId}"
         },
         {
             "name": "title",
@@ -77,7 +77,8 @@
             "propertyUrl": "https://w3id.org/marco-bolo/inProgressDataDate#TODO",
             "datatype": {
                 "@id": "https://schema.org/Date",
-                "base": "date"
+                "base": "date",
+                "format": "yyyy-MM-dd"
             }
         },
         {
@@ -155,8 +156,8 @@
         {
             "columnReference": "metadataPublisherId",
             "reference": {
-                "resource": "person-or-organization.csv",
-                "columnReference": "personOrOrganizationId"
+                "resource": "../out/validation/person-or-organization.csv",
+                "columnReference": "mboId"
             }
         },
         {
