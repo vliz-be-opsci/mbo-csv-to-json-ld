@@ -6,6 +6,7 @@ nav:
   - Overview: index.md
   - CSV files:
     - Action: Action.md
+    - Audience: Audience.md
     - ContactPoint: ContactPoint.md
     - DataDownload: DataDownload.md
     - DatasetComment: DatasetComment.md
