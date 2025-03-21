@@ -13,6 +13,8 @@ packages = [
 listcolumnsasnodes = 'mbocsvwscripts.listcolumnsasnodes:main'
 listcolumnforeignkeycheck = 'mbocsvwscripts.listcolumnforeignkeycheck:main'
 unionuniqueidentifiers = 'mbocsvwscripts.unionuniqueidentifiers:main'
+partition = 'mbocsvwscripts.partition:main'
+processparametadata = 'mbocsvwscripts.processparametadata:main'
 
 [tool.poetry.dependencies]
 python = "^3.12"

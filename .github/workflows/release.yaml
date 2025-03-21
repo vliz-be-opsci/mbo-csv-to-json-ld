@@ -3,6 +3,7 @@ on:
   create:
     tags:
       - "v[0-9]+.[0-9]+.[0-9]+*"
+  pull_request:
 
 env:
   REGISTRY: ghcr.io
@@ -12,7 +13,6 @@ jobs:
   docker_build_push:
     env:
       GIT_REF: ${{ github.ref }}
-    if: startsWith(github.ref, 'refs/tags/v')
     permissions:
       contents: read
       packages: write
@@ -33,13 +33,13 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Extract metadata (tags, labels) for Docker
+      - name: Extract metadata (tags, labels) for Docker (full release)
         id: meta
         uses: docker/metadata-action@v5
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-          tags: |
-            type=semver,pattern={{version}},latest=auto
+          tags: ${{ startsWith(github.ref, 'refs/tags/v') && 'type=semver,pattern={{version}},latest=auto' || 'type=ref,event=pr' }}
+            
 
       - name: Build and push Docker image
         id: push

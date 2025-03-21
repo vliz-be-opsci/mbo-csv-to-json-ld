@@ -7,8 +7,9 @@ Converts literals of type <https://w3id.org/marco-bolo/ConvertMboIdToNode> and <
 This makes up for a limitation in the CSV on the web standard, see <https://lists.w3.org/Archives/Public/public-csvw/2016Aug/0001.html>.
 """
 
-import click
 from pathlib import Path
+
+import click
 import rdflib
 
 
@@ -16,7 +17,7 @@ import rdflib
 @click.argument("ttl_file", type=click.Path(exists=True))
 def main(ttl_file: click.Path):
     """
-    Loads the TTL_FILE and transforms all literals of type <https://w3id.org/marco-bolo/ConvertMboIdToNode> and 
+    Loads the TTL_FILE and transforms all literals of type <https://w3id.org/marco-bolo/ConvertMboIdToNode> and
         <https://w3id.org/marco-bolo/ConvertIriToNode> into references to nodes in the graph.
     """
     _convert_literals_to_nodes_in_file(Path(str(ttl_file)))
@@ -64,9 +65,7 @@ def _update_literals_to_nodes_in_graph_assert_success(
 
     num_remaining = _get_number_to_be_converted_in_graph(graph)
     if num_remaining != 0:
-        raise Exception(
-            f"Failed to convert {num_remaining}literals."
-        )
+        raise Exception(f"Failed to convert {num_remaining}literals.")
 
     return graph
 
