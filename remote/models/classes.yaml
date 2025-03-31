@@ -2,7 +2,7 @@ id: https://w3id.org/marco-bolo/csv-input-classes
 name: csv-input-classes
 description: "
   This documentation makes use of linkml for the purposes of automatic model documentation and diagram generation.
-  
+
   The MARCO-BOLO project does not intend to depend on the linkml tooling in the long term.
   "
 prefixes:
@@ -25,7 +25,7 @@ classes:
     slots:
       - mboId
       - metadataPublisherId
-      - title
+      - name
       - abstract
       - description
       - howToPerformActionMboId
@@ -43,14 +43,14 @@ classes:
     slots:
       - mboId
       - metadataPublisherId
-      - title
+      - name
       - description
       - howToStepMboId
 
   HowToStep:
     description: |
       An individual step which is part of a `HowTo`.
-      
+
       There must be a single 'primary' HowToStep which groups all of your sub-steps together; 
       your `HowTo` should link to the identifier of the primary step.
 
@@ -62,7 +62,7 @@ classes:
     slots:
       - mboId
       - metadataPublisherId
-      - title
+      - name
       - positionInParent
       - abstract
       - description
@@ -84,7 +84,7 @@ classes:
     slots:
       - mboId
       - metadataPublisherId
-      - title
+      - name
       - positionInParent
       - description
       - url
@@ -96,7 +96,7 @@ classes:
     slots:
       - mboId
       - metadataPublisherId
-      - title
+      - name
       - description
       - landingPage
       - variableMeasuredMboIds
@@ -137,7 +137,7 @@ classes:
       - metadataPublisherId
       - givenName
       - familyName
-      - worksForOrganizationMboIds 
+      - worksForOrganizationMboIds
       - affiliatedOrganizationMboIds
       - contactPointMboIds
 
@@ -148,7 +148,7 @@ classes:
     slots:
       - metadataPublisherId
       - organizationType
-      - title
+      - name
       - legalName
       - alternateName
       - identifiers
@@ -170,7 +170,7 @@ classes:
       - mboId
       - metadataPublisherId
       - contactType
-      - title
+      - name
       - email
       - telephone
       - availableLanguages
@@ -182,17 +182,17 @@ classes:
     slots:
       - mboId
       - metadataPublisherId
-      - title
+      - name
       - licenseUrl
       - description
 
   PropertyValue:
-    description: 'A property value.'
+    description: "A property value."
     class_uri: schema:PropertyValue
     slots:
       - mboId
       - metadataPublisherId
-      - title
+      - name
       - description
       - propertyId
       - measurementMethod
@@ -205,15 +205,15 @@ classes:
   VariableMeasured:
     is_a: PropertyValue
     class_uri: schema:PropertyValue
-    description: 'A variable that you measured, along with relevant methodology.'
+    description: "A variable that you measured, along with relevant methodology."
 
   DataDownload:
-    description: 'A distribution of a Dataset, e.g. a CSV version of the dataset, or a PDF containing the dataset.'
+    description: "A distribution of a Dataset, e.g. a CSV version of the dataset, or a PDF containing the dataset."
     class_uri: schema:DataDownload
     slots:
       - mboId
       - metadataPublisherId
-      - title
+      - name
       - datasetMboId
       - description
       - publishingStatusMboId
@@ -237,7 +237,7 @@ classes:
         slot_uri: schema:encodesCreativeWork
 
   DatasetComment:
-    description: 'A comment on a Dataset'
+    description: "A comment on a Dataset"
     class_uri: schema:Comment
     slots:
       - mboId
@@ -250,7 +250,7 @@ classes:
         slot_uri: schema:parentItem
 
   SoftwareSourceCode:
-    description: | 
+    description: |
       The location and description of the spreadsheet, script, or whole application 
       that you used when creating your dataset. If you used a commercial or open 
       source application managed by others then consider using `SoftwareApplication`
@@ -259,7 +259,7 @@ classes:
     slots:
       - mboId
       - metadataPublisherId
-      - title
+      - name
       - codeRepositoryUrl
       - description
       - publishingStatusMboId
@@ -274,7 +274,7 @@ classes:
       - dateModified
       - datePublished
       - keywords
-  
+
   SoftwareApplication:
     description: |
       A description of the software used in the generation of your dataset.
@@ -285,7 +285,7 @@ classes:
     slots:
       - mboId
       - metadataPublisherId
-      - title
+      - name
       - softwareVersion
       - description
       - publishingStatusMboId
@@ -301,12 +301,12 @@ classes:
       - dateModified
       - datePublished
       - keywords
-    
+
   WebApplication:
     is_a: SoftwareApplication
-    description: 'A web application, a specialisation of a `SoftwareApplication`.'
+    description: "A web application, a specialisation of a `SoftwareApplication`."
     class_uri: schema:WebApplication
-  
+
   EmbargoStatement:
     class_uri: schema:Statement
     description: |
@@ -345,8 +345,10 @@ classes:
     slots:
       - mboId
       - metadataPublisherId
-      - title
+      - name
       - description
+      - latitude
+      - longitude
       - geoShapeMboId
 
   GeoShape:
@@ -358,7 +360,7 @@ classes:
     slots:
       - mboId
       - metadataPublisherId
-      - title
+      - name
       - description
       - box
       - circle
@@ -366,20 +368,19 @@ classes:
       - line
       - polygon
 
-  
   MonetaryGrant:
     class_uri: schema:MonetaryGrant
     description: A source of money awarded to an organization or project.
     slots:
       - mboId
       - metadataPublisherId
-      - title
+      - name
       - amount
       - currency
       - funderOrganizationMboIds
       - sponsorOrganizationMboIds
       - description
-      - url 
+      - url
 
   Taxon:
     class_uri: schema:Taxon
@@ -392,7 +393,7 @@ classes:
     slots:
       - mboId
       - metadataPublisherId
-      - title
+      - name
       - taxonIdentifier
       - taxonScientificName
       - taxonKingdom
@@ -417,5 +418,5 @@ classes:
       - mboId
       - metadataPublisherId
       - audienceType
-      - title
+      - name
       - audienceTypeDescription
