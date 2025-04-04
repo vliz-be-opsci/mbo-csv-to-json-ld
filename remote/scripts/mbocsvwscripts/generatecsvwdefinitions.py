@@ -201,7 +201,7 @@ def _generate_makefile_manual_foreign_key_checks(
 
         # Keep MANUAL_FOREIGN_KEY_VALIDATION_LOGS_SHORT up to date with the files it's necessary to perform list-column
         # foreign key validation on.
-        MANUAL_FOREIGN_KEY_VALIDATION_LOGS_SHORT	:= {" ".join([_get_csv_name_for_class(class_name) for class_name in class_manual_foreign_key_checks])}
+        MANUAL_FOREIGN_KEY_VALIDATION_LOGS_SHORT	:= {" ".join(sorted([_get_csv_name_for_class(class_name) for class_name in class_manual_foreign_key_checks]))}
         MANUAL_FOREIGN_KEY_VALIDATION_LOGS			:= $(MANUAL_FOREIGN_KEY_VALIDATION_LOGS_SHORT:%.csv=out/validation/%-csv-list-column-foreign-key.log)
 
     """
@@ -210,7 +210,7 @@ def _generate_makefile_manual_foreign_key_checks(
     for (
         class_name,
         manual_foreign_key_checks,
-    ) in class_manual_foreign_key_checks.items():
+    ) in sorted(class_manual_foreign_key_checks.items()):
         csv_file_name = _get_csv_name_for_class(class_name)
         log_file_name = (
             csv_file_name.removesuffix(".csv") + "-csv-list-column-foreign-key.log"
