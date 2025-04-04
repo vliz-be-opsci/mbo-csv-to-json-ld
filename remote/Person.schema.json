@@ -18,7 +18,7 @@
             "name": "metadataPublisherId",
             "titles": {
                 "en": [
-                    "Data Entry Person (PID - you)"
+                    "Data Entry Person (mPID - you)"
                 ]
             },
             "propertyUrl": "https://schema.org/creator",
@@ -53,7 +53,7 @@
             "name": "worksForOrganizationMboIds",
             "titles": {
                 "en": [
-                    "Works for Organizations (PIDs)"
+                    "Works for Organizations (mPIDs)"
                 ]
             },
             "propertyUrl": "https://schema.org/worksFor",
@@ -67,7 +67,7 @@
             "name": "affiliatedOrganizationMboIds",
             "titles": {
                 "en": [
-                    "Affiliated to Organizations (PIDs)"
+                    "Affiliated to Organizations (mPIDs)"
                 ]
             },
             "propertyUrl": "https://schema.org/affiliation",
@@ -81,7 +81,7 @@
             "name": "contactPointMboIds",
             "titles": {
                 "en": [
-                    "Contact Points (PIDs)"
+                    "Contact Points (mPIDs)"
                 ]
             },
             "propertyUrl": "https://schema.org/contactPoint",

@@ -18,7 +18,7 @@
             "name": "metadataPublisherId",
             "titles": {
                 "en": [
-                    "Data Entry Person (PID - you)"
+                    "Data Entry Person (mPID - you)"
                 ]
             },
             "propertyUrl": "https://schema.org/creator",
@@ -81,7 +81,7 @@
             "name": "geoShapeMboId",
             "titles": {
                 "en": [
-                    "GeoShape (PID)"
+                    "GeoShape (mPID)"
                 ]
             },
             "propertyUrl": "https://schema.org/geo",

@@ -18,7 +18,7 @@
             "name": "metadataPublisherId",
             "titles": {
                 "en": [
-                    "Data Entry Person (PID - you)"
+                    "Data Entry Person (mPID - you)"
                 ]
             },
             "propertyUrl": "https://schema.org/creator",
@@ -41,7 +41,7 @@
             "name": "datasetMboId",
             "titles": {
                 "en": [
-                    "Dataset (PID)"
+                    "Dataset (mPID)"
                 ]
             },
             "propertyUrl": "https://schema.org/encodesCreativeWork",
@@ -63,7 +63,7 @@
             "name": "publishingStatusMboId",
             "titles": {
                 "en": [
-                    "Publishing Status (PID)"
+                    "Publishing Status (mPID)"
                 ]
             },
             "propertyUrl": "https://schema.org/creativeWorkStatus",
@@ -150,7 +150,7 @@
             "name": "authorId",
             "titles": {
                 "en": [
-                    "Author (PID)"
+                    "Author (mPID)"
                 ]
             },
             "propertyUrl": "https://schema.org/author",
@@ -160,7 +160,7 @@
             "name": "contributorIds",
             "titles": {
                 "en": [
-                    "Contributors (PIDs)"
+                    "Contributors (mPIDs)"
                 ]
             },
             "propertyUrl": "https://schema.org/contributor",
@@ -174,7 +174,7 @@
             "name": "ownerId",
             "titles": {
                 "en": [
-                    "Owner (PID)"
+                    "Owner (mPID)"
                 ]
             },
             "propertyUrl": "https://schema.org/copyrightHolder",
@@ -184,7 +184,7 @@
             "name": "maintainerId",
             "titles": {
                 "en": [
-                    "Maintainer (PID)"
+                    "Maintainer (mPID)"
                 ]
             },
             "propertyUrl": "https://schema.org/maintainer",
@@ -194,7 +194,7 @@
             "name": "publisherId",
             "titles": {
                 "en": [
-                    "Publisher (PID)"
+                    "Publisher (mPID)"
                 ]
             },
             "propertyUrl": "https://schema.org/publisher",
@@ -204,7 +204,7 @@
             "name": "licenseMboId",
             "titles": {
                 "en": [
-                    "License PID"
+                    "License (mPID)"
                 ]
             },
             "propertyUrl": "https://schema.org/license",
@@ -214,7 +214,7 @@
             "name": "audienceMboIds",
             "titles": {
                 "en": [
-                    "Audiences (PIDs)"
+                    "Audiences (mPIDs)"
                 ]
             },
             "propertyUrl": "https://schema.org/audience",

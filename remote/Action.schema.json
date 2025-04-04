@@ -18,7 +18,7 @@
             "name": "metadataPublisherId",
             "titles": {
                 "en": [
-                    "Data Entry Person (PID - you)"
+                    "Data Entry Person (mPID - you)"
                 ]
             },
             "propertyUrl": "https://schema.org/creator",
@@ -65,7 +65,7 @@
             "name": "howToPerformActionMboId",
             "titles": {
                 "en": [
-                    "How To (PID)"
+                    "How To (mPID)"
                 ]
             },
             "propertyUrl": "https://schema.org/actionProcess",
@@ -75,7 +75,7 @@
             "name": "agentId",
             "titles": {
                 "en": [
-                    "Agent (PID)"
+                    "Agent (mPID)"
                 ]
             },
             "propertyUrl": "https://schema.org/agent",
@@ -85,7 +85,7 @@
             "name": "participantIds",
             "titles": {
                 "en": [
-                    "Participants (PIDs)"
+                    "Participants (mPIDs)"
                 ]
             },
             "propertyUrl": "https://schema.org/participant",
@@ -99,7 +99,7 @@
             "name": "actionInputPids",
             "titles": {
                 "en": [
-                    "Inputs (PIDs)"
+                    "Inputs (mPIDs)"
                 ]
             },
             "propertyUrl": "https://schema.org/object",
@@ -113,7 +113,7 @@
             "name": "resultingDatasetMboIds",
             "titles": {
                 "en": [
-                    "Resulting Datasets (PIDs)"
+                    "Resulting Datasets (mPIDs)"
                 ]
             },
             "propertyUrl": "https://schema.org/result",

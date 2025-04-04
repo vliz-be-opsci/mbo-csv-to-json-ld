@@ -62,7 +62,7 @@ slots:
     slot_uri: schema:url
     multivalued: false
   licenseMboId:
-    title: "License PID"
+    title: "License (mPID)"
     required: false
     description: "The MBO PID of the license which covers the entity you are describing."
     slot_uri: schema:license
@@ -70,7 +70,7 @@ slots:
 
   # Generic creative work slots
   publishingStatusMboId:
-    title: "Publishing Status (PID)"
+    title: "Publishing Status (mPID)"
     description: "The publishing status of the entity."
     required: false
     multivalued: false
@@ -91,7 +91,7 @@ slots:
     range: string
     slot_uri: schema:abstract
   audienceMboIds:
-    title: "Audiences (PIDs)"
+    title: "Audiences (mPIDs)"
     description: |
       The intended audiences for this entity.
     required: false
@@ -101,14 +101,14 @@ slots:
 
   # People or organization slots
   authorId:
-    title: "Author (PID)"
+    title: "Author (mPID)"
     description: "The Permanent Identifier of person or organization who created this entity."
     required: false
     multivalued: false
     range: PersonOrOrganization
     slot_uri: schema:author
   ownerId:
-    title: "Owner (PID)"
+    title: "Owner (mPID)"
     required: false
     multivalued: false
     description: |
@@ -119,35 +119,35 @@ slots:
     range: PersonOrOrganization
     slot_uri: schema:copyrightHolder
   publisherId:
-    title: "Publisher (PID)"
+    title: "Publisher (mPID)"
     required: false
     multivalued: false
     description: "The Permanent Identifier of an person or organization who created the entity."
     range: PersonOrOrganization
     slot_uri: schema:publisher
   providerId:
-    title: "Provider (PID)"
+    title: "Provider (mPID)"
     required: false
     multivalued: false
     description: "The Permanent Identifier of an person or organization who provides or provided the service."
     range: PersonOrOrganization
     slot_uri: schema:provider
   contributorIds:
-    title: "Contributors (PIDs)"
+    title: "Contributors (mPIDs)"
     required: false
     multivalued: true
     description: "The Permanent Identifiers of people or organizations who contributed to the entity."
     range: PersonOrOrganization
     slot_uri: schema:contributor
   maintainerId:
-    title: "Maintainer (PID)"
+    title: "Maintainer (mPID)"
     required: false
     multivalued: false
     description: "The Permanent Identifier of an person or organization who maintains this entity."
     range: PersonOrOrganization
     slot_uri: schema:maintainer
   metadataPublisherId:
-    title: "Data Entry Person (PID - you)"
+    title: "Data Entry Person (mPID - you)"
     required: true
     multivalued: false
     description: "The Ocean Expert identifier of the person who wrote this metadata record (you)."
@@ -215,7 +215,7 @@ slots:
     description: "The location where the dataset can be acquired."
     range: uri
   embargoStatementMboId:
-    title: "Embargo Statement (PID)"
+    title: "Embargo Statement (mPID)"
     required: false
     multivalued: false
     description: "Embargo information."
@@ -229,21 +229,21 @@ slots:
     range: date
     slot_uri: mbo:inProgressDataDate
   variableMeasuredMboIds:
-    title: "Variables Measured (PIDs)"
+    title: "Variables Measured (mPIDs)"
     description: "The MBO Ids of the variables measured in your dataset; these should include EBVs, EOVs, etc."
     required: false
     multivalued: true
     range: VariableMeasured
     slot_uri: schema:variableMeasured
   aboutTaxonMboIds:
-    title: "Taxa (PIDs)"
+    title: "Taxa (mPIDs)"
     description: The MBO Ids of the taxa observed in your dataset.
     required: false
     multivalued: true
     range: Taxon
     slot_uri: schema:about
   spatialCoveragePlaceMboId:
-    title: "Spatial Coverage (Place; PID)"
+    title: "Spatial Coverage (Place; mPID)"
     description: "A place defining the spatial coverage of the dataset."
     required: false
     multivalued: false
@@ -268,7 +268,7 @@ slots:
     range: uri
     slot_uri: schema:isBasedOn
   distributions:
-    title: "Distributions (PIDs)"
+    title: "Distributions (mPIDs)"
     description: "The different formats in which the dataset can be accessed or downloaded."
     required: false
     multivalued: true
@@ -282,7 +282,7 @@ slots:
     range: string
     slot_uri: schema:conditionsOfAccess
   datasetMboId:
-    title: "Dataset (PID)"
+    title: "Dataset (mPID)"
     description: "The MBO ID of the dataset."
     required: false
     multivalued: false
@@ -364,7 +364,7 @@ slots:
     range: string
     slot_uri: schema:text
   commentAboutDatasetMboId:
-    title: "Dataset (PID)"
+    title: "Dataset (mPID)"
     description: "The MBO ID of the dataset this comment describes."
     required: false
     multivalued: false
@@ -373,35 +373,35 @@ slots:
 
   # Action slots
   actionInputPids:
-    title: "Inputs (PIDs)"
+    title: "Inputs (mPIDs)"
     description: "Inputs to the `Action`; for example datasets or other data sources."
     required: false
     multivalued: true
     range: uri
     slot_uri: schema:object
   howToPerformActionMboId:
-    title: "How To (PID)"
+    title: "How To (mPID)"
     description: "How the action was performed."
     required: true
     multivalued: false
     range: HowTo
     slot_uri: schema:actionProcess
   agentId:
-    title: "Agent (PID)"
+    title: "Agent (mPID)"
     description: "The person or organization who performed the action."
     required: true
     multivalued: false
     range: PersonOrOrganization
     slot_uri: schema:agent
   participantIds:
-    title: "Participants (PIDs)"
+    title: "Participants (mPIDs)"
     description: "The IDs of the people or organizations who collaborated in the action."
     required: false
     multivalued: true
     range: PersonOrOrganization
     slot_uri: schema:participant
   resultingDatasetMboIds:
-    title: "Resulting Datasets (PIDs)"
+    title: "Resulting Datasets (mPIDs)"
     description: "The MBO identifiers of any datasets created in this action."
     required: true
     multivalued: true
@@ -410,7 +410,7 @@ slots:
 
   # HowTo slots
   howToStepMboId:
-    title: "How To Step (PID)"
+    title: "How To Step (mPID)"
     description: "The MBO identifier for the all-encompasing 'primary' step."
     required: true
     multivalued: false
@@ -426,28 +426,28 @@ slots:
     range: integer
     slot_uri: schema:position
   citeSourceCodeMboIds:
-    title: "Source Code Citations (PIDs)"
+    title: "Source Code Citations (mPIDs)"
     description: "The MBO identifiers for source code used in this HowToStep."
     required: false
     multivalued: true
     range: SoftwareSourceCode
     slot_uri: schema:citation
   citeSoftwareApplicationMboIds:
-    title: "Software Application Citations (PIDs)"
+    title: "Software Application Citations (mPIDs)"
     description: "The MBO identifiers for software or web applications used in this HowToStep."
     required: false
     multivalued: true
     range: SoftwareApplication
     slot_uri: schema:citation
   childStepMboIds:
-    title: "Child Steps (PIDs)"
+    title: "Child Steps (mPIDs)"
     description: "The MBO identifiers for steps which are children of this one."
     required: false
     multivalued: true
     range: HowToStep
     slot_uri: schema:itemListElement
   howToImplementTipMboIds:
-    title: "Implementation Tips (PIDs)"
+    title: "Implementation Tips (mPIDs)"
     description: |
       MBO identifiers pointing to tips which detail parameters and other configuration used in the step.
 
@@ -514,7 +514,7 @@ slots:
     range: date
     slot_uri: schema:expires
   embargoedDatasetMboId:
-    title: "Embargo Dataset (PID)"
+    title: "Embargo Dataset (mPID)"
     description: "The dataset that this embargo statement describes."
     required: true
     multivalued: false
@@ -557,7 +557,7 @@ slots:
 
   # Place slots
   geoShapeMboId:
-    title: "GeoShape (PID)"
+    title: "GeoShape (mPID)"
     description: |
       The location specified by geographic coordinates.
     required: false
@@ -660,21 +660,21 @@ slots:
     range: string
     slot_uri: schema:familyName
   worksForOrganizationMboIds:
-    title: "Works for Organizations (PIDs)"
+    title: "Works for Organizations (mPIDs)"
     description: "The MBO identifiers of organizations which that the person works for."
     required: false
     multivalued: true
     range: Organization
     slot_uri: schema:worksFor
   affiliatedOrganizationMboIds:
-    title: "Affiliated to Organizations (PIDs)"
+    title: "Affiliated to Organizations (mPIDs)"
     description: "The mbo identifiers of organizations which that the person is affiliated with."
     required: false
     multivalued: true
     range: Organization
     slot_uri: schema:affiliation
   contactPointMboIds:
-    title: "Contact Points (PIDs)"
+    title: "Contact Points (mPIDs)"
     description: The MBO identifiers of contact points for this person or organization.
     required: false
     multivalued: true
@@ -692,28 +692,28 @@ slots:
     pattern: "^(Organization|Airline|Consortium|Corporation|EducationalOrganization|FundingScheme|GovernmentOrganization|LibrarySystem|LocalBusiness|MedicalOrganization|NGO|NewsMediaOrganization|OnlineBusiness|PerformingGroup|PoliticalParty|Project|ResearchOrganization|SearchRescueOrganization|SportsOrganization|WorkersUnion)$"
     slot_uri: rdf:type
   departmentMboIds:
-    title: "Has Departments (PIDs)"
+    title: "Has Departments (mPIDs)"
     description: A department within the organization.
     required: false
     multivalued: true
     range: Organization
     slot_uri: schema:department
   parentOrganizationMboId:
-    title: "Parent Organization (PID)"
+    title: "Parent Organization (mPID)"
     description: Parent organization of this one (inverse of `subOrganizationMboIds`).
     required: false
     multivalued: false
     range: Organization
     slot_uri: schema:parentOrganization
   memberOfOrganizationMboIds:
-    title: "Member of Organizations (PIDs)"
+    title: "Member of Organizations (mPIDs)"
     description: Other organizations that this one is part of.
     required: false
     multivalued: true
     range: Organization
     slot_uri: schema:memberOf
   subOrganizationMboIds:
-    title: "Sub-organizations (PIDs)"
+    title: "Sub-organizations (mPIDs)"
     description: Organizations which are subsidiaries of this one (inverse of `parentOrganizationMboId`).
     required: false
     multivalued: true
@@ -741,7 +741,7 @@ slots:
     range: date
     slot_uri: schema:dissolutionDate
   fundingGrantMboIds:
-    title: "Grants (PIDs)"
+    title: "Grants (mPIDs)"
     description: Some source of funding for the organization.
     required: false
     multivalued: true
@@ -788,14 +788,14 @@ slots:
 
   # MonetaryGrant slots
   funderOrganizationMboIds:
-    title: "Funder Organizations (PIDs)"
+    title: "Funder Organizations (mPIDs)"
     description: The MBO identifiers for organizations which funded this grant.
     required: false
     multivalued: true
     range: Organization
     slot_uri: schema:funder
   sponsorOrganizationMboIds:
-    title: "Sponsor Organizations (PIDs)"
+    title: "Sponsor Organizations (mPIDs)"
     description: The MBO identifiers for organizations which sponsored this grant.
     required: false
     multivalued: true

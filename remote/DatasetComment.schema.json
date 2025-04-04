@@ -18,7 +18,7 @@
             "name": "metadataPublisherId",
             "titles": {
                 "en": [
-                    "Data Entry Person (PID - you)"
+                    "Data Entry Person (mPID - you)"
                 ]
             },
             "propertyUrl": "https://schema.org/creator",
@@ -29,7 +29,7 @@
             "name": "commentAboutDatasetMboId",
             "titles": {
                 "en": [
-                    "Dataset (PID)"
+                    "Dataset (mPID)"
                 ]
             },
             "propertyUrl": "https://schema.org/parentItem",
@@ -39,7 +39,7 @@
             "name": "authorId",
             "titles": {
                 "en": [
-                    "Author (PID)"
+                    "Author (mPID)"
                 ]
             },
             "propertyUrl": "https://schema.org/author",

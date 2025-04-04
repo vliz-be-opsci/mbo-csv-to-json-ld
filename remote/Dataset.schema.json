@@ -18,7 +18,7 @@
             "name": "metadataPublisherId",
             "titles": {
                 "en": [
-                    "Data Entry Person (PID - you)"
+                    "Data Entry Person (mPID - you)"
                 ]
             },
             "propertyUrl": "https://schema.org/creator",
@@ -67,7 +67,7 @@
             "name": "variableMeasuredMboIds",
             "titles": {
                 "en": [
-                    "Variables Measured (PIDs)"
+                    "Variables Measured (mPIDs)"
                 ]
             },
             "propertyUrl": "https://schema.org/variableMeasured",
@@ -81,7 +81,7 @@
             "name": "aboutTaxonMboIds",
             "titles": {
                 "en": [
-                    "Taxa (PIDs)"
+                    "Taxa (mPIDs)"
                 ]
             },
             "propertyUrl": "https://schema.org/about",
@@ -95,7 +95,7 @@
             "name": "spatialCoveragePlaceMboId",
             "titles": {
                 "en": [
-                    "Spatial Coverage (Place; PID)"
+                    "Spatial Coverage (Place; mPID)"
                 ]
             },
             "propertyUrl": "https://schema.org/spatialCoverage",
@@ -118,7 +118,7 @@
             "name": "distributions",
             "titles": {
                 "en": [
-                    "Distributions (PIDs)"
+                    "Distributions (mPIDs)"
                 ]
             },
             "propertyUrl": "https://schema.org/distribution",
@@ -132,7 +132,7 @@
             "name": "authorId",
             "titles": {
                 "en": [
-                    "Author (PID)"
+                    "Author (mPID)"
                 ]
             },
             "propertyUrl": "https://schema.org/author",
@@ -142,7 +142,7 @@
             "name": "contributorIds",
             "titles": {
                 "en": [
-                    "Contributors (PIDs)"
+                    "Contributors (mPIDs)"
                 ]
             },
             "propertyUrl": "https://schema.org/contributor",
@@ -156,7 +156,7 @@
             "name": "ownerId",
             "titles": {
                 "en": [
-                    "Owner (PID)"
+                    "Owner (mPID)"
                 ]
             },
             "propertyUrl": "https://schema.org/copyrightHolder",
@@ -166,7 +166,7 @@
             "name": "maintainerId",
             "titles": {
                 "en": [
-                    "Maintainer (PID)"
+                    "Maintainer (mPID)"
                 ]
             },
             "propertyUrl": "https://schema.org/maintainer",
@@ -176,7 +176,7 @@
             "name": "publisherId",
             "titles": {
                 "en": [
-                    "Publisher (PID)"
+                    "Publisher (mPID)"
                 ]
             },
             "propertyUrl": "https://schema.org/publisher",
@@ -200,7 +200,7 @@
             "name": "publishingStatusMboId",
             "titles": {
                 "en": [
-                    "Publishing Status (PID)"
+                    "Publishing Status (mPID)"
                 ]
             },
             "propertyUrl": "https://schema.org/creativeWorkStatus",
@@ -210,7 +210,7 @@
             "name": "embargoStatementMboId",
             "titles": {
                 "en": [
-                    "Embargo Statement (PID)"
+                    "Embargo Statement (mPID)"
                 ]
             },
             "propertyUrl": "https://schema.org/usageInfo",
@@ -273,7 +273,7 @@
             "name": "licenseMboId",
             "titles": {
                 "en": [
-                    "License PID"
+                    "License (mPID)"
                 ]
             },
             "propertyUrl": "https://schema.org/license",
@@ -308,7 +308,7 @@
             "name": "audienceMboIds",
             "titles": {
                 "en": [
-                    "Audiences (PIDs)"
+                    "Audiences (mPIDs)"
                 ]
             },
             "propertyUrl": "https://schema.org/audience",

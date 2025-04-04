@@ -18,7 +18,7 @@
             "name": "metadataPublisherId",
             "titles": {
                 "en": [
-                    "Data Entry Person (PID - you)"
+                    "Data Entry Person (mPID - you)"
                 ]
             },
             "propertyUrl": "https://schema.org/creator",
@@ -29,7 +29,7 @@
             "name": "embargoedDatasetMboId",
             "titles": {
                 "en": [
-                    "Embargo Dataset (PID)"
+                    "Embargo Dataset (mPID)"
                 ]
             },
             "propertyUrl": "https://schema.org/mainEntity",

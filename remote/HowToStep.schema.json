@@ -18,7 +18,7 @@
             "name": "metadataPublisherId",
             "titles": {
                 "en": [
-                    "Data Entry Person (PID - you)"
+                    "Data Entry Person (mPID - you)"
                 ]
             },
             "propertyUrl": "https://schema.org/creator",
@@ -77,7 +77,7 @@
             "name": "contributorIds",
             "titles": {
                 "en": [
-                    "Contributors (PIDs)"
+                    "Contributors (mPIDs)"
                 ]
             },
             "propertyUrl": "https://schema.org/contributor",
@@ -91,7 +91,7 @@
             "name": "providerId",
             "titles": {
                 "en": [
-                    "Provider (PID)"
+                    "Provider (mPID)"
                 ]
             },
             "propertyUrl": "https://schema.org/provider",
@@ -101,7 +101,7 @@
             "name": "citeSourceCodeMboIds",
             "titles": {
                 "en": [
-                    "Source Code Citations (PIDs)"
+                    "Source Code Citations (mPIDs)"
                 ]
             },
             "propertyUrl": "https://schema.org/citation",
@@ -115,7 +115,7 @@
             "name": "citeSoftwareApplicationMboIds",
             "titles": {
                 "en": [
-                    "Software Application Citations (PIDs)"
+                    "Software Application Citations (mPIDs)"
                 ]
             },
             "propertyUrl": "https://schema.org/citation",
@@ -129,7 +129,7 @@
             "name": "childStepMboIds",
             "titles": {
                 "en": [
-                    "Child Steps (PIDs)"
+                    "Child Steps (mPIDs)"
                 ]
             },
             "propertyUrl": "https://schema.org/itemListElement",
@@ -143,7 +143,7 @@
             "name": "howToImplementTipMboIds",
             "titles": {
                 "en": [
-                    "Implementation Tips (PIDs)"
+                    "Implementation Tips (mPIDs)"
                 ]
             },
             "propertyUrl": "https://schema.org/usageInfo",
@@ -157,7 +157,7 @@
             "name": "audienceMboIds",
             "titles": {
                 "en": [
-                    "Audiences (PIDs)"
+                    "Audiences (mPIDs)"
                 ]
             },
             "propertyUrl": "https://schema.org/audience",

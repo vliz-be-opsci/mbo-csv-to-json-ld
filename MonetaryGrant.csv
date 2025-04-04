@@ -1,2 +1,2 @@
-MBO Permanent Identifier,Data Entry Person (PID - you),Name,Amount,Currency,Funder Organizations (PIDs),Sponsor Organizations (PIDs),Description,URL
+MBO Permanent Identifier,Data Entry Person (mPID - you),Name,Amount,Currency,Funder Organizations (mPIDs),Sponsor Organizations (mPIDs),Description,URL
 mbo_todo_monetary_grant_1,mbo_todo_person_roblinksdata,Some grant,1,Kudos,,,,

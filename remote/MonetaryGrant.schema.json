@@ -18,7 +18,7 @@
             "name": "metadataPublisherId",
             "titles": {
                 "en": [
-                    "Data Entry Person (PID - you)"
+                    "Data Entry Person (mPID - you)"
                 ]
             },
             "propertyUrl": "https://schema.org/creator",
@@ -67,7 +67,7 @@
             "name": "funderOrganizationMboIds",
             "titles": {
                 "en": [
-                    "Funder Organizations (PIDs)"
+                    "Funder Organizations (mPIDs)"
                 ]
             },
             "propertyUrl": "https://schema.org/funder",
@@ -81,7 +81,7 @@
             "name": "sponsorOrganizationMboIds",
             "titles": {
                 "en": [
-                    "Sponsor Organizations (PIDs)"
+                    "Sponsor Organizations (mPIDs)"
                 ]
             },
             "propertyUrl": "https://schema.org/sponsor",

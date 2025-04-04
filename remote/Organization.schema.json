@@ -18,7 +18,7 @@
             "name": "metadataPublisherId",
             "titles": {
                 "en": [
-                    "Data Entry Person (PID - you)"
+                    "Data Entry Person (mPID - you)"
                 ]
             },
             "propertyUrl": "https://schema.org/creator",
@@ -143,7 +143,7 @@
             "name": "contactPointMboIds",
             "titles": {
                 "en": [
-                    "Contact Points (PIDs)"
+                    "Contact Points (mPIDs)"
                 ]
             },
             "propertyUrl": "https://schema.org/contactPoint",
@@ -157,7 +157,7 @@
             "name": "parentOrganizationMboId",
             "titles": {
                 "en": [
-                    "Parent Organization (PID)"
+                    "Parent Organization (mPID)"
                 ]
             },
             "propertyUrl": "https://schema.org/parentOrganization",
@@ -167,7 +167,7 @@
             "name": "memberOfOrganizationMboIds",
             "titles": {
                 "en": [
-                    "Member of Organizations (PIDs)"
+                    "Member of Organizations (mPIDs)"
                 ]
             },
             "propertyUrl": "https://schema.org/memberOf",
@@ -181,7 +181,7 @@
             "name": "departmentMboIds",
             "titles": {
                 "en": [
-                    "Has Departments (PIDs)"
+                    "Has Departments (mPIDs)"
                 ]
             },
             "propertyUrl": "https://schema.org/department",
@@ -195,7 +195,7 @@
             "name": "fundingGrantMboIds",
             "titles": {
                 "en": [
-                    "Grants (PIDs)"
+                    "Grants (mPIDs)"
                 ]
             },
             "propertyUrl": "https://schema.org/funding",

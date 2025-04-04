@@ -18,7 +18,7 @@
             "name": "metadataPublisherId",
             "titles": {
                 "en": [
-                    "Data Entry Person (PID - you)"
+                    "Data Entry Person (mPID - you)"
                 ]
             },
             "propertyUrl": "https://schema.org/creator",
@@ -79,7 +79,7 @@
             "name": "publishingStatusMboId",
             "titles": {
                 "en": [
-                    "Publishing Status (PID)"
+                    "Publishing Status (mPID)"
                 ]
             },
             "propertyUrl": "https://schema.org/creativeWorkStatus",
@@ -102,7 +102,7 @@
             "name": "authorId",
             "titles": {
                 "en": [
-                    "Author (PID)"
+                    "Author (mPID)"
                 ]
             },
             "propertyUrl": "https://schema.org/author",
@@ -112,7 +112,7 @@
             "name": "contributorIds",
             "titles": {
                 "en": [
-                    "Contributors (PIDs)"
+                    "Contributors (mPIDs)"
                 ]
             },
             "propertyUrl": "https://schema.org/contributor",
@@ -126,7 +126,7 @@
             "name": "maintainerId",
             "titles": {
                 "en": [
-                    "Maintainer (PID)"
+                    "Maintainer (mPID)"
                 ]
             },
             "propertyUrl": "https://schema.org/maintainer",
@@ -136,7 +136,7 @@
             "name": "ownerId",
             "titles": {
                 "en": [
-                    "Owner (PID)"
+                    "Owner (mPID)"
                 ]
             },
             "propertyUrl": "https://schema.org/copyrightHolder",
@@ -146,7 +146,7 @@
             "name": "providerId",
             "titles": {
                 "en": [
-                    "Provider (PID)"
+                    "Provider (mPID)"
                 ]
             },
             "propertyUrl": "https://schema.org/provider",
@@ -156,7 +156,7 @@
             "name": "publisherId",
             "titles": {
                 "en": [
-                    "Publisher (PID)"
+                    "Publisher (mPID)"
                 ]
             },
             "propertyUrl": "https://schema.org/publisher",

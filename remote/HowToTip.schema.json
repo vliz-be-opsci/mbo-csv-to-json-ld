@@ -18,7 +18,7 @@
             "name": "metadataPublisherId",
             "titles": {
                 "en": [
-                    "Data Entry Person (PID - you)"
+                    "Data Entry Person (mPID - you)"
                 ]
             },
             "propertyUrl": "https://schema.org/creator",
@@ -78,7 +78,7 @@
             "name": "audienceMboIds",
             "titles": {
                 "en": [
-                    "Audiences (PIDs)"
+                    "Audiences (mPIDs)"
                 ]
             },
             "propertyUrl": "https://schema.org/audience",
