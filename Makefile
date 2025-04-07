@@ -6,7 +6,7 @@ WORKING_DIR			:= $(shell pwd)
 CSVW_CHECK_DOCKER	:= roblinksdata/csvw-check:latest
 CSV2RDF_DOCKER		:= europe-west2-docker.pkg.dev/swirrl-devops-infrastructure-1/public/csv2rdf:v0.7.1
 JENA_CLI_DOCKER		:= gsscogs/gss-jvm-build-tools:latest
-MBO_TOOLS_DOCKER	:= ghcr.io/marco-bolo/csv-to-json-ld-tools:latest
+MBO_TOOLS_DOCKER	:= ghcr.io/marco-bolo/csv-to-json-ld-tools:pr-18
 
 CSVW_CHECK						:= docker run --rm -v "$(WORKING_DIR)":/work -w /work $(CSVW_CHECK_DOCKER) -s
 CSV2RDF							:= docker run --rm -v "$(WORKING_DIR)":/work -w /work $(CSV2RDF_DOCKER) csv2rdf -m minimal -u 
@@ -26,14 +26,36 @@ BULK_TTL_FILES    				:= $(CSVW_METADATA_FILES:remote/%.csv-metadata.json=out/bu
 EXPECTED_BULK_OUT_FILES			:= $(BULK_TTL_FILES)
 REFERENCED_CSVS_QUERY_FILE		:= remote/csvs-referenced-by-csvw.sparql
 
-# START manual foreign key checks
+
+dockersetup:
+	@echo "=============================== Pulling & Building required docker images. ==============================="
+	@docker pull $(CSVW_CHECK_DOCKER)
+	@docker pull $(CSV2RDF_DOCKER)
+	@docker pull $(JENA_CLI_DOCKER)
+	@docker pull $(MBO_TOOLS_DOCKER)
+	@echo "" ; 
+
+out/bulk: 
+	@mkdir -p out/bulk
+
+out/validation:
+	@mkdir -p out/validation
+
+out/validation/person-or-organization.csv: out/validation Person.csv Organization.csv 
+	@$(UNION_UNIQUE_IDENTIFIERS) --out out/validation/person-or-organization.csv --column-name "MBO Permanent Identifier" Person.csv Organization.csv
+
+# BEGIN manual foreign key checks
 
 # Keep MANUAL_FOREIGN_KEY_VALIDATION_LOGS_SHORT up to date with the files it's necessary to perform list-column
 # foreign key validation on.
-MANUAL_FOREIGN_KEY_VALIDATION_LOGS_SHORT	:= Action.csv HowToStep.csv HowToTip.csv Dataset.csv Person.csv Organization.csv DataDownload.csv DatasetComment.csv SoftwareSourceCode.csv SoftwareApplication.csv Place.csv MonetaryGrant.csv
+MANUAL_FOREIGN_KEY_VALIDATION_LOGS_SHORT	:= Action.csv DataDownload.csv Dataset.csv DatasetComment.csv HowToStep.csv HowToTip.csv MonetaryGrant.csv Organization.csv Person.csv Place.csv SoftwareApplication.csv SoftwareSourceCode.csv
 MANUAL_FOREIGN_KEY_VALIDATION_LOGS			:= $(MANUAL_FOREIGN_KEY_VALIDATION_LOGS_SHORT:%.csv=out/validation/%-csv-list-column-foreign-key.log)
 
-out/validation/Action-csv-list-column-foreign-key.log: out/validation/person-or-organization.csv Dataset.csv
+out/validation/Action-csv-list-column-foreign-key.log: out/validation/person-or-organization.csv Action.csv HowTo.csv Dataset.csv out/validation
+	@echo "=============================== Validating values in Action.csv['How To (mPID)'] ==============================="
+	@$(LIST_COLUMN_FOREIGN_KEY_CHECK) "Action.csv" "How To (mPID)" "HowTo.csv" "MBO Permanent Identifier"
+
+
 	@echo "=============================== Validating values in Action.csv['Participants (mPIDs)'] ==============================="
 	@$(LIST_COLUMN_FOREIGN_KEY_CHECK) "Action.csv" "Participants (mPIDs)" "out/validation/person-or-organization.csv" "MBO Permanent Identifier" --separator "|"
 
@@ -41,45 +63,51 @@ out/validation/Action-csv-list-column-foreign-key.log: out/validation/person-or-
 	@echo "=============================== Validating values in Action.csv['Resulting Datasets (mPIDs)'] ==============================="
 	@$(LIST_COLUMN_FOREIGN_KEY_CHECK) "Action.csv" "Resulting Datasets (mPIDs)" "Dataset.csv" "MBO Permanent Identifier" --separator "|"
 
+
+	@echo "=============================== Validating values in Action.csv['Child Actions (mPIDs)'] ==============================="
+	@$(LIST_COLUMN_FOREIGN_KEY_CHECK) "Action.csv" "Child Actions (mPIDs)" "Action.csv" "MBO Permanent Identifier" --separator "|"
+
 	@echo "" > out/validation/Action-csv-list-column-foreign-key.log # Let the build know we've done this validation now.
 	@echo ""
-out/validation/HowToStep-csv-list-column-foreign-key.log: out/validation/person-or-organization.csv HowToTip.csv SoftwareApplication.csv SoftwareSourceCode.csv Audience.csv HowToStep.csv
-	@echo "=============================== Validating values in HowToStep.csv['Contributors (mPIDs)'] ==============================="
-	@$(LIST_COLUMN_FOREIGN_KEY_CHECK) "HowToStep.csv" "Contributors (mPIDs)" "out/validation/person-or-organization.csv" "MBO Permanent Identifier" --separator "|"
+out/validation/DataDownload-csv-list-column-foreign-key.log: Dataset.csv out/validation/person-or-organization.csv PublishingStatusDefinedTerm.csv Audience.csv License.csv out/validation
+	@echo "=============================== Validating values in DataDownload.csv['Dataset (mPID)'] ==============================="
+	@$(LIST_COLUMN_FOREIGN_KEY_CHECK) "DataDownload.csv" "Dataset (mPID)" "Dataset.csv" "MBO Permanent Identifier"
 
 
-	@echo "=============================== Validating values in HowToStep.csv['Provider (mPID)'] ==============================="
-	@$(LIST_COLUMN_FOREIGN_KEY_CHECK) "HowToStep.csv" "Provider (mPID)" "out/validation/person-or-organization.csv" "MBO Permanent Identifier"
+	@echo "=============================== Validating values in DataDownload.csv['Publishing Status (mPID)'] ==============================="
+	@$(LIST_COLUMN_FOREIGN_KEY_CHECK) "DataDownload.csv" "Publishing Status (mPID)" "PublishingStatusDefinedTerm.csv" "MBO Permanent Identifier"
 
 
-	@echo "=============================== Validating values in HowToStep.csv['Source Code Citations (mPIDs)'] ==============================="
-	@$(LIST_COLUMN_FOREIGN_KEY_CHECK) "HowToStep.csv" "Source Code Citations (mPIDs)" "SoftwareSourceCode.csv" "MBO Permanent Identifier" --separator "|"
+	@echo "=============================== Validating values in DataDownload.csv['Author (mPID)'] ==============================="
+	@$(LIST_COLUMN_FOREIGN_KEY_CHECK) "DataDownload.csv" "Author (mPID)" "out/validation/person-or-organization.csv" "MBO Permanent Identifier"
 
 
-	@echo "=============================== Validating values in HowToStep.csv['Software Application Citations (mPIDs)'] ==============================="
-	@$(LIST_COLUMN_FOREIGN_KEY_CHECK) "HowToStep.csv" "Software Application Citations (mPIDs)" "SoftwareApplication.csv" "MBO Permanent Identifier" --separator "|"
+	@echo "=============================== Validating values in DataDownload.csv['Contributors (mPIDs)'] ==============================="
+	@$(LIST_COLUMN_FOREIGN_KEY_CHECK) "DataDownload.csv" "Contributors (mPIDs)" "out/validation/person-or-organization.csv" "MBO Permanent Identifier" --separator "|"
 
 
-	@echo "=============================== Validating values in HowToStep.csv['Child Steps (mPIDs)'] ==============================="
-	@$(LIST_COLUMN_FOREIGN_KEY_CHECK) "HowToStep.csv" "Child Steps (mPIDs)" "HowToStep.csv" "MBO Permanent Identifier" --separator "|"
+	@echo "=============================== Validating values in DataDownload.csv['Owner (mPID)'] ==============================="
+	@$(LIST_COLUMN_FOREIGN_KEY_CHECK) "DataDownload.csv" "Owner (mPID)" "out/validation/person-or-organization.csv" "MBO Permanent Identifier"
 
 
-	@echo "=============================== Validating values in HowToStep.csv['Implementation Tips (mPIDs)'] ==============================="
-	@$(LIST_COLUMN_FOREIGN_KEY_CHECK) "HowToStep.csv" "Implementation Tips (mPIDs)" "HowToTip.csv" "MBO Permanent Identifier" --separator "|"
+	@echo "=============================== Validating values in DataDownload.csv['Maintainer (mPID)'] ==============================="
+	@$(LIST_COLUMN_FOREIGN_KEY_CHECK) "DataDownload.csv" "Maintainer (mPID)" "out/validation/person-or-organization.csv" "MBO Permanent Identifier"
 
 
-	@echo "=============================== Validating values in HowToStep.csv['Audiences (mPIDs)'] ==============================="
-	@$(LIST_COLUMN_FOREIGN_KEY_CHECK) "HowToStep.csv" "Audiences (mPIDs)" "Audience.csv" "MBO Permanent Identifier" --separator "|"
+	@echo "=============================== Validating values in DataDownload.csv['Publisher (mPID)'] ==============================="
+	@$(LIST_COLUMN_FOREIGN_KEY_CHECK) "DataDownload.csv" "Publisher (mPID)" "out/validation/person-or-organization.csv" "MBO Permanent Identifier"
 
-	@echo "" > out/validation/HowToStep-csv-list-column-foreign-key.log # Let the build know we've done this validation now.
+
+	@echo "=============================== Validating values in DataDownload.csv['License (mPID)'] ==============================="
+	@$(LIST_COLUMN_FOREIGN_KEY_CHECK) "DataDownload.csv" "License (mPID)" "License.csv" "MBO Permanent Identifier"
+
+
+	@echo "=============================== Validating values in DataDownload.csv['Audiences (mPIDs)'] ==============================="
+	@$(LIST_COLUMN_FOREIGN_KEY_CHECK) "DataDownload.csv" "Audiences (mPIDs)" "Audience.csv" "MBO Permanent Identifier" --separator "|"
+
+	@echo "" > out/validation/DataDownload-csv-list-column-foreign-key.log # Let the build know we've done this validation now.
 	@echo ""
-out/validation/HowToTip-csv-list-column-foreign-key.log: Audience.csv
-	@echo "=============================== Validating values in HowToTip.csv['Audiences (mPIDs)'] ==============================="
-	@$(LIST_COLUMN_FOREIGN_KEY_CHECK) "HowToTip.csv" "Audiences (mPIDs)" "Audience.csv" "MBO Permanent Identifier" --separator "|"
-
-	@echo "" > out/validation/HowToTip-csv-list-column-foreign-key.log # Let the build know we've done this validation now.
-	@echo ""
-out/validation/Dataset-csv-list-column-foreign-key.log: DataDownload.csv out/validation/person-or-organization.csv VariableMeasured.csv Taxon.csv License.csv PublishingStatusDefinedTerm.csv Audience.csv Place.csv EmbargoStatement.csv
+out/validation/Dataset-csv-list-column-foreign-key.log: Place.csv DataDownload.csv Taxon.csv out/validation/person-or-organization.csv PublishingStatusDefinedTerm.csv Audience.csv EmbargoStatement.csv License.csv VariableMeasured.csv out/validation
 	@echo "=============================== Validating values in Dataset.csv['Variables Measured (mPIDs)'] ==============================="
 	@$(LIST_COLUMN_FOREIGN_KEY_CHECK) "Dataset.csv" "Variables Measured (mPIDs)" "VariableMeasured.csv" "MBO Permanent Identifier" --separator "|"
 
@@ -88,8 +116,8 @@ out/validation/Dataset-csv-list-column-foreign-key.log: DataDownload.csv out/val
 	@$(LIST_COLUMN_FOREIGN_KEY_CHECK) "Dataset.csv" "Taxa (mPIDs)" "Taxon.csv" "MBO Permanent Identifier" --separator "|"
 
 
-	@echo "=============================== Validating values in Dataset.csv['Spatial Coverage (Place; mPID)'] ==============================="
-	@$(LIST_COLUMN_FOREIGN_KEY_CHECK) "Dataset.csv" "Spatial Coverage (Place; mPID)" "Place.csv" "MBO Permanent Identifier"
+	@echo "=============================== Validating values in Dataset.csv['Spatial Coverage (Place - mPID)'] ==============================="
+	@$(LIST_COLUMN_FOREIGN_KEY_CHECK) "Dataset.csv" "Spatial Coverage (Place - mPID)" "Place.csv" "MBO Permanent Identifier"
 
 
 	@echo "=============================== Validating values in Dataset.csv['Distributions (mPIDs)'] ==============================="
@@ -133,13 +161,63 @@ out/validation/Dataset-csv-list-column-foreign-key.log: DataDownload.csv out/val
 
 	@echo "" > out/validation/Dataset-csv-list-column-foreign-key.log # Let the build know we've done this validation now.
 	@echo ""
-out/validation/Person-csv-list-column-foreign-key.log: ContactPoint.csv
-	@echo "=============================== Validating values in Person.csv['Contact Points (mPIDs)'] ==============================="
-	@$(LIST_COLUMN_FOREIGN_KEY_CHECK) "Person.csv" "Contact Points (mPIDs)" "ContactPoint.csv" "MBO Permanent Identifier" --separator "|"
+out/validation/DatasetComment-csv-list-column-foreign-key.log: out/validation/person-or-organization.csv Dataset.csv out/validation
+	@echo "=============================== Validating values in DatasetComment.csv['Dataset (mPID)'] ==============================="
+	@$(LIST_COLUMN_FOREIGN_KEY_CHECK) "DatasetComment.csv" "Dataset (mPID)" "Dataset.csv" "MBO Permanent Identifier"
 
-	@echo "" > out/validation/Person-csv-list-column-foreign-key.log # Let the build know we've done this validation now.
+
+	@echo "=============================== Validating values in DatasetComment.csv['Author (mPID)'] ==============================="
+	@$(LIST_COLUMN_FOREIGN_KEY_CHECK) "DatasetComment.csv" "Author (mPID)" "out/validation/person-or-organization.csv" "MBO Permanent Identifier"
+
+	@echo "" > out/validation/DatasetComment-csv-list-column-foreign-key.log # Let the build know we've done this validation now.
 	@echo ""
-out/validation/Organization-csv-list-column-foreign-key.log: Organization.csv MonetaryGrant.csv ContactPoint.csv
+out/validation/HowToStep-csv-list-column-foreign-key.log: SoftwareApplication.csv SoftwareSourceCode.csv out/validation/person-or-organization.csv HowToStep.csv Audience.csv HowToTip.csv out/validation
+	@echo "=============================== Validating values in HowToStep.csv['Contributors (mPIDs)'] ==============================="
+	@$(LIST_COLUMN_FOREIGN_KEY_CHECK) "HowToStep.csv" "Contributors (mPIDs)" "out/validation/person-or-organization.csv" "MBO Permanent Identifier" --separator "|"
+
+
+	@echo "=============================== Validating values in HowToStep.csv['Provider (mPID)'] ==============================="
+	@$(LIST_COLUMN_FOREIGN_KEY_CHECK) "HowToStep.csv" "Provider (mPID)" "out/validation/person-or-organization.csv" "MBO Permanent Identifier"
+
+
+	@echo "=============================== Validating values in HowToStep.csv['Source Code Citations (mPIDs)'] ==============================="
+	@$(LIST_COLUMN_FOREIGN_KEY_CHECK) "HowToStep.csv" "Source Code Citations (mPIDs)" "SoftwareSourceCode.csv" "MBO Permanent Identifier" --separator "|"
+
+
+	@echo "=============================== Validating values in HowToStep.csv['Software Application Citations (mPIDs)'] ==============================="
+	@$(LIST_COLUMN_FOREIGN_KEY_CHECK) "HowToStep.csv" "Software Application Citations (mPIDs)" "SoftwareApplication.csv" "MBO Permanent Identifier" --separator "|"
+
+
+	@echo "=============================== Validating values in HowToStep.csv['Child Steps (mPIDs)'] ==============================="
+	@$(LIST_COLUMN_FOREIGN_KEY_CHECK) "HowToStep.csv" "Child Steps (mPIDs)" "HowToStep.csv" "MBO Permanent Identifier" --separator "|"
+
+
+	@echo "=============================== Validating values in HowToStep.csv['Implementation Tips (mPIDs)'] ==============================="
+	@$(LIST_COLUMN_FOREIGN_KEY_CHECK) "HowToStep.csv" "Implementation Tips (mPIDs)" "HowToTip.csv" "MBO Permanent Identifier" --separator "|"
+
+
+	@echo "=============================== Validating values in HowToStep.csv['Audiences (mPIDs)'] ==============================="
+	@$(LIST_COLUMN_FOREIGN_KEY_CHECK) "HowToStep.csv" "Audiences (mPIDs)" "Audience.csv" "MBO Permanent Identifier" --separator "|"
+
+	@echo "" > out/validation/HowToStep-csv-list-column-foreign-key.log # Let the build know we've done this validation now.
+	@echo ""
+out/validation/HowToTip-csv-list-column-foreign-key.log: Audience.csv out/validation
+	@echo "=============================== Validating values in HowToTip.csv['Audiences (mPIDs)'] ==============================="
+	@$(LIST_COLUMN_FOREIGN_KEY_CHECK) "HowToTip.csv" "Audiences (mPIDs)" "Audience.csv" "MBO Permanent Identifier" --separator "|"
+
+	@echo "" > out/validation/HowToTip-csv-list-column-foreign-key.log # Let the build know we've done this validation now.
+	@echo ""
+out/validation/MonetaryGrant-csv-list-column-foreign-key.log: Organization.csv out/validation
+	@echo "=============================== Validating values in MonetaryGrant.csv['Funder Organizations (mPIDs)'] ==============================="
+	@$(LIST_COLUMN_FOREIGN_KEY_CHECK) "MonetaryGrant.csv" "Funder Organizations (mPIDs)" "Organization.csv" "MBO Permanent Identifier" --separator "|"
+
+
+	@echo "=============================== Validating values in MonetaryGrant.csv['Sponsor Organizations (mPIDs)'] ==============================="
+	@$(LIST_COLUMN_FOREIGN_KEY_CHECK) "MonetaryGrant.csv" "Sponsor Organizations (mPIDs)" "Organization.csv" "MBO Permanent Identifier" --separator "|"
+
+	@echo "" > out/validation/MonetaryGrant-csv-list-column-foreign-key.log # Let the build know we've done this validation now.
+	@echo ""
+out/validation/Organization-csv-list-column-foreign-key.log: MonetaryGrant.csv Organization.csv ContactPoint.csv out/validation
 	@echo "=============================== Validating values in Organization.csv['Contact Points (mPIDs)'] ==============================="
 	@$(LIST_COLUMN_FOREIGN_KEY_CHECK) "Organization.csv" "Contact Points (mPIDs)" "ContactPoint.csv" "MBO Permanent Identifier" --separator "|"
 
@@ -161,81 +239,27 @@ out/validation/Organization-csv-list-column-foreign-key.log: Organization.csv Mo
 
 	@echo "" > out/validation/Organization-csv-list-column-foreign-key.log # Let the build know we've done this validation now.
 	@echo ""
-out/validation/DataDownload-csv-list-column-foreign-key.log: out/validation/person-or-organization.csv Dataset.csv License.csv Audience.csv PublishingStatusDefinedTerm.csv
-	@echo "=============================== Validating values in DataDownload.csv['Dataset (mPID)'] ==============================="
-	@$(LIST_COLUMN_FOREIGN_KEY_CHECK) "DataDownload.csv" "Dataset (mPID)" "Dataset.csv" "MBO Permanent Identifier"
+out/validation/Person-csv-list-column-foreign-key.log: Organization.csv ContactPoint.csv out/validation
+	@echo "=============================== Validating values in Person.csv['Works for Organizations (mPIDs)'] ==============================="
+	@$(LIST_COLUMN_FOREIGN_KEY_CHECK) "Person.csv" "Works for Organizations (mPIDs)" "Organization.csv" "MBO Permanent Identifier" --separator "|"
 
 
-	@echo "=============================== Validating values in DataDownload.csv['Publishing Status (mPID)'] ==============================="
-	@$(LIST_COLUMN_FOREIGN_KEY_CHECK) "DataDownload.csv" "Publishing Status (mPID)" "PublishingStatusDefinedTerm.csv" "MBO Permanent Identifier"
+	@echo "=============================== Validating values in Person.csv['Affiliated to Organizations (mPIDs)'] ==============================="
+	@$(LIST_COLUMN_FOREIGN_KEY_CHECK) "Person.csv" "Affiliated to Organizations (mPIDs)" "Organization.csv" "MBO Permanent Identifier" --separator "|"
 
 
-	@echo "=============================== Validating values in DataDownload.csv['Author (mPID)'] ==============================="
-	@$(LIST_COLUMN_FOREIGN_KEY_CHECK) "DataDownload.csv" "Author (mPID)" "out/validation/person-or-organization.csv" "MBO Permanent Identifier"
+	@echo "=============================== Validating values in Person.csv['Contact Points (mPIDs)'] ==============================="
+	@$(LIST_COLUMN_FOREIGN_KEY_CHECK) "Person.csv" "Contact Points (mPIDs)" "ContactPoint.csv" "MBO Permanent Identifier" --separator "|"
 
-
-	@echo "=============================== Validating values in DataDownload.csv['Contributors (mPIDs)'] ==============================="
-	@$(LIST_COLUMN_FOREIGN_KEY_CHECK) "DataDownload.csv" "Contributors (mPIDs)" "out/validation/person-or-organization.csv" "MBO Permanent Identifier" --separator "|"
-
-
-	@echo "=============================== Validating values in DataDownload.csv['Owner (mPID)'] ==============================="
-	@$(LIST_COLUMN_FOREIGN_KEY_CHECK) "DataDownload.csv" "Owner (mPID)" "out/validation/person-or-organization.csv" "MBO Permanent Identifier"
-
-
-	@echo "=============================== Validating values in DataDownload.csv['Maintainer (mPID)'] ==============================="
-	@$(LIST_COLUMN_FOREIGN_KEY_CHECK) "DataDownload.csv" "Maintainer (mPID)" "out/validation/person-or-organization.csv" "MBO Permanent Identifier"
-
-
-	@echo "=============================== Validating values in DataDownload.csv['Publisher (mPID)'] ==============================="
-	@$(LIST_COLUMN_FOREIGN_KEY_CHECK) "DataDownload.csv" "Publisher (mPID)" "out/validation/person-or-organization.csv" "MBO Permanent Identifier"
-
-
-	@echo "=============================== Validating values in DataDownload.csv['License (mPID)'] ==============================="
-	@$(LIST_COLUMN_FOREIGN_KEY_CHECK) "DataDownload.csv" "License (mPID)" "License.csv" "MBO Permanent Identifier"
-
-
-	@echo "=============================== Validating values in DataDownload.csv['Audiences (mPIDs)'] ==============================="
-	@$(LIST_COLUMN_FOREIGN_KEY_CHECK) "DataDownload.csv" "Audiences (mPIDs)" "Audience.csv" "MBO Permanent Identifier" --separator "|"
-
-	@echo "" > out/validation/DataDownload-csv-list-column-foreign-key.log # Let the build know we've done this validation now.
+	@echo "" > out/validation/Person-csv-list-column-foreign-key.log # Let the build know we've done this validation now.
 	@echo ""
-out/validation/DatasetComment-csv-list-column-foreign-key.log: out/validation/person-or-organization.csv Dataset.csv
-	@echo "=============================== Validating values in DatasetComment.csv['Dataset (mPID)'] ==============================="
-	@$(LIST_COLUMN_FOREIGN_KEY_CHECK) "DatasetComment.csv" "Dataset (mPID)" "Dataset.csv" "MBO Permanent Identifier"
+out/validation/Place-csv-list-column-foreign-key.log: GeoShape.csv out/validation
+	@echo "=============================== Validating values in Place.csv['GeoShape (mPID)'] ==============================="
+	@$(LIST_COLUMN_FOREIGN_KEY_CHECK) "Place.csv" "GeoShape (mPID)" "GeoShape.csv" "MBO Permanent Identifier"
 
-
-	@echo "=============================== Validating values in DatasetComment.csv['Author (mPID)'] ==============================="
-	@$(LIST_COLUMN_FOREIGN_KEY_CHECK) "DatasetComment.csv" "Author (mPID)" "out/validation/person-or-organization.csv" "MBO Permanent Identifier"
-
-	@echo "" > out/validation/DatasetComment-csv-list-column-foreign-key.log # Let the build know we've done this validation now.
+	@echo "" > out/validation/Place-csv-list-column-foreign-key.log # Let the build know we've done this validation now.
 	@echo ""
-out/validation/SoftwareSourceCode-csv-list-column-foreign-key.log: PublishingStatusDefinedTerm.csv out/validation/person-or-organization.csv
-	@echo "=============================== Validating values in SoftwareSourceCode.csv['Publishing Status (mPID)'] ==============================="
-	@$(LIST_COLUMN_FOREIGN_KEY_CHECK) "SoftwareSourceCode.csv" "Publishing Status (mPID)" "PublishingStatusDefinedTerm.csv" "MBO Permanent Identifier"
-
-
-	@echo "=============================== Validating values in SoftwareSourceCode.csv['Author (mPID)'] ==============================="
-	@$(LIST_COLUMN_FOREIGN_KEY_CHECK) "SoftwareSourceCode.csv" "Author (mPID)" "out/validation/person-or-organization.csv" "MBO Permanent Identifier"
-
-
-	@echo "=============================== Validating values in SoftwareSourceCode.csv['Contributors (mPIDs)'] ==============================="
-	@$(LIST_COLUMN_FOREIGN_KEY_CHECK) "SoftwareSourceCode.csv" "Contributors (mPIDs)" "out/validation/person-or-organization.csv" "MBO Permanent Identifier" --separator "|"
-
-
-	@echo "=============================== Validating values in SoftwareSourceCode.csv['Maintainer (mPID)'] ==============================="
-	@$(LIST_COLUMN_FOREIGN_KEY_CHECK) "SoftwareSourceCode.csv" "Maintainer (mPID)" "out/validation/person-or-organization.csv" "MBO Permanent Identifier"
-
-
-	@echo "=============================== Validating values in SoftwareSourceCode.csv['Owner (mPID)'] ==============================="
-	@$(LIST_COLUMN_FOREIGN_KEY_CHECK) "SoftwareSourceCode.csv" "Owner (mPID)" "out/validation/person-or-organization.csv" "MBO Permanent Identifier"
-
-
-	@echo "=============================== Validating values in SoftwareSourceCode.csv['Publisher (mPID)'] ==============================="
-	@$(LIST_COLUMN_FOREIGN_KEY_CHECK) "SoftwareSourceCode.csv" "Publisher (mPID)" "out/validation/person-or-organization.csv" "MBO Permanent Identifier"
-
-	@echo "" > out/validation/SoftwareSourceCode-csv-list-column-foreign-key.log # Let the build know we've done this validation now.
-	@echo ""
-out/validation/SoftwareApplication-csv-list-column-foreign-key.log: PublishingStatusDefinedTerm.csv out/validation/person-or-organization.csv
+out/validation/SoftwareApplication-csv-list-column-foreign-key.log: PublishingStatusDefinedTerm.csv out/validation/person-or-organization.csv out/validation
 	@echo "=============================== Validating values in SoftwareApplication.csv['Publishing Status (mPID)'] ==============================="
 	@$(LIST_COLUMN_FOREIGN_KEY_CHECK) "SoftwareApplication.csv" "Publishing Status (mPID)" "PublishingStatusDefinedTerm.csv" "MBO Permanent Identifier"
 
@@ -265,40 +289,34 @@ out/validation/SoftwareApplication-csv-list-column-foreign-key.log: PublishingSt
 
 	@echo "" > out/validation/SoftwareApplication-csv-list-column-foreign-key.log # Let the build know we've done this validation now.
 	@echo ""
-out/validation/Place-csv-list-column-foreign-key.log: GeoShape.csv
-	@echo "=============================== Validating values in Place.csv['GeoShape (mPID)'] ==============================="
-	@$(LIST_COLUMN_FOREIGN_KEY_CHECK) "Place.csv" "GeoShape (mPID)" "GeoShape.csv" "MBO Permanent Identifier"
-
-	@echo "" > out/validation/Place-csv-list-column-foreign-key.log # Let the build know we've done this validation now.
-	@echo ""
-out/validation/MonetaryGrant-csv-list-column-foreign-key.log: Organization.csv
-	@echo "=============================== Validating values in MonetaryGrant.csv['Funder Organizations (mPIDs)'] ==============================="
-	@$(LIST_COLUMN_FOREIGN_KEY_CHECK) "MonetaryGrant.csv" "Funder Organizations (mPIDs)" "Organization.csv" "MBO Permanent Identifier" --separator "|"
+out/validation/SoftwareSourceCode-csv-list-column-foreign-key.log: PublishingStatusDefinedTerm.csv out/validation/person-or-organization.csv out/validation
+	@echo "=============================== Validating values in SoftwareSourceCode.csv['Publishing Status (mPID)'] ==============================="
+	@$(LIST_COLUMN_FOREIGN_KEY_CHECK) "SoftwareSourceCode.csv" "Publishing Status (mPID)" "PublishingStatusDefinedTerm.csv" "MBO Permanent Identifier"
 
 
-	@echo "=============================== Validating values in MonetaryGrant.csv['Sponsor Organizations (mPIDs)'] ==============================="
-	@$(LIST_COLUMN_FOREIGN_KEY_CHECK) "MonetaryGrant.csv" "Sponsor Organizations (mPIDs)" "Organization.csv" "MBO Permanent Identifier" --separator "|"
+	@echo "=============================== Validating values in SoftwareSourceCode.csv['Author (mPID)'] ==============================="
+	@$(LIST_COLUMN_FOREIGN_KEY_CHECK) "SoftwareSourceCode.csv" "Author (mPID)" "out/validation/person-or-organization.csv" "MBO Permanent Identifier"
 
-	@echo "" > out/validation/MonetaryGrant-csv-list-column-foreign-key.log # Let the build know we've done this validation now.
+
+	@echo "=============================== Validating values in SoftwareSourceCode.csv['Contributors (mPIDs)'] ==============================="
+	@$(LIST_COLUMN_FOREIGN_KEY_CHECK) "SoftwareSourceCode.csv" "Contributors (mPIDs)" "out/validation/person-or-organization.csv" "MBO Permanent Identifier" --separator "|"
+
+
+	@echo "=============================== Validating values in SoftwareSourceCode.csv['Maintainer (mPID)'] ==============================="
+	@$(LIST_COLUMN_FOREIGN_KEY_CHECK) "SoftwareSourceCode.csv" "Maintainer (mPID)" "out/validation/person-or-organization.csv" "MBO Permanent Identifier"
+
+
+	@echo "=============================== Validating values in SoftwareSourceCode.csv['Owner (mPID)'] ==============================="
+	@$(LIST_COLUMN_FOREIGN_KEY_CHECK) "SoftwareSourceCode.csv" "Owner (mPID)" "out/validation/person-or-organization.csv" "MBO Permanent Identifier"
+
+
+	@echo "=============================== Validating values in SoftwareSourceCode.csv['Publisher (mPID)'] ==============================="
+	@$(LIST_COLUMN_FOREIGN_KEY_CHECK) "SoftwareSourceCode.csv" "Publisher (mPID)" "out/validation/person-or-organization.csv" "MBO Permanent Identifier"
+
+	@echo "" > out/validation/SoftwareSourceCode-csv-list-column-foreign-key.log # Let the build know we've done this validation now.
 	@echo ""
 
 # END manual foreign key checks
-
-dockersetup:
-	@echo "=============================== Pulling & Building required docker images. ==============================="
-	@docker pull $(CSVW_CHECK_DOCKER)
-	@docker pull $(CSV2RDF_DOCKER)
-	@docker pull $(JENA_CLI_DOCKER)
-	@docker pull $(MBO_TOOLS_DOCKER)
-	@echo "" ; 
-
-output-directories:
-	@mkdir -p out/bulk
-	@mkdir -p out/validation
-
-
-out/validation/person-or-organization.csv: Person.csv Organization.csv
-	@$(UNION_UNIQUE_IDENTIFIERS) --out out/validation/person-or-organization.csv --column-name "MBO Permanent Identifier" Person.csv Organization.csv
 
 validate: $(CSVW_METADATA_VALIDATION_FILES) $(MANUAL_FOREIGN_KEY_VALIDATION_LOGS)
 
@@ -313,7 +331,7 @@ jsonld: $(BULK_TTL_FILES)
 	@$(MAKE) -f split/Makefile jsonld
 
 init:
-	@$(MAKE) output-directories dockersetup 
+	@$(MAKE) dockersetup 
 	@$(MAKE) -f split/Makefile init
 
 all:
@@ -348,7 +366,7 @@ $(eval TABLE_SCHEMA_DEPENDENCIES_COMMAND_$(1) := cat "$(1)" \
 			| $(JQ) '.tables[] | .tableSchema' \
 			| sed 's/"\(.*\)"/\1/g' \
 			| awk '{print "$(CSVW_DIR_NAME_$(1))/" $$$$0}' \
-			| xargs -l realpath --relative-to "$(WORKING_DIR)" \
+			| xargs -l realpath --canonicalize-missing --relative-to "$(WORKING_DIR)" \
 			| xargs;)
 $(eval TABLE_SCHEMA_DEPENDENCIES_$(1) = $(shell $(TABLE_SCHEMA_DEPENDENCIES_COMMAND_$(1)) ))
 
@@ -356,7 +374,7 @@ $(eval CSVCHECK_CSV_DEPENDENCIES_COMMAND_$(1) := cat "$(1)" \
 			| $(JQ) '.tables[] | .url' \
 			| sed 's/"\(.*\)"/\1/g' \
 			| awk '{print "$(CSVW_DIR_NAME_$(1))/" $$$$0}' \
-			| xargs -l realpath -q --relative-to "$(WORKING_DIR)" \
+			| xargs -l realpath --canonicalize-missing --relative-to "$(WORKING_DIR)" \
 			| xargs;)
 
 $(eval CSVCHECK_CSV_DEPENDENCIES_$(1) = $(shell $(CSVCHECK_CSV_DEPENDENCIES_COMMAND_$(1)) ))
@@ -373,12 +391,12 @@ $(eval CSV2RDF_CSV_DEPENDENCIES_COMMAND_$(1) := cat "$(1)" \
 			| $(JQ) '.tables[] | select(.suppressOutput != true) | .url' \
 			| sed 's/"\(.*\)"/\1/g' \
 			| awk '{print "$(CSVW_DIR_NAME_$(1))/" $$$$0}' \
-			| xargs -l realpath -q --relative-to "$(WORKING_DIR)" \
+			| xargs -l realpath --canonicalize-missing --relative-to "$(WORKING_DIR)" \
 			| xargs;)
 
 $(eval CSV2RDF_CSV_DEPENDENCIES_$(1) = $(shell $(CSV2RDF_CSV_DEPENDENCIES_COMMAND_$(1)) ))
 
-$(TTL_FILE_$(1)): $(1) $(CSV2RDF_CSV_DEPENDENCIES_$(1)) $(TABLE_SCHEMA_DEPENDENCIES_$(1))
+$(TTL_FILE_$(1)): $(1) $(CSV2RDF_CSV_DEPENDENCIES_$(1)) $(TABLE_SCHEMA_DEPENDENCIES_$(1)) out/bulk out/validation/person-or-organization.csv
 	@echo "=============================== Converting $$< to ttl $$@ ==============================="
 	@# Unfortunately csv2rdf returns a non-zero status code if it produces no triples (even if this is to be expected).
 	@# So for the time being we'll ignore any errors which come from it.
