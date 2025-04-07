@@ -24,8 +24,6 @@ CSVW_METADATA_FILES 			:= $(wildcard remote/*.csv-metadata.json)
 CSVW_METADATA_VALIDATION_FILES	:= $(CSVW_METADATA_FILES:remote/%.csv-metadata.json=out/validation/%.log)
 BULK_TTL_FILES    				:= $(CSVW_METADATA_FILES:remote/%.csv-metadata.json=out/bulk/%.ttl)
 EXPECTED_BULK_OUT_FILES			:= $(BULK_TTL_FILES)
-REFERENCED_CSVS_QUERY_FILE		:= remote/csvs-referenced-by-csvw.sparql
-
 
 dockersetup:
 	@echo "=============================== Pulling & Building required docker images. ==============================="
