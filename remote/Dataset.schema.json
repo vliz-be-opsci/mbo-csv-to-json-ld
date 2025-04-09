@@ -208,6 +208,20 @@
             }
         },
         {
+            "name": "hasPart",
+            "titles": {
+                "en": [
+                    "Has Part (URL)"
+                ]
+            },
+            "propertyUrl": "https://schema.org/hasPart",
+            "separator": "|",
+            "datatype": {
+                "@id": "https://w3id.org/marco-bolo/ConvertIriToNode",
+                "base": "string"
+            }
+        },
+        {
             "name": "publishingStatusMboId",
             "titles": {
                 "en": [

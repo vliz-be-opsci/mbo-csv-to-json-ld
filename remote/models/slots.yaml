@@ -275,11 +275,24 @@ slots:
     slot_uri: schema:temporalCoverage
   basedOn:
     title: "Based On (URL)"
-    description: "The URI PID of any datasets which yours is based on."
+    description: |
+      The URI PID of any datasets which yours is based on.
+
+      WARNING: There are no foreign key checks.
     required: false
     multivalued: true
     range: uri
     slot_uri: schema:isBasedOn
+  hasPart:
+    title: "Has Part (URL)"
+    description: |
+      Used in aggregate datasets which are composed of multiple parts. You are required to use the full URI here to reference pre-existing Datasets. 
+
+      WARNING: There are no foreign key checks.
+    required: false
+    multivalued: true
+    range: uri
+    slot_uri: schema:hasPart
   distributions:
     title: "Distributions (mPIDs)"
     description: "The different formats in which the dataset can be accessed or downloaded."
