@@ -26,15 +26,16 @@
             "valueUrl": "https://w3id.org/marco-bolo/{+metadataPublisherId}"
         },
         {
-            "name": "metadataDescribedForActionId",
+            "name": "serviceType",
             "titles": {
                 "en": [
-                    "Data Entered for Action (mPID)"
+                    "Service Type"
                 ]
             },
-            "propertyUrl": "https://w3id.org/marco-bolo/isResultOf",
-            "aboutUrl": "https://w3id.org/marco-bolo/{+id}#input-metadata",
-            "valueUrl": "https://w3id.org/marco-bolo/{+metadataDescribedForActionId}"
+            "propertyUrl": "https://schema.org/serviceType",
+            "datatype": {
+                "base": "string"
+            }
         },
         {
             "name": "name",
@@ -49,28 +50,14 @@
             }
         },
         {
-            "name": "positionInParent",
+            "name": "serviceProviderOrganizationMboId",
             "titles": {
                 "en": [
-                    "Position in Parent"
+                    "Service Provider Organization (mPID)"
                 ]
             },
-            "propertyUrl": "https://schema.org/position",
-            "datatype": {
-                "base": "integer"
-            }
-        },
-        {
-            "name": "abstract",
-            "titles": {
-                "en": [
-                    "Abstract"
-                ]
-            },
-            "propertyUrl": "https://schema.org/abstract",
-            "datatype": {
-                "base": "string"
-            }
+            "propertyUrl": "https://schema.org/provider",
+            "valueUrl": "https://w3id.org/marco-bolo/{+serviceProviderOrganizationMboId}"
         },
         {
             "name": "description",
@@ -85,96 +72,15 @@
             }
         },
         {
-            "name": "contributorIds",
+            "name": "url",
             "titles": {
                 "en": [
-                    "Contributors (mPIDs)"
+                    "URL"
                 ]
             },
-            "propertyUrl": "https://schema.org/contributor",
-            "separator": "|",
+            "propertyUrl": "https://schema.org/url",
+            "valueUrl": "{+url}",
             "datatype": {
-                "@id": "https://w3id.org/marco-bolo/ConvertMboIdToNode",
-                "base": "string"
-            }
-        },
-        {
-            "name": "providerId",
-            "titles": {
-                "en": [
-                    "Provider (mPID)"
-                ]
-            },
-            "propertyUrl": "https://schema.org/provider",
-            "valueUrl": "https://w3id.org/marco-bolo/{+providerId}"
-        },
-        {
-            "name": "citeSourceCodeMboIds",
-            "titles": {
-                "en": [
-                    "Source Code Citations (mPIDs)"
-                ]
-            },
-            "propertyUrl": "https://schema.org/citation",
-            "separator": "|",
-            "datatype": {
-                "@id": "https://w3id.org/marco-bolo/ConvertMboIdToNode",
-                "base": "string"
-            }
-        },
-        {
-            "name": "citeSoftwareApplicationMboIds",
-            "titles": {
-                "en": [
-                    "Software Application Citations (mPIDs)"
-                ]
-            },
-            "propertyUrl": "https://schema.org/citation",
-            "separator": "|",
-            "datatype": {
-                "@id": "https://w3id.org/marco-bolo/ConvertMboIdToNode",
-                "base": "string"
-            }
-        },
-        {
-            "name": "citeServiceMboIds",
-            "titles": {
-                "en": [
-                    "Service Citations (mPIDs)"
-                ]
-            },
-            "propertyUrl": "https://schema.org/citation",
-            "separator": "|",
-            "datatype": {
-                "@id": "https://w3id.org/marco-bolo/ConvertMboIdToNode",
-                "base": "string"
-            }
-        },
-        {
-            "name": "childStepMboIds",
-            "titles": {
-                "en": [
-                    "Child Steps (mPIDs)"
-                ]
-            },
-            "propertyUrl": "https://schema.org/itemListElement",
-            "separator": "|",
-            "datatype": {
-                "@id": "https://w3id.org/marco-bolo/ConvertMboIdToNode",
-                "base": "string"
-            }
-        },
-        {
-            "name": "howToImplementTipMboIds",
-            "titles": {
-                "en": [
-                    "Implementation Tips (mPIDs)"
-                ]
-            },
-            "propertyUrl": "https://schema.org/usageInfo",
-            "separator": "|",
-            "datatype": {
-                "@id": "https://w3id.org/marco-bolo/ConvertMboIdToNode",
                 "base": "string"
             }
         },
@@ -193,9 +99,23 @@
             }
         },
         {
+            "name": "placesServedMboIds",
+            "titles": {
+                "en": [
+                    "Places Served (mPIDs)"
+                ]
+            },
+            "propertyUrl": "https://schema.org/areaServed",
+            "separator": "|",
+            "datatype": {
+                "@id": "https://w3id.org/marco-bolo/ConvertMboIdToNode",
+                "base": "string"
+            }
+        },
+        {
             "virtual": true,
             "propertyUrl": "rdf:type",
-            "valueUrl": "https://schema.org/HowToStep"
+            "valueUrl": "https://schema.org/Service"
         },
         {
             "virtual": true,
@@ -219,7 +139,7 @@
             "virtual": true,
             "aboutUrl": "https://w3id.org/marco-bolo/{+id}#input-metadata",
             "propertyUrl": "https://schema.org/contentUrl",
-            "valueUrl": "https://w3id.org/marco-bolo/mbo_TODO_HowToStep.csv#row={_row}"
+            "valueUrl": "https://w3id.org/marco-bolo/mbo_TODO_Service.csv#row={_row}"
         }
     ],
     "aboutUrl": "https://w3id.org/marco-bolo/{+id}",
@@ -235,9 +155,9 @@
             }
         },
         {
-            "columnReference": "metadataDescribedForActionId",
+            "columnReference": "serviceProviderOrganizationMboId",
             "reference": {
-                "resource": "../Action.csv",
+                "resource": "../Organization.csv",
                 "columnReference": "id"
             }
         }

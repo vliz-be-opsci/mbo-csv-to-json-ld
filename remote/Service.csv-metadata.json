@@ -54,7 +54,7 @@
         {
             "url": "../SoftwareSourceCode.csv",
             "tableSchema": "SoftwareSourceCode.schema.json",
-            "suppressOutput": false
+            "suppressOutput": true
         },
         {
             "url": "../SoftwareApplication.csv",
@@ -64,7 +64,7 @@
         {
             "url": "../Service.csv",
             "tableSchema": "Service.schema.json",
-            "suppressOutput": true
+            "suppressOutput": false
         },
         {
             "url": "../EmbargoStatement.csv",
