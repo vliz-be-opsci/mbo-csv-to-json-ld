@@ -5,6 +5,7 @@ prefixes:
   schema: https://schema.org/
   mbo: https://w3id.org/marco-bolo/
   dwc: http://rs.tdwg.org/dwc/terms/
+  qudt-unit: http://qudt.org/vocab/unit/
 imports:
   - linkml:types
   - ./classes
@@ -187,37 +188,56 @@ slots:
     title: "Measurement Technique"
     required: false
     multivalued: false
-    description: "TODO"
+    description: |
+      A textual descripion of the measurement technique.
     range: string
     slot_uri: schema:measurementTechnique
   minValue:
     title: "Min Value"
     required: false
     multivalued: false
-    description: "TODO"
+    description: |
+      The minimum value observed.
     range: decimal
     slot_uri: schema:minValue
   maxValue:
     title: "Max Value"
     required: false
     multivalued: false
-    description: "TODO"
+    description: |
+      The maximum value observed.
     range: decimal
     slot_uri: schema:maxValue
-  unitCode:
-    title: "Unit Code"
+  unitQudtId:
+    title: "Unit Code (QUDT Code)"
     required: false
     multivalued: false
-    description: "TODO"
-    range: string
+    description: |
+      The QUDT Code for the unit of measurement.
+
+      For example, for the QUDT unit <http://qudt.org/vocab/unit/NUM-PER-KiloM2> (Number per square kilometre), you should input `NUM-PER-KiloM2`.
+
+      See https://www.qudt.org/doc/2025/01/DOC_VOCAB-UNITS.html for a full list of available units.
+    implicit_prefix: qudt-unit
+    range: uri
+    pattern: "^[A-Za-z0-9-_]+$"
     slot_uri: schema:unitCode
   unitText:
     title: "Unit Text"
     required: false
     multivalued: false
-    description: "TODO"
+    description: |
+      A textual description of the unit.
     range: string
     slot_uri: schema:unitText
+  isTypeOfPropertyValueMboId:
+    title: "Is Sub-Type Of (PropertyValue mPIDs)"
+    required: false
+    multivalued: true
+    description: |
+      Parent PropertyValues for which this is a more specific sub-type of.
+    range: PropertyValue
+    slot_uri: schema:valueReference
 
   # Dataset slots
   landingPage:
@@ -242,12 +262,13 @@ slots:
     multivalued: false
     range: date
     slot_uri: mbo:inProgressDataDate
-  variableMeasuredMboIds:
-    title: "Variables Measured (mPIDs)"
-    description: "The MBO Ids of the variables measured in your dataset; these should include EBVs, EOVs, etc."
+  containsVariablesMboIds:
+    title: "Contains Variables (PropertyValue mPIDs)"
+    description: |
+      The MBO Ids of the PropertyValues describing what was measured or calculated in your dataset; these should include EBVs, EOVs, etc.
     required: false
     multivalued: true
-    range: VariableMeasured
+    range: PropertyValue
     slot_uri: schema:variableMeasured
   aboutTaxonMboIds:
     title: "Taxa (mPIDs)"
@@ -450,6 +471,15 @@ slots:
     multivalued: false
     range: HowToStep
     slot_uri: schema:step
+  supportingDocumentationUrls:
+    subproperty_of: url
+    title: "Supporting documentation (URLs)"
+    description: |
+      The URL(s) of supporting documentation which would help a human repeat this the associated HowToStep.
+    required: false
+    multivalued: true
+    range: schemaURL
+    slot_uri: schema:url
 
   # HowToStep slots
   positionInParent:
@@ -753,7 +783,7 @@ slots:
     required: true
     multivalued: false
     range: string
-    pattern: "^(Organization|Airline|Consortium|Corporation|EducationalOrganization|FundingScheme|GovernmentOrganization|LibrarySystem|LocalBusiness|MedicalOrganization|NGO|NewsMediaOrganization|OnlineBusiness|PerformingGroup|PoliticalParty|Project|ResearchOrganization|SearchRescueOrganization|SportsOrganization|WorkersUnion)$"
+    pattern: "^(Organization|Airline|Consortium|Corporation|EducationalOrganization|CollegeOrUniversity|ElementarySchool|HighSchool|MiddleSchool|Preschool|School|FundingScheme|GovernmentOrganization|LibrarySystem|LocalBusiness|AnimalShelter|ArchiveOrganization|AutomotiveBusiness|AutoBodyShop|AutoDealer|AutoPartsStore|AutoRental|AutoRepair|AutoWash|GasStation|MotorcycleDealer|MotorcycleRepair|ChildCare|Dentist|DryCleaningOrLaundry|EmergencyService|FireStation|Hospital|PoliceStation|EmploymentAgency|EntertainmentBusiness|AdultEntertainment|AmusementPark|ArtGallery|Casino|ComedyClub|MovieTheater|NightClub|FinancialService|AccountingService|AutomatedTeller|BankOrCreditUnion|InsuranceAgency|FoodEstablishment|Bakery|BarOrPub|Brewery|CafeOrCoffeeShop|Distillery|FastFoodRestaurant|IceCreamShop|Restaurant|Winery|GovernmentOffice|HealthAndBeautyBusiness|BeautySalon|DaySpa|HairSalon|HealthClub|NailSalon|TattooParlor|HomeAndConstructionBusiness|Electrician|GeneralContractor|HVACBusiness|HousePainter|Locksmith|MovingCompany|Plumber|RoofingContractor|InternetCafe|LegalService|Attorney|Notary|Library|LodgingBusiness|BedAndBreakfast|Campground|Hostel|Hotel|Motel|Resort|VacationRental|MedicalBusiness|CommunityHealth|Dentist|Dermatology|DietNutrition|Emergency|Geriatric|Gynecologic|MedicalClinic|CovidTestingFacility|Midwifery|Nursing|Obstetric|Oncologic|Optician|Optometric|Otolaryngologic|Pediatric|Pharmacy|Physician|Physiotherapy|PlasticSurgery|Podiatric|PrimaryCare|Psychiatric|PublicHealth|ProfessionalService|RadioStation|RealEstateAgent|RecyclingCenter|SelfStorage|ShoppingCenter|SportsActivityLocation|BowlingAlley|ExerciseGym|GolfCourse|HealthClub|PublicSwimmingPool|SkiResort|SportsClub|StadiumOrArena|TennisComplex|Store|AutoPartsStore|BikeStore|BookStore|ClothingStore|ComputerStore|ConvenienceStore|DepartmentStore|ElectronicsStore|Florist|FurnitureStore|GardenStore|GroceryStore|HardwareStore|HobbyShop|HomeGoodsStore|JewelryStore|LiquorStore|MensClothingStore|MobilePhoneStore|MovieRentalStore|MusicStore|OfficeEquipmentStore|OutletStore|PawnShop|PetStore|ShoeStore|SportingGoodsStore|TireShop|ToyStore|WholesaleStore|TelevisionStation|TouristInformationCenter|TravelAgency|MedicalOrganization|Dentist|DiagnosticLab|Hospital|MedicalClinic|Pharmacy|Physician|VeterinaryCare|NGO|NewsMediaOrganization|OnlineBusiness|OnlineStore|PerformingGroup|DanceGroup|MusicGroup|TheaterGroup|PoliticalParty|Project|FundingAgency|ResearchProject|ResearchOrganization|SearchRescueOrganization|SportsOrganization|SportsTeam|WorkersUnion)$"
     slot_uri: rdf:type
   departmentMboIds:
     title: "Has Departments (mPIDs)"
@@ -895,6 +925,18 @@ slots:
     required: false
     multivalued: false
     range: string
+    slot_uri: schema:identifier
+  taxonLifeScienceIdentifier:
+    title: "Life Science Identifier (PID)"
+    subproperty_of: identifier
+    description: |
+      The life science identifier for this taxon, for example `urn:lsid:marinespecies.org:taxname:578941`.
+
+      For more information, see https://www.lsid.info/
+    required: false
+    multivalued: false
+    range: URN
+    pattern: '^urn:lsid:[^:\s]+:[^:\s]+:[^:\s]+(:[^:\s]+)?$'
     slot_uri: schema:identifier
   taxonScientificName:
     title: "Scientific Name"

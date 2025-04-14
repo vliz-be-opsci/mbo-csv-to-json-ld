@@ -74,8 +74,7 @@
             "propertyUrl": "https://schema.org/propertyID",
             "valueUrl": "{+propertyId}",
             "datatype": {
-                "base": "string",
-                "@id": "https://schema.org/URL"
+                "base": "string"
             }
         },
         {
@@ -127,15 +126,17 @@
             }
         },
         {
-            "name": "unitCode",
+            "name": "unitQudtId",
             "titles": {
                 "en": [
-                    "Unit Code"
+                    "Unit Code (QUDT Code)"
                 ]
             },
             "propertyUrl": "https://schema.org/unitCode",
+            "valueUrl": "http://qudt.org/vocab/unit/{+unitQudtId}",
             "datatype": {
-                "base": "string"
+                "base": "string",
+                "format": "^[A-Za-z0-9-_]+$"
             }
         },
         {
@@ -147,6 +148,20 @@
             },
             "propertyUrl": "https://schema.org/unitText",
             "datatype": {
+                "base": "string"
+            }
+        },
+        {
+            "name": "isTypeOfPropertyValueMboId",
+            "titles": {
+                "en": [
+                    "Is Sub-Type Of (PropertyValue mPIDs)"
+                ]
+            },
+            "propertyUrl": "https://schema.org/valueReference",
+            "separator": "|",
+            "datatype": {
+                "@id": "https://w3id.org/marco-bolo/ConvertMboIdToNode",
                 "base": "string"
             }
         },
@@ -177,7 +192,7 @@
             "virtual": true,
             "aboutUrl": "https://w3id.org/marco-bolo/{+id}#input-metadata",
             "propertyUrl": "https://schema.org/contentUrl",
-            "valueUrl": "https://w3id.org/marco-bolo/mbo_TODO_VariableMeasured.csv#row={_row}"
+            "valueUrl": "https://w3id.org/marco-bolo/mbo_TODO_PropertyValue.csv#row={_row}"
         }
     ],
     "aboutUrl": "https://w3id.org/marco-bolo/{+id}",
