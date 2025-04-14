@@ -21,10 +21,10 @@ nav:
       - Organization: Organization.md
       - Person: Person.md
       - Place: Place.md
+      - PropertyValue: PropertyValue.md
       - PublishingStatusDefinedTerm: PublishingStatusDefinedTerm.md
       - Service: Service.md
       - SoftwareApplication: SoftwareApplication.md
       - SoftwareSourceCode: SoftwareSourceCode.md
       - Taxon: Taxon.md
-      - VariableMeasured: VariableMeasured.md
       - WebApplication: WebApplication.md
