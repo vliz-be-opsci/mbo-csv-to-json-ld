@@ -5,9 +5,10 @@
             "name": "id",
             "titles": {
                 "en": [
-                    "MBO Permanent Identifier"
+                    "MBO Permanent Identifier*"
                 ]
             },
+            "required": true,
             "propertyUrl": "https://schema.org/identifier",
             "datatype": {
                 "base": "string",
@@ -18,9 +19,10 @@
             "name": "metadataPublisherId",
             "titles": {
                 "en": [
-                    "Data Entry Person (mPID - you)"
+                    "Data Entry Person (mPID - you)*"
                 ]
             },
+            "required": true,
             "propertyUrl": "https://schema.org/creator",
             "aboutUrl": "https://w3id.org/marco-bolo/{+id}#input-metadata",
             "valueUrl": "https://w3id.org/marco-bolo/{+metadataPublisherId}"
@@ -29,9 +31,10 @@
             "name": "metadataDescribedForActionId",
             "titles": {
                 "en": [
-                    "Data Entered for Action (mPID)"
+                    "Data Entered for Action (mPID)*"
                 ]
             },
+            "required": true,
             "propertyUrl": "https://w3id.org/marco-bolo/isResultOf",
             "aboutUrl": "https://w3id.org/marco-bolo/{+id}#input-metadata",
             "valueUrl": "https://w3id.org/marco-bolo/{+metadataDescribedForActionId}"
@@ -40,9 +43,10 @@
             "name": "organizationType",
             "titles": {
                 "en": [
-                    "Organization Type"
+                    "Organization Type*"
                 ]
             },
+            "required": true,
             "propertyUrl": "rdf:type",
             "valueUrl": "https://schema.org/{+organizationType}",
             "datatype": {
@@ -54,9 +58,10 @@
             "name": "name",
             "titles": {
                 "en": [
-                    "Name"
+                    "Name*"
                 ]
             },
+            "required": true,
             "propertyUrl": "https://schema.org/name",
             "datatype": {
                 "base": "string"

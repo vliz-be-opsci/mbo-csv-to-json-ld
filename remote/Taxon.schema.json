@@ -5,9 +5,10 @@
             "name": "id",
             "titles": {
                 "en": [
-                    "MBO Permanent Identifier"
+                    "MBO Permanent Identifier*"
                 ]
             },
+            "required": true,
             "propertyUrl": "https://schema.org/identifier",
             "datatype": {
                 "base": "string",
@@ -18,9 +19,10 @@
             "name": "metadataPublisherId",
             "titles": {
                 "en": [
-                    "Data Entry Person (mPID - you)"
+                    "Data Entry Person (mPID - you)*"
                 ]
             },
+            "required": true,
             "propertyUrl": "https://schema.org/creator",
             "aboutUrl": "https://w3id.org/marco-bolo/{+id}#input-metadata",
             "valueUrl": "https://w3id.org/marco-bolo/{+metadataPublisherId}"
@@ -29,9 +31,10 @@
             "name": "metadataDescribedForActionId",
             "titles": {
                 "en": [
-                    "Data Entered for Action (mPID)"
+                    "Data Entered for Action (mPID)*"
                 ]
             },
+            "required": true,
             "propertyUrl": "https://w3id.org/marco-bolo/isResultOf",
             "aboutUrl": "https://w3id.org/marco-bolo/{+id}#input-metadata",
             "valueUrl": "https://w3id.org/marco-bolo/{+metadataDescribedForActionId}"
@@ -40,9 +43,10 @@
             "name": "name",
             "titles": {
                 "en": [
-                    "Name"
+                    "Name*"
                 ]
             },
+            "required": true,
             "propertyUrl": "https://schema.org/name",
             "datatype": {
                 "base": "string"
@@ -64,9 +68,10 @@
             "name": "taxonScientificName",
             "titles": {
                 "en": [
-                    "Scientific Name"
+                    "Scientific Name*"
                 ]
             },
+            "required": true,
             "propertyUrl": "http://rs.tdwg.org/dwc/terms/scientificName",
             "datatype": {
                 "base": "string"
@@ -76,9 +81,10 @@
             "name": "taxonKingdom",
             "titles": {
                 "en": [
-                    "Kingdom"
+                    "Kingdom*"
                 ]
             },
+            "required": true,
             "propertyUrl": "http://rs.tdwg.org/dwc/terms/kingdom",
             "datatype": {
                 "base": "string"
@@ -88,9 +94,10 @@
             "name": "taxonPhylum",
             "titles": {
                 "en": [
-                    "Phylum"
+                    "Phylum*"
                 ]
             },
+            "required": true,
             "propertyUrl": "http://rs.tdwg.org/dwc/terms/phylum",
             "datatype": {
                 "base": "string"
@@ -100,9 +107,10 @@
             "name": "taxonOrder",
             "titles": {
                 "en": [
-                    "Order"
+                    "Order*"
                 ]
             },
+            "required": true,
             "propertyUrl": "http://rs.tdwg.org/dwc/terms/order",
             "datatype": {
                 "base": "string"
@@ -112,9 +120,10 @@
             "name": "taxonFamily",
             "titles": {
                 "en": [
-                    "Family"
+                    "Family*"
                 ]
             },
+            "required": true,
             "propertyUrl": "http://rs.tdwg.org/dwc/terms/family",
             "datatype": {
                 "base": "string"
@@ -124,9 +133,10 @@
             "name": "taxonGenus",
             "titles": {
                 "en": [
-                    "Genus"
+                    "Genus*"
                 ]
             },
+            "required": true,
             "propertyUrl": "http://rs.tdwg.org/dwc/terms/genus",
             "datatype": {
                 "base": "string"
@@ -136,9 +146,10 @@
             "name": "taxonSpecificEpithet",
             "titles": {
                 "en": [
-                    "Specific Epithet"
+                    "Specific Epithet*"
                 ]
             },
+            "required": true,
             "propertyUrl": "http://rs.tdwg.org/dwc/terms/specificEpithet",
             "datatype": {
                 "base": "string"
@@ -148,9 +159,10 @@
             "name": "taxonomicStatus",
             "titles": {
                 "en": [
-                    "Status"
+                    "Status*"
                 ]
             },
+            "required": true,
             "propertyUrl": "http://rs.tdwg.org/dwc/terms/taxonomicStatus",
             "datatype": {
                 "base": "string"
@@ -160,9 +172,10 @@
             "name": "taxonVerbatimTaxonRank",
             "titles": {
                 "en": [
-                    "Verbatim Taxon Rank"
+                    "Verbatim Taxon Rank*"
                 ]
             },
+            "required": true,
             "propertyUrl": "http://rs.tdwg.org/dwc/terms/verbatimTaxonRank",
             "datatype": {
                 "base": "string"

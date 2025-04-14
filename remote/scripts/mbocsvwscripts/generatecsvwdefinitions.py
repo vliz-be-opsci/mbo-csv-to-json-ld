@@ -185,7 +185,7 @@ def _generate_unioned_identifiers_schema(out_dir: Path):
                 {
                     "name": "id",
                     "required": True,
-                    "titles": {"en": ["MBO Permanent Identifier"]},
+                    "titles": {"en": ["MBO Permanent Identifier*"]},
                     "suppressOutput": True,
                 }
             ],
@@ -464,7 +464,11 @@ def _get_metadata_file_name_for_class(class_name: str) -> str:
 
 
 def _get_csv_col_title_for_slot(slot: SlotDefinition) -> str:
-    return slot.title or slot.name
+    col_title = slot.title or slot.name
+    if slot.required is True:
+        col_title += "*"
+
+    return col_title
 
 
 def _get_column_definition_for_slot(
@@ -490,6 +494,9 @@ def _get_column_definition_for_slot(
 
     if slot.identifier is True:
         primary_key_definition.append(slot.name)
+
+    if slot.required is True:
+        column_definition["required"] = True
 
     if slot.slot_uri is not None:
         column_definition["propertyUrl"] = slot.slot_uri.as_uri(namespaces)
