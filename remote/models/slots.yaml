@@ -4,7 +4,6 @@ prefixes:
   linkml: https://w3id.org/linkml/
   schema: https://schema.org/
   mbo: https://w3id.org/marco-bolo/
-  dwc: http://rs.tdwg.org/dwc/terms/
   qudt-unit: http://qudt.org/vocab/unit/
 imports:
   - linkml:types
@@ -904,7 +903,9 @@ slots:
     required: false
     multivalued: false
     range: decimal
-    slot_uri: schema:amount/schema:value
+    slot_uri: schema:value
+    extensions:
+      csvw_about_url: "#MonetaryAmount"
   currency:
     title: "Currency"
     description: |
@@ -914,8 +915,9 @@ slots:
     required: false
     multivalued: false
     range: string
-    slot_uri: schema:amount/schema:currency
-
+    slot_uri: schema:currency
+    extensions:
+      csvw_about_url: "#MonetaryAmount"
   # Taxon slots
   taxonIdentifier:
     title: "Identifier"
@@ -945,71 +947,85 @@ slots:
       this should be the name in lowest level taxonomic rank that can be determined. This term should not contain 
       identification qualifications, which should instead be supplied in the dwc:identificationQualifier term.
 
-      Actually represents dwc:scientificName via a schema:PropertyValue (schema:additionalValue/schema:value).
+      Actually represents dwc:scientificName via a schema:PropertyValue (schema:additionalProperty/schema:value).
     required: true
     multivalued: false
     range: string
-    slot_uri: dwc:scientificName
+    slot_uri: schema:value
+    extensions:
+      csvw_about_url: "#ScientificName"
   taxonKingdom:
     title: "Kingdom"
     description: |
       The full scientific name of the kingdom in which the dwc:Taxon is classified.
 
-      Actually represents dwc:kingdom via a schema:PropertyValue (schema:additionalValue/schema:value).
+      Actually represents dwc:kingdom via a schema:PropertyValue (schema:additionalProperty/schema:value).
     required: true
     multivalued: false
     range: string
-    slot_uri: dwc:kingdom
+    slot_uri: schema:value
+    extensions:
+      csvw_about_url: "#Kingdom"
   taxonPhylum:
     title: "Phylum"
     description: |
       The full scientific name of the phylum or division in which the dwc:Taxon is classified.
 
-      Actually represents dwc:phylum via a schema:PropertyValue (schema:additionalValue/schema:value).
+      Actually represents dwc:phylum via a schema:PropertyValue (schema:additionalProperty/schema:value).
     required: true
     multivalued: false
     range: string
-    slot_uri: dwc:phylum
+    slot_uri: schema:value
+    extensions:
+      csvw_about_url: "#Phylum"
   taxonOrder:
     title: "Order"
     description: |
       The full scientific name of the order in which the dwc:Taxon is classified.
 
-      Actually represents dwc:order via a schema:PropertyValue (schema:additionalValue/schema:value).
+      Actually represents dwc:order via a schema:PropertyValue (schema:additionalProperty/schema:value).
     required: true
     multivalued: false
     range: string
-    slot_uri: dwc:order
+    slot_uri: schema:value
+    extensions:
+      csvw_about_url: "#Order"
   taxonFamily:
     title: "Family"
     description: |
       The full scientific name of the family in which the dwc:Taxon is classified.
 
-      Actually represents dwc:family via a schema:PropertyValue (schema:additionalValue/schema:value).
+      Actually represents dwc:family via a schema:PropertyValue (schema:additionalProperty/schema:value).
     required: true
     multivalued: false
     range: string
-    slot_uri: dwc:family
+    slot_uri: schema:value
+    extensions:
+      csvw_about_url: "#Family"
   taxonGenus:
     title: "Genus"
     description: |
       The full scientific name of the genus in which the dwc:Taxon is classified.
 
-      Actually represents dwc:genus via a schema:PropertyValue (schema:additionalValue/schema:value).
+      Actually represents dwc:genus via a schema:PropertyValue (schema:additionalProperty/schema:value).
     required: true
     multivalued: false
     range: string
-    slot_uri: dwc:genus
+    slot_uri: schema:value
+    extensions:
+      csvw_about_url: "#Genus"
   taxonSpecificEpithet:
     title: "Specific Epithet"
     description: |
       The name of the first or species epithet of the dwc:scientificName.
 
-      Actually represents dwc:specificEpithet via a schema:PropertyValue (schema:additionalValue/schema:value).
+      Actually represents dwc:specificEpithet via a schema:PropertyValue (schema:additionalProperty/schema:value).
     required: true
     multivalued: false
     range: string
-    slot_uri: dwc:specificEpithet
+    slot_uri: schema:value
+    extensions:
+      csvw_about_url: "#SpecificEpithet"
   taxonomicStatus:
     title: "Status"
     description: |
@@ -1019,21 +1035,25 @@ slots:
       nomenclature contained in that scope, combined with the experts opinion. 
       It must be linked to a specific taxonomic reference that defines the concept.
 
-      Actually represents dwc:taxonomicStatus via a schema:PropertyValue (schema:additionalValue/schema:value).
+      Actually represents dwc:taxonomicStatus via a schema:PropertyValue (schema:additionalProperty/schema:value).
     required: true
     multivalued: false
     range: string
-    slot_uri: dwc:taxonomicStatus
+    slot_uri: schema:value
+    extensions:
+      csvw_about_url: "#Status"
   taxonVerbatimTaxonRank:
     title: "Verbatim Taxon Rank"
     description: |
       The taxonomic rank of the most specific name in the dwc:scientificName as it appears in the original record.
 
-      Actually represents dwc:verbatimTaxonRank via a schema:PropertyValue (schema:additionalValue/schema:value).
+      Actually represents dwc:verbatimTaxonRank via a schema:PropertyValue (schema:additionalProperty/schema:value).
     required: true
     multivalued: false
     range: string
-    slot_uri: dwc:verbatimTaxonRank
+    slot_uri: schema:value
+    extensions:
+      csvw_about_url: "#VerbatimTaxonRank"
 
   # Audience slots
   audienceType:

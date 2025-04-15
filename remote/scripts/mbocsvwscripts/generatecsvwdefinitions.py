@@ -6,15 +6,19 @@ Generate csv-w defintions from the linkml.
 
 N.B. There are no unit tests for this since it is designed to save development time and hence be run by a developer.
 """
+
 import csv
 import json
 from pathlib import Path
 from typing import Dict, Any, List, Optional, Set
 from textwrap import dedent, indent
 from dataclasses import dataclass
+from urllib.parse import urljoin
+from os import linesep
 
 import click
 import pandas as pd
+import rdflib
 from linkml_runtime.utils.schemaview import (
     SchemaView,
     ClassDefinition,
@@ -22,6 +26,7 @@ from linkml_runtime.utils.schemaview import (
     TypeDefinition,
     Namespaces,
 )
+from rdflib import URIRef
 from rdflib.namespace import XSD
 
 _PARA_METADATA_SLOT_NAMES = {"metadataPublisherId", "metadataDescribedForActionId"}
@@ -48,6 +53,16 @@ The schema file for the unioned identifiers table structure.
 _SEPARATOR_CHAR: str = "|"
 _SCHEMA_ORG_PREFIX = "https://schema.org/"
 _MBO_PREFIX = "https://w3id.org/marco-bolo/"
+
+
+_LINKML_EXTENSION_ABOUT_URL = "csvw_about_url"
+"""
+A linkml extension key for overriding the `about_url` of a CSV-W column definiton of a slot.
+"""
+_LINKML_EXTENSION_VIRTUAL_TRIPLES = "csvw_virtual_triples"
+"""
+A linkml extension key for adding triples to CSV-Ws as virtual columns.
+"""
 
 
 @dataclass
@@ -227,15 +242,22 @@ def _generate_makefile_manual_foreign_key_checks(
 
         makefile_config += f"out/validation/{log_file_name}: {" ".join(dependent_files)} out/validation"
         makefile_config += indent(
-            "\n".join([_get_makefile_config_for_foreign_key_check(manual_fk_check, out_dir) for manual_fk_check in manual_foreign_key_checks]),
-            "	"
+            "\n".join(
+                [
+                    _get_makefile_config_for_foreign_key_check(manual_fk_check, out_dir)
+                    for manual_fk_check in manual_foreign_key_checks
+                ]
+            ),
+            "	",
         )
         makefile_config += indent(
-            dedent(f"""
+            dedent(
+                f"""
                 @echo "" > out/validation/{log_file_name} # Let the build know we've done this validation now.
                 @echo ""
-            """),
-            "	"
+            """
+            ),
+            "	",
         )
 
     return makefile_config
@@ -385,14 +407,17 @@ def _generate_csv_and_schema_for_class(
     if any(manual_build_foreign_key_checks):
         class_manual_foreign_key_checks[clazz.name] = manual_build_foreign_key_checks
 
-    input_metadata_uri = f"{_MBO_PREFIX}{{+{identifier_slot.name}}}#input-metadata"
+    identifier_template_uri_for_row = f"{_MBO_PREFIX}{{+{identifier_slot.name}}}"
+    input_metadata_uri = f"{identifier_template_uri_for_row}#input-metadata"
 
-    if not any ([s for s in slots_for_class if s.designates_type is True]):
-        column_definitions.append({
-            "virtual": True,
-            "propertyUrl": "rdf:type",
-            "valueUrl": clazz.class_uri.as_uri(namespaces),
-        })
+    if not any([s for s in slots_for_class if s.designates_type is True]):
+        column_definitions.append(
+            {
+                "virtual": True,
+                "propertyUrl": "rdf:type",
+                "valueUrl": clazz.class_uri.as_uri(namespaces),
+            }
+        )
 
     column_definitions += [
         {
@@ -411,7 +436,7 @@ def _generate_csv_and_schema_for_class(
             "virtual": True,
             "aboutUrl": input_metadata_uri,
             "propertyUrl": f"{_SCHEMA_ORG_PREFIX}about",
-            "valueUrl": f"{_MBO_PREFIX}{{+{identifier_slot.name}}}",
+            "valueUrl": identifier_template_uri_for_row,
         },
         {
             "virtual": True,
@@ -423,6 +448,11 @@ def _generate_csv_and_schema_for_class(
             "valueUrl": f"{_MBO_PREFIX}mbo_TODO_{csv_name_for_class}#row={{_row}}",
         },
     ]
+
+    if _LINKML_EXTENSION_VIRTUAL_TRIPLES in clazz.extensions:
+        column_definitions += _add_user_defined_virtual_columns_for_triples(
+            clazz, identifier_template_uri_for_row, namespaces
+        )
 
     basic_schema = {
         "@context": "http://www.w3.org/ns/csvw",
@@ -438,6 +468,49 @@ def _generate_csv_and_schema_for_class(
     with open(schema_file_path, "w+") as f:
         class_schema_map[clazz.name] = schema_file_path
         f.writelines(json.dumps(basic_schema, indent=4))
+
+
+def _add_user_defined_virtual_columns_for_triples(
+    clazz: ClassDefinition, identifier_template_uri_for_row: str, namespaces: Namespaces
+) -> List[Dict[str, str]]:
+    additional_virtual_columns = []
+    this_row_temp_identifier_uri = f"{_MBO_PREFIX}IdentifierForThisRow"
+    virtual_triples_txt = clazz.extensions[_LINKML_EXTENSION_VIRTUAL_TRIPLES].value
+    """
+    For example:
+        <> schema:amount <#MonetaryAmount>.
+        <#MonetaryAmount> a schema:MonetaryAmount.
+    """
+
+    virtual_triples_graph = rdflib.Graph()
+    prefixes = [f"@prefix {key}: <{value}>." for key, value in namespaces.items()]
+    prefixes.append(f"@base <{this_row_temp_identifier_uri}>.")
+    ttl_data = linesep.join(prefixes) + linesep + virtual_triples_txt
+    virtual_triples_graph.parse(data=ttl_data, format="ttl")
+    for s, p, o in virtual_triples_graph:
+        if not isinstance(o, URIRef):
+            raise Exception(
+                f"Object '{o}' must be a URI reference to a node in the graph. Arbitrary expression of literals is not supported by the CSV-W spec."
+            )
+
+        additional_virtual_column = {
+            "virtual": True,
+            "propertyUrl": str(p).replace(
+                this_row_temp_identifier_uri, identifier_template_uri_for_row
+            ),
+            "valueUrl": str(o).replace(
+                this_row_temp_identifier_uri, identifier_template_uri_for_row
+            ),
+        }
+
+        subject_str = str(s)
+        if subject_str != this_row_temp_identifier_uri:
+            additional_virtual_column["aboutUrl"] = subject_str.replace(
+                this_row_temp_identifier_uri, identifier_template_uri_for_row
+            )
+        additional_virtual_columns.append(additional_virtual_column)
+
+    return additional_virtual_columns
 
 
 def _get_slots_for_class(
@@ -508,6 +581,12 @@ def _get_column_definition_for_slot(
             f"{_MBO_PREFIX}{{+{identifier_slot.name}}}#input-metadata"
         )
 
+    if _LINKML_EXTENSION_ABOUT_URL in slot.extensions:
+        column_definition["aboutUrl"] = urljoin(
+            f"{_MBO_PREFIX}{{+{identifier_slot.name}}}",
+            slot.extensions[_LINKML_EXTENSION_ABOUT_URL].value,
+        )
+
     if slot.range in all_classes:
         _define_related_class_column(
             all_classes,
@@ -523,7 +602,9 @@ def _get_column_definition_for_slot(
         )
     else:
         # Primitive data type
-        data_type: Dict[str, Any] = _map_linkml_data_type_to_csvw(slot, all_literal_types, namespaces)
+        data_type: Dict[str, Any] = _map_linkml_data_type_to_csvw(
+            slot, all_literal_types, namespaces
+        )
         if slot.pattern:
             data_type["format"] = slot.pattern
 
@@ -548,25 +629,36 @@ def _get_column_definition_for_slot(
             # route so should not have this specified.
             if slot.implicit_prefix:
                 if not slot.implicit_prefix in namespaces:
-                    raise Exception(f"Unable to find prefix definition for implicit_prefix '{slot.implicit_prefix}'.")
+                    raise Exception(
+                        f"Unable to find prefix definition for implicit_prefix '{slot.implicit_prefix}'."
+                    )
                 prefix = namespaces.get(slot.implicit_prefix)
                 column_definition["valueUrl"] = f"{prefix}{{+{slot.name}}}"
             else:
                 column_definition["valueUrl"] = f"{{+{slot.name}}}"
 
         if slot.multivalued and slot.implicit_prefix:
-            raise Exception(f"Unable to currently support implicit_prefix on multivalued slot.")
+            raise Exception(
+                f"Unable to currently support implicit_prefix on multivalued slot."
+            )
 
         column_definition["datatype"] = data_type
 
     return column_definition
 
+
 def _map_linkml_built_in_data_type_to_csvw(linkml_built_in_data_type: str) -> str:
 
+    raise Exception(
+        f"Unmatched linkml base literal datatype '{linkml_built_in_data_type}'"
+    )
 
-    raise Exception(f"Unmatched linkml base literal datatype '{linkml_built_in_data_type}'")
 
-def _map_linkml_data_type_to_csvw(slot: SlotDefinition, all_literal_types: Dict[str, TypeDefinition], namespaces: Namespaces) -> Dict[str, str]:
+def _map_linkml_data_type_to_csvw(
+    slot: SlotDefinition,
+    all_literal_types: Dict[str, TypeDefinition],
+    namespaces: Namespaces,
+) -> Dict[str, str]:
     if slot.range in all_literal_types:
         literal_type = all_literal_types[slot.range]
         literal_type_base = (literal_type.base or "str").lower()
@@ -600,6 +692,7 @@ def _map_linkml_data_type_to_csvw(slot: SlotDefinition, all_literal_types: Dict[
         return data_type_def
 
     raise Exception(f"Unhandled literal datatype '{slot.range}'")
+
 
 def _define_related_class_column(
     all_classes: Dict[str, ClassDefinition],

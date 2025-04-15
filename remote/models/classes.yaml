@@ -9,6 +9,7 @@ prefixes:
   linkml: https://w3id.org/linkml/
   schema: https://schema.org/
   mbo: https://w3id.org/marco-bolo/
+  dwc: http://rs.tdwg.org/dwc/terms/
 imports:
   - linkml:types
   - ./slots
@@ -405,6 +406,10 @@ classes:
       - sponsorOrganizationMboIds
       - description
       - url
+    extensions:
+      csvw_virtual_triples: |
+        <> schema:amount <#MonetaryAmount>.
+        <#MonetaryAmount> a schema:MonetaryAmount.
 
   Taxon:
     class_uri: schema:Taxon
@@ -430,7 +435,36 @@ classes:
       - taxonVerbatimTaxonRank
       - taxonIdentifier
       - taxonLifeScienceIdentifier
+    extensions:
+      csvw_virtual_triples: |
+        <> schema:additionalProperty <#ScientificName>,
+                                     <#Kingdom>,
+                                     <#Phylum>,
+                                     <#Order>,
+                                     <#Family>,
+                                     <#Genus>,
+                                     <#SpecificEpithet>,
+                                     <#Status>,
+                                     <#VerbatimTaxonRank>.
 
+        <#ScientificName> a schema:PropertyValue;
+                          schema:propertyID dwc:scientificName.
+        <#Kingdom> a schema:PropertyValue;
+                          schema:propertyID dwc:kingdom.
+        <#Phylum> a schema:PropertyValue;
+                          schema:propertyID dwc:phylum.
+        <#Order> a schema:PropertyValue;
+                          schema:propertyID dwc:order.
+        <#Family> a schema:PropertyValue;
+                          schema:propertyID dwc:family.
+        <#Genus> a schema:PropertyValue;
+                          schema:propertyID dwc:genus.
+        <#SpecificEpithet> a schema:PropertyValue;
+                          schema:propertyID dwc:specificEpithet.
+        <#Status> a schema:PropertyValue;
+                          schema:propertyID dwc:taxonomicStatus.
+        <#VerbatimTaxonRank> a schema:PropertyValue;
+                          schema:propertyID dwc:verbatimTaxonRank.
   Audience:
     class_uri: schema:Audience
     description: |

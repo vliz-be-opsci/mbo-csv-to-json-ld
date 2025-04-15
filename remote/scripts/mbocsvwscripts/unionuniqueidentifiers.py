@@ -17,7 +17,12 @@ import click
 
 @click.command()
 @click.option("-o", "--out", required=True, type=click.Path(exists=False))
-@click.option("-c", "--column-name", default="MBO PID", help="The identifiers column title in the output CSV file.")
+@click.option(
+    "-c",
+    "--column-name",
+    default="MBO PID",
+    help="The identifiers column title in the output CSV file.",
+)
 @click.argument("csv_files", type=click.Path(exists=True), nargs=-1)
 def main(out: click.Path, column_name: str, csv_files: Tuple[click.Path, ...]):
     """
@@ -35,7 +40,9 @@ from pathlib import Path
 import pandas as pd
 
 
-def _union_identifiers(csv_files: List[Path], out_file: Path, pid_column_name: str) -> None:
+def _union_identifiers(
+    csv_files: List[Path], out_file: Path, pid_column_name: str
+) -> None:
     mbo_identifiers: Set[str] = set()
     for csv_file in csv_files:
         df = pd.read_csv(csv_file)

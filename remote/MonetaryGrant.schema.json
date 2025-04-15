@@ -59,8 +59,8 @@
                     "Amount"
                 ]
             },
-            "aboutUrl": "https://w3id.org/marco-bolo/{+id}#amount",
             "propertyUrl": "https://schema.org/value",
+            "aboutUrl": "https://w3id.org/marco-bolo/{+id}#MonetaryAmount",
             "datatype": {
                 "base": "decimal"
             }
@@ -72,8 +72,8 @@
                     "Currency"
                 ]
             },
-            "aboutUrl": "https://w3id.org/marco-bolo/{+id}#amount",
             "propertyUrl": "https://schema.org/currency",
+            "aboutUrl": "https://w3id.org/marco-bolo/{+id}#MonetaryAmount",
             "datatype": {
                 "base": "string"
             }
@@ -133,17 +133,6 @@
         },
         {
             "virtual": true,
-            "propertyUrl": "https://schema.org/amount",
-            "valueUrl": "https://w3id.org/marco-bolo/{+id}#amount"
-        },
-        {
-            "virtual": true,
-            "aboutUrl": "https://w3id.org/marco-bolo/{+id}#amount",
-            "propertyUrl": "rdf:type",
-            "valueUrl": "https://schema.org/MonetaryAmount"
-        },
-        {
-            "virtual": true,
             "propertyUrl": "rdf:type",
             "valueUrl": "https://schema.org/MonetaryGrant"
         },
@@ -170,6 +159,17 @@
             "aboutUrl": "https://w3id.org/marco-bolo/{+id}#input-metadata",
             "propertyUrl": "https://schema.org/contentUrl",
             "valueUrl": "https://w3id.org/marco-bolo/mbo_TODO_MonetaryGrant.csv#row={_row}"
+        },
+        {
+            "virtual": true,
+            "propertyUrl": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+            "valueUrl": "https://schema.org/MonetaryAmount",
+            "aboutUrl": "https://w3id.org/marco-bolo/{+id}#MonetaryAmount"
+        },
+        {
+            "virtual": true,
+            "propertyUrl": "https://schema.org/amount",
+            "valueUrl": "https://w3id.org/marco-bolo/{+id}#MonetaryAmount"
         }
     ],
     "aboutUrl": "https://w3id.org/marco-bolo/{+id}",

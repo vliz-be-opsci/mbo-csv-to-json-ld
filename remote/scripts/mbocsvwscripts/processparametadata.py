@@ -92,8 +92,12 @@ def _build_para_metadata_graph(
     date_created: date,
     git_repo_commit_file_url: str,
 ):
-    result_of_action = _get_object_from_single_triple_with_predicate(input_metadata_triples, IS_RESULT_OF_PREDICATE)
-    csv_content_url = _get_object_from_single_triple_with_predicate(input_metadata_triples, SCHEMA.contentUrl)
+    result_of_action = _get_object_from_single_triple_with_predicate(
+        input_metadata_triples, IS_RESULT_OF_PREDICATE
+    )
+    csv_content_url = _get_object_from_single_triple_with_predicate(
+        input_metadata_triples, SCHEMA.contentUrl
+    )
 
     dataset_uri = URIRef(f"{uri_described_in_original_metadata}-input-metadata")
     csv_data_download_uri = URIRef(
@@ -114,7 +118,7 @@ def _build_para_metadata_graph(
         (dataset_uri, RDF.type, SCHEMA.Dataset),
         (dataset_uri, SCHEMA.distribution, csv_data_download_uri),
         (dataset_uri, SCHEMA.distribution, jsonld_data_download_uri),
-        (result_of_action, SCHEMA.result, dataset_uri)
+        (result_of_action, SCHEMA.result, dataset_uri),
     ]
     if git_repo_commit_file_url is not None:
         dataset_triples.append(
@@ -130,8 +134,12 @@ def _build_para_metadata_graph(
         (csv_data_download_uri, RDF.type, SCHEMA.DataDownload),
         (csv_data_download_uri, SCHEMA.encodesCreativeWork, dataset_uri),
         (csv_data_download_uri, SCHEMA.encodingFormat, Literal("text/csv")),
-        (csv_data_download_uri, SCHEMA.contentUrl, Literal(str(csv_content_url), datatype=SCHEMA.URL)),
-        (result_of_action, SCHEMA.result, csv_data_download_uri)
+        (
+            csv_data_download_uri,
+            SCHEMA.contentUrl,
+            Literal(str(csv_content_url), datatype=SCHEMA.URL),
+        ),
+        (result_of_action, SCHEMA.result, csv_data_download_uri),
     ]
 
     json_data_download_triples = [
@@ -154,7 +162,7 @@ def _build_para_metadata_graph(
             SCHEMA.encodingFormat,
             Literal("application/ld+json"),
         ),
-        (result_of_action, SCHEMA.result, jsonld_data_download_uri)
+        (result_of_action, SCHEMA.result, jsonld_data_download_uri),
     ]
     para_metadata_graph = rdflib.Graph()
     para_metadata_graph += dataset_triples
@@ -165,10 +173,16 @@ def _build_para_metadata_graph(
     return para_metadata_graph
 
 
-def _get_object_from_single_triple_with_predicate(input_metadata_triples: List[Tuple[Node, Node, Node]], matching_predicate: Node):
-    triples_using_predicate = [o for (_, p, o) in input_metadata_triples if p == matching_predicate]
+def _get_object_from_single_triple_with_predicate(
+    input_metadata_triples: List[Tuple[Node, Node, Node]], matching_predicate: Node
+):
+    triples_using_predicate = [
+        o for (_, p, o) in input_metadata_triples if p == matching_predicate
+    ]
     if len(triples_using_predicate) != 1:
-        raise Exception(f"Expected 1 triples using {matching_predicate}, but found {len(triples_using_predicate)}")
+        raise Exception(
+            f"Expected 1 triples using {matching_predicate}, but found {len(triples_using_predicate)}"
+        )
     return triples_using_predicate[0]
 
 
