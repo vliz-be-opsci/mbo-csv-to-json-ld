@@ -415,10 +415,6 @@ classes:
     class_uri: schema:Taxon
     description: |
       A set of organisms asserted to represent a natural cohesive biological unit.
-
-      N.B. This model deviates from the schema.org specification:
-        schema:Taxon doesn't actually have `schema:additionalProperty` defined on it.
-        <https://github.com/iodepo/odis-arch/issues/494>
     slots:
       - id
       - metadataPublisherId
