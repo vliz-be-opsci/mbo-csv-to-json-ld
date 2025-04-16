@@ -9,6 +9,8 @@ N.B. There are no unit tests for this since it is designed to save development t
 
 import csv
 import json
+import os
+import re
 from pathlib import Path
 from typing import Dict, Any, List, Optional, Set
 from textwrap import dedent, indent
@@ -19,6 +21,8 @@ from os import linesep
 import click
 import pandas as pd
 import rdflib
+from linkml_runtime.linkml_model import SchemaDefinition
+from linkml_runtime.utils.metamodelcore import URIorCURIE
 from linkml_runtime.utils.schemaview import (
     SchemaView,
     ClassDefinition,
@@ -28,6 +32,7 @@ from linkml_runtime.utils.schemaview import (
 )
 from rdflib import URIRef
 from rdflib.namespace import XSD
+from tabulate import tabulate
 
 _PARA_METADATA_SLOT_NAMES = {"metadataPublisherId", "metadataDescribedForActionId"}
 """
@@ -63,6 +68,11 @@ _LINKML_EXTENSION_VIRTUAL_TRIPLES = "csvw_virtual_triples"
 """
 A linkml extension key for adding triples to CSV-Ws as virtual columns.
 """
+
+_TWO_LINES: str = os.linesep + os.linesep
+_TABLE_FORMAT: str = "pipe"
+_NON_TITLE_CHARS = re.compile("\\W+")
+_NEW_LINES = re.compile("\\n")
 
 
 @dataclass
@@ -127,11 +137,32 @@ def main(classes_yaml: click.Path, output_dir: click.Path):
     )
 
     if any(class_manual_foreign_key_checks):
-        print(
-            _generate_makefile_manual_foreign_key_checks(
-                class_manual_foreign_key_checks, out_dir
+        with open(out_dir / "Makefile.part", "w+") as f:
+            f.writelines(
+                _generate_makefile_manual_foreign_key_checks(
+                    class_manual_foreign_key_checks, out_dir
+                )
+            )
+    with open(out_dir / "class-descriptions.md", "w+") as f:
+        f.writelines(
+            _generate_user_documentation_markdown(
+                all_classes,
+                all_literal_types,
+                all_slots,
+                schema_view.namespaces(),
+                schema_view.schema,
             )
         )
+
+
+def _expand_curie(uri_or_curie: URIorCURIE, namespaces: Namespaces) -> str:
+    """
+    Causes an exception rather than quietly failing where it can't look the prefix up in `namespaces`.
+    """
+    if URIorCURIE.is_curie(uri_or_curie):
+        return str(namespaces.uri_for(uri_or_curie))
+
+    return str(uri_or_curie)
 
 
 def _perform_transitive_dependency_closure(
@@ -216,7 +247,7 @@ def _generate_makefile_manual_foreign_key_checks(
 ) -> str:
     makefile_config = dedent(
         f"""
-        The following needs to be placed inside the top-level Makefile:
+        # The following needs to be placed inside the top-level Makefile:
 
         # Keep MANUAL_FOREIGN_KEY_VALIDATION_LOGS_SHORT up to date with the files it's necessary to perform list-column
         # foreign key validation on.
@@ -415,7 +446,7 @@ def _generate_csv_and_schema_for_class(
             {
                 "virtual": True,
                 "propertyUrl": "rdf:type",
-                "valueUrl": clazz.class_uri.as_uri(namespaces),
+                "valueUrl": _expand_curie(clazz.class_uri, namespaces),
             }
         )
 
@@ -487,7 +518,7 @@ def _add_user_defined_virtual_columns_for_triples(
     prefixes.append(f"@base <{this_row_temp_identifier_uri}>.")
     ttl_data = linesep.join(prefixes) + linesep + virtual_triples_txt
     virtual_triples_graph.parse(data=ttl_data, format="ttl")
-    for s, p, o in virtual_triples_graph:
+    for s, p, o in sorted(virtual_triples_graph):
         if not isinstance(o, URIRef):
             raise Exception(
                 f"Object '{o}' must be a URI reference to a node in the graph. Arbitrary expression of literals is not supported by the CSV-W spec."
@@ -573,8 +604,10 @@ def _get_column_definition_for_slot(
     if slot.required is True:
         column_definition["required"] = True
 
-    if slot.slot_uri is not None:
-        column_definition["propertyUrl"] = slot.slot_uri.as_uri(namespaces)
+    if slot.slot_uri is None:
+        column_definition["suppressOutput"] = True
+    else:
+        column_definition["propertyUrl"] = _expand_curie(slot.slot_uri, namespaces)
 
     if slot.name in _PARA_METADATA_SLOT_NAMES:
         column_definition["aboutUrl"] = (
@@ -600,6 +633,23 @@ def _get_column_definition_for_slot(
             output_dir,
             csv_dependencies_for_class,
         )
+    elif slot.range == "uri" and slot.slot_uri is not None and not slot.multivalued:
+        # Represent URIs as node values in the graph rather than as literal/primitive data types like strings.
+        # Multivalued things still need to go via the <https://w3id.org/marco-bolo/ConvertIriToNode> conversion
+        # route so should not have this specified.
+        if slot.implicit_prefix:
+            if not slot.implicit_prefix in namespaces:
+                raise Exception(
+                    f"Unable to find prefix definition for implicit_prefix '{slot.implicit_prefix}'."
+                )
+            prefix = namespaces.get(slot.implicit_prefix)
+            column_definition["valueUrl"] = f"{prefix}{{+{slot.name}}}"
+        else:
+            column_definition["valueUrl"] = f"{{+{slot.name}}}"
+
+        if slot.pattern is not None:
+            column_definition["datatype"] = {"base": "string", "format": slot.pattern}
+
     else:
         # Primitive data type
         data_type: Dict[str, Any] = _map_linkml_data_type_to_csvw(
@@ -614,33 +664,20 @@ def _get_column_definition_for_slot(
         if slot.maximum_value:
             data_type["maximum"] = slot.maximum_value
 
-        if slot.designates_type:
-            column_definition["propertyUrl"] = "rdf:type"
-            column_definition["valueUrl"] = f"{_SCHEMA_ORG_PREFIX}{{+{slot.name}}}"
-
         if slot.multivalued:
             column_definition["separator"] = _SEPARATOR_CHAR
             if slot.range == "uri":
                 data_type = {"@id": f"{_MBO_PREFIX}ConvertIriToNode", "base": "string"}
 
-        if slot.range == "uri" and not slot.multivalued:
-            # Represent URIs as node values in the graph rather than as literal/primitive data types like strings.
-            # Multivalued things still need to go via the <https://w3id.org/marco-bolo/ConvertIriToNode> conversion
-            # route so should not have this specified.
-            if slot.implicit_prefix:
-                if not slot.implicit_prefix in namespaces:
-                    raise Exception(
-                        f"Unable to find prefix definition for implicit_prefix '{slot.implicit_prefix}'."
-                    )
-                prefix = namespaces.get(slot.implicit_prefix)
-                column_definition["valueUrl"] = f"{prefix}{{+{slot.name}}}"
+        if slot.implicit_prefix:
+            if slot.multivalued:
+                raise Exception(
+                    f"Unable to currently support implicit_prefix on multivalued slot."
+                )
             else:
-                column_definition["valueUrl"] = f"{{+{slot.name}}}"
-
-        if slot.multivalued and slot.implicit_prefix:
-            raise Exception(
-                f"Unable to currently support implicit_prefix on multivalued slot."
-            )
+                raise Exception(
+                    f"Unexpected/unhandled implicit_prefix value '{slot.implicit_prefix}'."
+                )
 
         column_definition["datatype"] = data_type
 
@@ -665,7 +702,7 @@ def _map_linkml_data_type_to_csvw(
         data_type_def = {}
 
         if literal_type.uri is not None:
-            data_type_uri = literal_type.uri.as_uri(namespaces)
+            data_type_uri = _expand_curie(literal_type.uri, namespaces)
             if not data_type_uri.startswith(str(XSD)):
                 # Can't stick built-in-types here.
                 data_type_def["@id"] = data_type_uri
@@ -794,6 +831,144 @@ def _get_primary_key_identifier_slot_definition(
             f"Expected to find 1 identifier slots in {clazz.name} but found {len(identifier_slots)}"
         )
     return identifier_slots[0]
+
+
+def _generate_user_documentation_markdown(
+    all_classes: Dict[str, ClassDefinition],
+    all_literals: Dict[str, TypeDefinition],
+    all_slots: Dict[str, SlotDefinition],
+    namespaces: Namespaces,
+    schema: SchemaDefinition,
+) -> str:
+    ordered_classes = sorted(all_classes.values(), key=lambda c: c.name)
+    markdown = "# MARCO-BOLO CSV Models" + _TWO_LINES
+    markdown += (
+        "This has been automatically generated by a python script. You should not attempt to edit it manually."
+        + _TWO_LINES
+    )
+
+    if schema.description:
+        markdown += schema.description + _TWO_LINES
+
+    table_of_contents = [
+        {"Contents": f"[{clazz.name}](#{_get_anchor_tag_identifier(clazz.name)})"}
+        for clazz in ordered_classes
+    ]
+    table_of_contents.append({"Contents": "[Prefixes](#prefixes)"})
+    markdown += (
+        tabulate(table_of_contents, tablefmt=_TABLE_FORMAT, headers="keys") + _TWO_LINES
+    )
+    markdown += _TWO_LINES.join(
+        [
+            _get_markdown_docs_for_class(
+                clazz, all_classes, all_slots, all_literals, namespaces
+            )
+            for clazz in ordered_classes
+        ]
+    ) + _TWO_LINES
+
+    markdown += _generate_prefixes_section_markdown(namespaces) + _TWO_LINES
+    return markdown
+
+
+def _escape_description_strings_table_cell(description: str) -> str:
+    return _NEW_LINES.sub("<br/>", description)
+
+
+def _generate_prefixes_section_markdown(namespaces: Namespaces) -> str:
+    prefixes_markdown = "## Prefixes" + _TWO_LINES
+    prefixes_markdown += tabulate(
+        [
+            {"Prefix": prefix, "Base URI": str(namespace)}
+            for (prefix, namespace) in namespaces.items()
+        ],
+        tablefmt=_TABLE_FORMAT,
+        headers="keys",
+    )
+    return prefixes_markdown
+
+
+def _get_range_str_for_slot(
+    slot: SlotDefinition,
+    all_classes: Dict[str, ClassDefinition],
+    all_literals: Dict[str, TypeDefinition],
+    namespaces: Namespaces,
+) -> str:
+    if slot.range in all_classes:
+        range_clazz = all_classes[slot.range]
+        class_anchor_tag_id = _get_anchor_tag_identifier(range_clazz.name)
+
+        return f"[{range_clazz.name}](#{class_anchor_tag_id}) identifer"
+
+    if slot.range == "date":
+        return "Date (YYYY-mm-DD)"
+
+    if slot.range == "datetime":
+        return "Date Time (YYYY-mm-DDTHH:mm:SSZ)"
+
+    if slot.range == "string":
+        if slot.pattern:
+            return "Text matching the pattern"
+
+        return "Free Text"
+
+    if slot.range == "uri":
+        if slot.implicit_prefix:
+            base_uri = namespaces.get(slot.implicit_prefix)
+            return f"[{slot.implicit_prefix}]({base_uri}) identifier slug."
+        else:
+            return "URL Persistent Identifier"
+
+    if slot.range in all_literals:
+        range_literal = all_literals[slot.range]
+        return f"{range_literal.title or range_literal.name}"
+
+    return slot.range
+
+
+def _get_anchor_tag_identifier(title: str) -> str:
+    return _NON_TITLE_CHARS.sub("", title.lower())
+
+
+def _get_markdown_docs_for_class(
+    clazz: ClassDefinition,
+    all_classes: Dict[str, ClassDefinition],
+    all_slots: Dict[str, SlotDefinition],
+    all_literals: Dict[str, TypeDefinition],
+    namespaces: Namespaces,
+) -> str:
+    class_markdown = f"## {clazz.name}{_TWO_LINES}"
+
+    csv_file_name = _get_csv_name_for_class(clazz.name)
+
+    if clazz.abstract:
+        class_markdown += (
+            "This CSV is auto-generated. You cannot edit this yourself." + _TWO_LINES
+        )
+    else:
+        class_markdown += (
+                f"File location: [{csv_file_name}](./{csv_file_name})" + _TWO_LINES
+        )
+
+    if clazz.description:
+        class_markdown += clazz.description + _TWO_LINES
+
+    class_markdown += tabulate(
+        [
+            [
+                _get_csv_col_title_for_slot(slot),
+                "Yes" if slot.required else "No",
+                _get_range_str_for_slot(slot, all_classes, all_literals, namespaces),
+                "Yes" if slot.multivalued else "No",
+                _escape_description_strings_table_cell(slot.description or ""),
+            ]
+            for slot in _get_slots_for_class(clazz, all_classes, all_slots)
+        ],
+        tablefmt=_TABLE_FORMAT,
+        headers=["Column Title", "Required", "Contains", "Multivalued", "Description"],
+    )
+
+    return class_markdown
 
 
 if __name__ == "__main__":
