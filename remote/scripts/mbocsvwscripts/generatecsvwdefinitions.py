@@ -72,7 +72,8 @@ A linkml extension key for adding triples to CSV-Ws as virtual columns.
 _TWO_LINES: str = os.linesep + os.linesep
 _TABLE_FORMAT: str = "pipe"
 _NON_TITLE_CHARS = re.compile("\\W+")
-_NEW_LINES = re.compile("\\n")
+_NEW_LINES_REGEX = re.compile("\\n")
+_PIPES_REGEX = re.compile("\\|")
 
 
 @dataclass
@@ -872,7 +873,11 @@ def _generate_user_documentation_markdown(
 
 
 def _escape_description_strings_table_cell(description: str) -> str:
-    return _NEW_LINES.sub("<br/>", description)
+
+    return _NEW_LINES_REGEX.sub(
+    "<br/>",
+        _PIPES_REGEX.sub("\\|", description)
+    )
 
 
 def _generate_prefixes_section_markdown(namespaces: Namespaces) -> str:
@@ -960,7 +965,7 @@ def _get_markdown_docs_for_class(
                 "Yes" if slot.required else "No",
                 _get_range_str_for_slot(slot, all_classes, all_literals, namespaces),
                 "Yes" if slot.multivalued else "No",
-                _escape_description_strings_table_cell(slot.description or ""),
+                _get_slot_description(slot),
             ]
             for slot in _get_slots_for_class(clazz, all_classes, all_slots)
         ],
@@ -969,6 +974,17 @@ def _get_markdown_docs_for_class(
     )
 
     return class_markdown
+
+
+def _get_slot_description(slot: SlotDefinition) -> str:
+    description = slot.description or ""
+    if slot.multivalued:
+        if any(description):
+            description += os.linesep
+
+        description += "Use the pipe symbol `|` to separate multiple values."
+
+    return _escape_description_strings_table_cell(description)
 
 
 if __name__ == "__main__":

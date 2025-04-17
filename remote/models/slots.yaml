@@ -5,7 +5,6 @@ prefixes:
   linkml: https://w3id.org/linkml/
   schema: https://schema.org/
   mbo: https://w3id.org/marco-bolo/
-  qudt-unit: http://qudt.org/vocab/unit/
 imports:
   - linkml:types
   - ./classes
@@ -75,11 +74,11 @@ slots:
       The [Action](#action) which resulted in this metadata record being described.
 
       Is likely to be the Action associated with a MARCO-BOLO Task.
-
-      Uses the <https://w3id.org/marco-bolo/isResultOf> predicate but ultimately ends up being 
-      represented as a triple in the form `<action> schema:result <this-entity>`.
     range: Action
     slot_uri: mbo:isResultOf
+    comments: |
+      Uses the <https://w3id.org/marco-bolo/isResultOf> predicate but ultimately ends up being 
+      represented as a triple in the form `<action> schema:result <this-entity>`.
 
   # Generic creative work slots
   publishingStatusMboId:
@@ -126,11 +125,11 @@ slots:
     multivalued: false
     description: |
       The Permanent Identifier of an person or organization who owns the entity.
-
-      TODO: I'm not sure `schema:copyrightHolder` is the right choice here. 
-            Could use `schema:sourceOrganization` but that isn't that good either.
     range: PersonOrOrganization
     slot_uri: schema:copyrightHolder
+    comments: |
+      TODO: I'm not sure `schema:copyrightHolder` is the right choice here. 
+      Could use `schema:sourceOrganization` but that isn't that good either.
   publisherId:
     title: "Publisher (mPID)"
     required: false
@@ -163,7 +162,8 @@ slots:
     title: "Data Entry Person (mPID - you)"
     required: true
     multivalued: false
-    description: "The Ocean Expert identifier of the person who wrote this metadata record (you)."
+    description: |
+      The MBO Persistent IDentifier (mPID) of the person who entered this row of data.
     range: PersonOrOrganization
     slot_uri: schema:creator
 
@@ -172,7 +172,12 @@ slots:
     title: "Property ID (URL PID)"
     required: false
     multivalued: false
-    description: "The permanent identifer of this property."
+    description: |
+      A URL persistent identifer representing this property.
+
+      e.g. `http://vocab.nerc.ac.uk/collection/P07/current/CFSN0376/`
+
+      This should generally be sourced from [NERC P07 - Climate and Forecast Standard Names](https://vocab.nerc.ac.uk/collection/P07).
     range: uri
     slot_uri: schema:propertyID
   measurementMethod:
@@ -190,6 +195,14 @@ slots:
       A textual descripion of the measurement technique.
     range: string
     slot_uri: schema:measurementTechnique
+  value:
+    title: "Value"
+    required: false
+    multivalued: false
+    description: |
+      The single value observed.
+    range: decimal
+    slot_uri: schema:value
   minValue:
     title: "Min Value"
     required: false
@@ -206,17 +219,17 @@ slots:
       The maximum value observed.
     range: decimal
     slot_uri: schema:maxValue
-  unitQudtId:
-    title: "Unit Code (QUDT Code)"
+  unitId:
+    title: "Units (URL PIDs)"
     required: false
-    multivalued: false
+    multivalued: true
     description: |
-      The QUDT Code for the unit of measurement.
+      One or more URL Persistent Identifers in which the min/max/values are recorded.
 
-      For example, for the QUDT unit <http://qudt.org/vocab/unit/NUM-PER-KiloM2> (Number per square kilometre), you should input `NUM-PER-KiloM2`.
+      e.g. `http://vocab.nerc.ac.uk/collection/P06/current/UPMM/`, `http://qudt.org/vocab/unit/NUM-PER-M3`, or `http://vocab.nerc.ac.uk/collection/P06/current/UPMM/|http://qudt.org/vocab/unit/NUM-PER-M3`.
 
-      See <https://www.qudt.org/doc/2025/01/DOC_VOCAB-UNITS.html> for a full list of available units.
-    implicit_prefix: qudt-unit
+      The primary source of units should be [NERC P06: BODC-approved data storage units](https://vocab.nerc.ac.uk/collection/P06). 
+      If a suitable unit cannot be found there, then a more general unit can be chosen from [QUDT](https://www.qudt.org/doc/2025/01/DOC_VOCAB-UNITS.html).
     range: uri
     pattern: "^[A-Za-z0-9-_]+$"
     slot_uri: schema:unitCode
@@ -519,12 +532,12 @@ slots:
     title: "Implementation Tips (mPIDs)"
     description: |
       MBO identifiers pointing to tips which detail parameters and other configuration used in the step.
-
-      TODO: This could be `schema:itemListElement`, but I prefer `schema:usageInfo` for our use-case.
     required: false
     multivalued: true
     range: HowToTip
     slot_uri: schema:usageInfo
+    comments: |
+      TODO: This could be `schema:itemListElement`, but I prefer `schema:usageInfo` for our use-case.
 
   # SoftwareSourceCode slots
   codeRepositoryUrl:
@@ -696,7 +709,7 @@ slots:
     description: |
       schema.org expects lat long (Y X) coordinate order followed by a radius in metres.
 
-      For example `-30.0 +10.0 -600.0`.
+      For example `-30.0 +10.0 600.0`.
     required: false
     multivalued: false
     range: string

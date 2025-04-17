@@ -99,6 +99,18 @@
             }
         },
         {
+            "name": "value",
+            "titles": {
+                "en": [
+                    "Value"
+                ]
+            },
+            "propertyUrl": "https://schema.org/value",
+            "datatype": {
+                "base": "decimal"
+            }
+        },
+        {
             "name": "minValue",
             "titles": {
                 "en": [
@@ -123,17 +135,17 @@
             }
         },
         {
-            "name": "unitQudtId",
+            "name": "unitId",
             "titles": {
                 "en": [
-                    "Unit Code (QUDT Code)"
+                    "Units (URL PIDs)"
                 ]
             },
             "propertyUrl": "https://schema.org/unitCode",
-            "valueUrl": "http://qudt.org/vocab/unit/{+unitQudtId}",
+            "separator": "|",
             "datatype": {
-                "base": "string",
-                "format": "^[A-Za-z0-9-_]+$"
+                "@id": "https://w3id.org/marco-bolo/ConvertIriToNode",
+                "base": "string"
             }
         },
         {
