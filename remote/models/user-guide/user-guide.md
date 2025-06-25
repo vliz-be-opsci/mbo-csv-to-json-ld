@@ -8,17 +8,21 @@ This is a metadata publishing tool developed for **[Work Package 1 (WP1)](https:
 
 Why was this tool created? [Answer]
 
-## Conceptually how does it work?
-
 ## 🛠 How the Tool Works
 
 This tool helps you turn metadata stored in **CSV files** into a format that can be read by machines and shared widely across the web — specifically, in a format called **JSON-LD**, which follows the **Schema.org** standard.
 
+### Documentation
+
+- [Rendered model documentation](http://lab.marcobolo-project.eu/csv-to-json-ld/index.html)
+
 To make all this possible, the tool brings together four key technologies:
+
+### Step By Step Explanation
 
 ---
 
-### 📘 1. LinkML: The Blueprint
+#### 📘 1. LinkML: The Blueprint
 
 **LinkML** (Linked Modeling Language) is used to define a _schema_ — basically, a blueprint that tells us:
 - what kinds of metadata we expect (e.g., dataset title, creator, location)
@@ -29,7 +33,7 @@ We use LinkML to write these rules in a way that can be both human- and machine-
 
 ---
 
-### 📄 2. CSV-W: Structured Spreadsheets
+#### 📄 2. CSV-W: Structured Spreadsheets
 
 Most people are comfortable using spreadsheets, so we use **CSV files** to collect metadata. But plain CSV files don’t include descriptions of what each column means. That’s where **CSV-W** (CSV on the Web) comes in.
 
@@ -41,7 +45,7 @@ This lets us treat CSV files like structured, interoperable datasets — not jus
 
 ---
 
-### 🌐 3. W3IDs: Persistent Links
+#### 🌐 3. W3IDs: Persistent Links
 
 Each field or class in the schema — like `creator`, `identifier`, or `dataset` — is assigned a **W3ID** (Web Identifier).
 
@@ -54,7 +58,7 @@ Even if we update the website or move things around, this W3ID will always point
 
 ---
 
-### 🧩 4. Schema.org: Speaking a Common Language
+#### 🧩 4. Schema.org: Speaking a Common Language
 
 When we convert metadata into **JSON-LD**, we map it to **Schema.org** — a vocabulary used by Google, Bing, and many others to understand web content.
 
@@ -167,3 +171,12 @@ ERROR Type: Required in CSV 'file:/work/Person.csv', Row: 3, Column: '5'
 ```
 
 For example, the above message indicates that the 4th and 5th column of the 3rd row (header == row 1) are invalid because they are required fields, but are empty.
+
+## Hosting and Registering JSON-LD with ODIS
+
+*This is is development, as we may have a single endpoint, the MBO GitHub repo, for all MBO JSON-LD to be crawled by ODIS.*
+
+To make your metadata discoverable by ODIS:
+
+1. **Host the generated JSON-LD** at a stable public URL (e.g., through GitHub Pages).
+2. **Register the URL with ODIS** so it can be harvested and indexed.
