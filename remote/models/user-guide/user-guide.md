@@ -10,7 +10,7 @@ Why was this tool created? [Answer]
 
 ## Conceptually how does it work?
 
-## 🛠 How the Tool Works (Plain Language)
+## 🛠 How the Tool Works
 
 This tool helps you turn metadata stored in **CSV files** into a format that can be read by machines and shared widely across the web — specifically, in a format called **JSON-LD**, which follows the **Schema.org** standard.
 
@@ -113,7 +113,7 @@ There are multiple ways you could use this tool on GitHub and on your local mach
 1. On your GitHub fork, click the `Contribute` button and select 'Open pull request'.
 1. Add a meaningful title and description of the changes you have made.
 1. Click `Reviewers` to select a WP1 Team member to review and approve your changes.
-1. Click `Create puill request`
+1. Click `Create pull request`
 
 ### 4. Your work will be reviewed and merged with this central repository, which will be registered with ODIS.
 
