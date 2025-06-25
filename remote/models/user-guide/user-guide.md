@@ -122,3 +122,48 @@ There are multiple ways you could use this tool on GitHub and on your local mach
 1. A WP1 Team member will review your changes and communicate with you via GitHub about any changes that need to be made. 
 1. From here, we need to figure out if the JSON-LD files should have been generated on their fork, or if we do them after merging.
 1. If the latter, this would be part of the review process since it will have to clear validation to create the JSON-LD.
+
+### GitHub.dev approach
+
+1. GitHub offers an environment for editing the CSV files. The advantage of working in this space is you avoid local copies of the files. The disadvantage is you have a limited set of CSV editing functions.
+1. To access this environment, go to `https://github.dev/your-github-username/csv-to-json-ld`
+1. Sign in to GitHub when prompted and authorize GitHub.dev to access your account.
+1. If this is your first time, click on the `Extensions` icon (a group of stacked squares) and install the “Excel Viewer” extension from MESCIUS. This enables spreadsheet-style editing of CSV files.
+1. Tick the box: “Use this profile as the default for new windows”. This configures your browser to open CSVs with a table-based view.
+1. You may need to open the CSV by right-clicking on the file and clicke `open with` > `CSV Editor Excel Viewer`. You and can make this the default open option for CSVs via the same menu.
+
+
+## Validating through GitHub Actions
+
+**This is most relevant to the WP1 team, who will likely be supervising validation**
+
+The workflow for validating the CSVs and generating the JSON-LD can be found here: https://github.com/marco-bolo/csv-to-json-ld/blob/main/.github/workflows/build-jsonld.yaml  Currently it runs in response to any push or pull request. We may eventually switch to a manual trigger to give us more control over validation and iteration.
+
+When the workflows are triggered, it will be logged in the GitHub `Actions` tab. If you click on `Actions` you will see the various workflows on the left hand side.  Click on `Build JSON-LD` to view any runs of this workflow. Your run will be titled by the commit title. If you are unsure if it is *your* build, you can filter by `Actor` on the right hand side of the table.
+
+A green check mark (✅) to the left of your build means your changes passed validation. A red cross (❌) means there were errors.
+
+### I passed validation (✅), what next?
+
+Download Your JSON-LD Output. If you click on the build title, it will bring you to the page for that build. At the bottom are `Artifacts`, or files that were produced by the GitHub Action.  In the build results, click `schema-org-jsonld-outputs` to download the output as a zip file. 
+
+Note: These artifacts are temporary and will expire after 90 days. Be sure to store the files elsewhere for long-term access.
+
+*we need to decide what happens next*
+
+### I failed validation (❌), what next?
+
+Review the build logs. If you click on the build title, it will bring you to the page for that build. At the bottom of a failed GitHub Action are `Annotations`. If you click on the item(s) under annotations, it will bring you to the log of the build. You will be brought to the last error in the log and can scroll to review. You can also expand other sections of the log by clicking on the title of the section (e.g. 'Post Checkout').
+
+The log should include a summary of the erros that looks like this:
+
+```
+Errors detected:
+
+When validating remote/Person.csv-metadata.json
+
+ERROR Type: Required in CSV 'file:/work/Person.csv', Row: 3, Column: '4'
+ERROR Type: Required in CSV 'file:/work/Person.csv', Row: 3, Column: '5'
+```
+
+For example, the above message indicates that the 4th and 5th column of the 3rd row (header == row 1) are invalid because they are required fields, but are empty.
