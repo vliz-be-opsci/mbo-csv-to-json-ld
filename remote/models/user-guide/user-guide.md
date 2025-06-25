@@ -139,7 +139,7 @@ There are multiple ways you could use this tool on GitHub and on your local mach
 
 ## Validating through GitHub Actions
 
-**This is most relevant to the WP1 team, who will likely be supervising validation**
+*This is most relevant to the WP1 team, who will likely be supervising validation*
 
 The workflow for validating the CSVs and generating the JSON-LD can be found here: https://github.com/marco-bolo/csv-to-json-ld/blob/main/.github/workflows/build-jsonld.yaml  Currently it runs in response to any push or pull request. We may eventually switch to a manual trigger to give us more control over validation and iteration.
 
