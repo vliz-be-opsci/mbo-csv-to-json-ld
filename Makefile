@@ -50,10 +50,6 @@ dockersetup:
 	@docker pull $(MBO_TOOLS_DOCKER)
 	@echo "" ; 
 
-out/validation/person-or-organization.csv: Person.csv Organization.csv 
-	@mkdir -p out/validation
-	@$(UNION_UNIQUE_IDENTIFIERS) --out out/validation/person-or-organization.csv --column-name "MBO Permanent Identifier*" Person.csv Organization.csv
-
 validate: $(CSVW_METADATA_VALIDATION_FILES) $(MANUAL_FOREIGN_KEY_VALIDATION_LOGS)
 	@EXIT_CODE=0; \
 	 for file in $$(find out/validation/*.err.log); \
