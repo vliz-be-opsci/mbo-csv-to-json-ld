@@ -113,8 +113,8 @@ There are multiple ways you could use this tool on GitHub and on your local mach
 1. There are a variety of ways you can do this. Here are our recommendations:
 	1. If you are savvy with GitHub, clone your copy locally, use your editor of choice to update the CSV files and push the updates to your fork.
 	1. If you are unfamiliar with GitHub, download a local zip file of the repo, by clicking the green `Code` button and selecting `Download ZIP`. Alternatively you can go to: `https://github.com/your-github-username/csv-to-json-ld/archive/refs/heads/main.zip`
-	1. Unzip the downloaded file, and use your editor of choice to make updates to the CSV files.
-	1. Upload the CSV files that have changed to your GitHub fork by clicking the `Add file` button and selecting `Upload files`. Include a meaningful 'commit' message describing the changes you have made. As long as the file name is the same, it will overwrite the copy that is hosted on GitHub.
+		1. Unzip the downloaded file, and use your editor of choice to make updates to the CSV files.
+		1. Upload the CSV files that have changed to your GitHub fork by clicking the `Add file` button and selecting `Upload files`. Include a meaningful 'commit' message describing the changes you have made. As long as the file name is the same, it will overwrite the copy that is hosted on GitHub.
 
 ### 3 Submit a Pull Request to the original MARCO-BOLO repository.
 
