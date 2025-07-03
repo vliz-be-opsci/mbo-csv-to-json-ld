@@ -13,7 +13,7 @@ This is a metadata publishing tool developed for **[Work Package 1 (WP1)](https:
 
 ## Why was this tool created?
 
-The **MARCO-BOLO** project aims to align with the IOC Data Architecture and ensure the discoverability of knowledge artifacts through **ODIS** and **JSON-LD** metadata.  To ease the burden on **MARCO-BOLO** researchers and not require familiarity with **JSON-LD** this tool allows the generation of compliant files from CSV whilst still meeting the overarching aims of the **MARCO-BOLO** Data Management Plan.
+The **MARCO-BOLO** project aims to align with the IOC Data Architecture and ensure the discoverability of knowledge artifacts through **ODIS** and **JSON-LD** metadata.  To ease the burden on **MARCO-BOLO** researchers and not require familiarity with **JSON-LD** this tool allows the generation of compliant files from CSV whilst still meeting the overarching aims of the [**MARCO-BOLO** Data Management Plan](https://zenodo.org/records/8208410).
 
 ## 🛠 How the Tool Works
 
