@@ -11,7 +11,9 @@ This project is open source and licensed under the MIT License.
 
 This is a metadata publishing tool developed for **[Work Package 1 (WP1)](https://marcobolo-project.eu/work-packages/work-package-1)** of the [**MARCO-BOLO** project](https://marcobolo-project.eu/) (MARine COastal BiOdiversity Long-term Observations). WP1 focuses on data literacy and metadata flow across the project. This tool helps researchers and data managers transform metadata from CSV files into **JSON-LD** conforming to **Schema.org** and ready for harvesting by the [ODIS Catalog](https://catalog.odis.org/).
 
-Why was this tool created? [Answer]
+## Why was this tool created?
+
+The **MARCO-BOLO** project aims to align with the IOC Data Architecture and ensure the discoverability of knowledge artifacts through **ODIS** and **JSON-LD** metadata.  To ease the burden on **MARCO-BOLO** researchers and not require familiarity with **JSON-LD** this tool allows the generation of compliant files from CSV whilst still meeting the overarching aims of the **MARCO-BOLO** Data Management Plan.
 
 ## 🛠 How the Tool Works
 
