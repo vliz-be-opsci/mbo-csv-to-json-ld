@@ -521,3 +521,15 @@ These relationships apply to *every other table* as well. No table stands alone 
 | SoftwareSourceCode  | PersonOrOrganization        | ownerId                       | No            |
 | SoftwareSourceCode  | PersonOrOrganization        | publisherId                   | No            |
 | SoftwareSourceCode  | PublishingStatusDefinedTerm | publishingStatusMboId         | No            |
+
+## FAQs
+
+1. I want to update a value, like an mPID. What's the best approach to do this quickly across all the CSV files?
+> A traditional 'find and replace' works well, but can only be done on a local copy of the repo. A suggested approach is:
+> 1. Open the directory in visual studio code
+> 1. Press Ctrl-Shift-F (or whatever Mac equivalent there is)
+> 1. Put the old mPID in the find box
+> 1. Put the new mPID in the replace box
+> 1. Target the replacement to only consider *.csv files.
+> 1. Verify the replacements suggested are sensible.
+> 1. Perform the find-and-replace.
