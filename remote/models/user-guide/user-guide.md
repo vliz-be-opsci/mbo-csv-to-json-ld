@@ -143,6 +143,13 @@ There are multiple ways you could use this tool on GitHub and on your local mach
 1. Tick the box: “Use this profile as the default for new windows”. This configures your browser to open CSVs with a table-based view.
 1. You may need to open the CSV by right-clicking on the file and clicke `open with` > `CSV Editor Excel Viewer`. You and can make this the default open option for CSVs via the same menu.
 
+### Local approach
+
+1. If you would like to run this locally, you can clone it to your computer and run the `make` commands in a terminal.
+1. To run the entire workflow, execute `make all`.
+1. Important notes:
+   1. Docker desktop also needs to be installed and running for the local build to work.
+   2. On a MacOS, you make need to update `make` or install `gmake`.
 
 ## Validating through GitHub Actions
 
