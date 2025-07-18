@@ -98,61 +98,65 @@
             "valueUrl": "https://w3id.org/marco-bolo/{+howToPerformActionMboId}"
         },
         {
-            "name": "participantIds",
-            "titles": {
+              "name": "participantIds",
+              "titles": {
                 "en": [
-                    "Participants (mPIDs)"
+                  "Participants (mPIDs)"
                 ]
-            },
-            "propertyUrl": "https://schema.org/participant",
-            "separator": "|",
-            "datatype": {
+              },
+              "propertyUrl": "https://schema.org/participant",
+              "separator": "|",
+              "@type": "array",
+              "datatype": {
                 "@id": "https://w3id.org/marco-bolo/ConvertMboIdToNode",
                 "base": "string"
-            }
-        },
-        {
-            "name": "actionInputPids",
-            "titles": {
-                "en": [
-                    "Inputs (URL PIDs)"
-                ]
+              }
             },
-            "propertyUrl": "https://schema.org/object",
-            "separator": "|",
-            "datatype": {
+        {
+              "name": "actionInputPids",
+              "titles": {
+                "en": [
+                  "Inputs (URL PIDs)"
+                ]
+              },
+              "propertyUrl": "https://schema.org/object",
+              "separator": "|",
+              "@type": "array",
+              "datatype": {
                 "@id": "https://w3id.org/marco-bolo/ConvertIriToNode",
                 "base": "string"
-            }
-        },
-        {
-            "name": "resultingDatasetMboIds",
-            "titles": {
-                "en": [
-                    "Resulting Datasets (mPIDs)"
-                ]
+              }
             },
-            "propertyUrl": "https://schema.org/result",
-            "separator": "|",
-            "datatype": {
+        {
+              "name": "resultingDatasetMboIds",
+              "titles": {
+                "en": [
+                  "Resulting Datasets (mPIDs)"
+                ]
+              },
+              "propertyUrl": "https://schema.org/result",
+              "separator": "|",
+              "@type": "array",
+              "datatype": {
                 "@id": "https://w3id.org/marco-bolo/ConvertMboIdToNode",
                 "base": "string"
-            }
-        },
-        {
-            "name": "childActionMboIds",
-            "titles": {
-                "en": [
-                    "Child Actions (mPIDs)"
-                ]
+              }
             },
-            "propertyUrl": "https://schema.org/result",
-            "separator": "|",
-            "datatype": {
+        {
+              "name": "childActionMboIds",
+              "titles": {
+                "en": [
+                  "Child Actions (mPIDs)"
+                ]
+              },
+              "propertyUrl": "https://schema.org/result",
+              "separator": "|",
+              "@type": "array",
+              "datatype": {
                 "@id": "https://w3id.org/marco-bolo/ConvertMboIdToNode",
                 "base": "string"
-            }
-        },
+              }
+            },
         {
             "virtual": true,
             "propertyUrl": "rdf:type",
