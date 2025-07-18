@@ -1,0 +1,75 @@
+- name: Checkout google_sheets branch
+  uses: actions/checkout@v4
+  with:
+    ref: google_sheets
+
+name: Sync Google Sheet to CSV
+
+on:
+  #schedule:
+  #  - cron: '0 1 * * *'  # 3:00 AM CET/CEST (01:00 UTC)
+  workflow_dispatch:  # allow manual trigger too
+
+jobs:
+  export-sheet-tabs:
+    runs-on: ubuntu-latest
+
+    env:
+      SHEET_ID: 1PBFK3LW3DAdvXdbk2v8bSdtTf87mBhabeeegwRjOBRg  # your Sheet ID
+      CSV_DIR: sheet-sync
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.11
+
+      - name: Install dependencies
+        run: |
+          pip install gspread pandas gspread_dataframe oauth2client
+
+      - name: Authenticate with Google (via service account)
+        env:
+          GOOGLE_CREDENTIALS_JSON: ${{ secrets.GOOGLE_SHEET_SERVICE_ACCOUNT }}
+        run: |
+          mkdir -p ~/.config/gspread
+          echo "$GOOGLE_CREDENTIALS_JSON" > ~/.config/gspread/credentials.json
+
+      - name: Export each sheet tab as CSV
+        run: |
+          python <<EOF
+          import gspread
+          import pandas as pd
+          from gspread_dataframe import get_as_dataframe
+          import os
+
+          gc = gspread.service_account()
+          sh = gc.open_by_key("${{ env.SHEET_ID }}")
+          os.makedirs("${{ env.CSV_DIR }}", exist_ok=True)
+
+          for worksheet in sh.worksheets():
+              name = worksheet.title
+              df = get_as_dataframe(worksheet, evaluate_formulas=True, header=0)
+              df.dropna(how="all", inplace=True)
+              path = f"${{ env.CSV_DIR }}/{name}.csv"
+              df.to_csv(path, index=False)
+              print(f"✅ Exported tab '{name}' to '{path}'")
+          EOF
+
+      - name: Commit updated CSVs
+        run: |
+
+  git config user.name "github-actions[bot]"
+    git config user.email "github-actions[bot]@users.noreply.github.com"
+    git add $CSV_DIR/*.csv
+  
+    if git diff --cached --quiet; then
+      echo "🟢 No changes to commit."
+    else
+      TIMESTAMP=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
+      git commit -m "Sync Google Sheet tabs as CSV — $TIMESTAMP"
+      git push origin HEAD:google_sheets
+    fi
