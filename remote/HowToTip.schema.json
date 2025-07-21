@@ -153,6 +153,13 @@
                 "resource": "../Action.csv",
                 "columnReference": "id"
             }
-        }
+        },
+        {
+              "columnReference": "audienceMboIds",
+              "reference": {
+                "resource": "../out/Audience.csv",
+                "columnReference": "id"
+              }
+}
     ]
 }

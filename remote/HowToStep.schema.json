@@ -245,6 +245,63 @@
                 "resource": "../Action.csv",
                 "columnReference": "id"
             }
+        },
+        {
+          "columnReference": "contributorIds",
+          "reference": {
+            "resource": "../out/validation/person-or-organization.csv",
+            "columnReference": "id"
+          }
+        },
+        {
+          "columnReference": "providerId",
+          "reference": {
+            "resource": "../out/validation/person-or-organization.csv",
+            "columnReference": "id"
+          }
+        },
+        {
+          "columnReference": "citeSourceCodeMboIds",
+          "reference": {
+            "resource": "../SoftwareSourceCode.csv",
+            "columnReference": "id"
+          }
+        },
+        {
+          "columnReference": "citeSoftwareApplicationMboIds",
+          "reference": {
+            "resource": "../SoftwareApplication.csv",
+            "columnReference": "id"
+          }
+        },
+        {
+          "columnReference": "citeServiceMboIds",
+          "reference": {
+            "resource": "../Service.csv",
+            "columnReference": "id"
+          }
+        },
+        {
+          "columnReference": "childStepMboIds",
+          "reference": {
+            "resource": "../HowToStep.csv",
+            "columnReference": "id"
+          }
+        },
+        {
+          "columnReference": "howToImplementTipMboIds",
+          "reference": {
+            "resource": "../HowToTip.csv",
+            "columnReference": "id"
+          }
+        },
+        {
+          "columnReference": "audienceMboIds",
+          "reference": {
+            "resource": "../Audience.csv",
+            "columnReference": "id"
+          }
         }
+
     ]
 }

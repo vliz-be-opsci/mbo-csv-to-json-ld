@@ -320,6 +320,63 @@
                 "resource": "../Dataset.csv",
                 "columnReference": "id"
             }
+        },
+        {
+          "columnReference": "publishingStatusMboId",
+          "reference": {
+            "resource": "../PublishingStatusDefinedTerm.csv",
+            "columnReference": "id"
+          }
+        },
+        {
+          "columnReference": "authorId",
+          "reference": {
+            "resource": "../out/validation/person-or-organization.csv",
+            "columnReference": "id"
+          }
+        },
+        {
+          "columnReference": "contributorIds",
+          "reference": {
+            "resource": "../out/validation/person-or-organization.csv",
+            "columnReference": "id"
+          }
+        },
+        {
+          "columnReference": "ownerId",
+          "reference": {
+            "resource": "../out/validation/person-or-organization.csv",
+            "columnReference": "id"
+          }
+        },
+        {
+          "columnReference": "maintainerId",
+          "reference": {
+            "resource": "../out/validation/person-or-organization.csv",
+            "columnReference": "id"
+          }
+        },
+        {
+          "columnReference": "publisherId",
+          "reference": {
+            "resource": "../out/validation/person-or-organization.csv",
+            "columnReference": "id"
+          }
+        },
+        {
+          "columnReference": "licenseMboId",
+          "reference": {
+            "resource": "../License.csv",
+            "columnReference": "id"
+          }
+        },
+        {
+          "columnReference": "audienceMboIds",
+          "reference": {
+            "resource": "../Audience.csv",
+            "columnReference": "id"
+          }
         }
+
     ]
 }

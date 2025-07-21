@@ -171,6 +171,28 @@
                 "resource": "../Action.csv",
                 "columnReference": "id"
             }
+        },
+        {
+          "columnReference": "worksForOrganizationMboIds",
+          "reference": {
+            "resource": "../Organization.csv",
+            "columnReference": "id"
+          }
+        },
+        {
+          "columnReference": "affiliatedOrganizationMboIds",
+          "reference": {
+            "resource": "../Organization.csv",
+            "columnReference": "id"
+          }
+        },
+        {
+          "columnReference": "contactPointMboIds",
+          "reference": {
+            "resource": "../ContactPoint.csv",
+            "columnReference": "id"
+          }
         }
+
     ]
 }

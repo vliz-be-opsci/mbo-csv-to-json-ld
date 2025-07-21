@@ -165,6 +165,21 @@
                 "resource": "../Organization.csv",
                 "columnReference": "id"
             }
+        },
+        {
+          "columnReference": "audienceMboIds",
+          "reference": {
+            "resource": "../Audience.csv",
+            "columnReference": "id"
+          }
+        },
+        {
+          "columnReference": "placesServedMboIds",
+          "reference": {
+            "resource": "../Place.csv",
+            "columnReference": "id"
+          }
         }
+
     ]
 }

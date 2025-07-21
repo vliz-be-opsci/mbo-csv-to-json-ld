@@ -150,6 +150,14 @@
                 "resource": "../Action.csv",
                 "columnReference": "id"
             }
+        },
+        {
+          "columnReference": "geoShapeMboId",
+          "reference": {
+            "resource": "../GeoShape.csv",
+            "columnReference": "id"
+          }
         }
+
     ]
 }

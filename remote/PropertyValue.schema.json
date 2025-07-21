@@ -222,6 +222,14 @@
                 "resource": "../Action.csv",
                 "columnReference": "id"
             }
+        },
+        {
+          "columnReference": "isTypeOfPropertyValueMboId",
+          "reference": {
+            "resource": "../PropertyValue.csv",
+            "columnReference": "id"
+          }
         }
+
     ]
 }

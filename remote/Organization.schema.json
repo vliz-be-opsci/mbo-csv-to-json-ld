@@ -277,6 +277,42 @@
                 "resource": "../Action.csv",
                 "columnReference": "id"
             }
+        },
+        {
+          "columnReference": "contactPointMboIds",
+          "reference": {
+            "resource": "../ContactPoint.csv",
+            "columnReference": "id"
+          }
+        },
+        {
+          "columnReference": "parentOrganizationMboId",
+          "reference": {
+            "resource": "../Organization.csv",
+            "columnReference": "id"
+          }
+        },
+        {
+          "columnReference": "memberOfOrganizationMboIds",
+          "reference": {
+            "resource": "../Organization.csv",
+            "columnReference": "id"
+          }
+        },
+        {
+          "columnReference": "departmentMboIds",
+          "reference": {
+            "resource": "../Organization.csv",
+            "columnReference": "id"
+          }
+        },
+        {
+          "columnReference": "fundingGrantMboIds",
+          "reference": {
+            "resource": "../MonetaryGrant.csv",
+            "columnReference": "id"
+          }
         }
+
     ]
 }

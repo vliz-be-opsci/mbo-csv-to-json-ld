@@ -190,6 +190,21 @@
                 "resource": "../Action.csv",
                 "columnReference": "id"
             }
+        },
+        {
+          "columnReference": "funderOrganizationMboIds",
+          "reference": {
+            "resource": "../out/validation/person-or-organization.csv",
+            "columnReference": "id"
+          }
+        },
+        {
+          "columnReference": "sponsorOrganizationMboIds",
+          "reference": {
+            "resource": "../out/validation/person-or-organization.csv",
+            "columnReference": "id"
+          }
         }
+
     ]
 }
