@@ -11,7 +11,7 @@ jobs:
 
     env:
       SHEET_ID: 1PBFK3LW3DAdvXdbk2v8bSdtTf87mBhabeeegwRjOBRg
-      CSV_DIR: sheet-sync
+      CSV_DIR: .  # This sets the directory for writing the CVSs to the repo. Currently the root directory.
       GOOGLE_PROJECT_ID: mbo-wp1-csv-to-json-ld
       GOOGLE_POOL_ID: github
       GOOGLE_PROVIDER_ID: github
