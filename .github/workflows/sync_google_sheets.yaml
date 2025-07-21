@@ -1,13 +1,14 @@
 name: Sync Google Sheet to CSV
 
 on:
-  permissions:
-  id-token: write  # required for OIDC
-  contents: read   # required to checkout repo
   workflow_dispatch:  # allow manual trigger
   # schedule:
   #   - cron: '0 1 * * *'  # 3:00 AM CET/CEST (01:00 UTC)
 
+permissions:
+    id-token: write  # required for OIDC
+    contents: read   # required to checkout repo
+    
 jobs:
   export-sheet-tabs:
     runs-on: ubuntu-latest
