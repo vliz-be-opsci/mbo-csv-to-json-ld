@@ -55,8 +55,7 @@ jobs:
 
           token = os.environ.get("GOOGLE_ACCESS_TOKEN")
           creds = Credentials(token=token)
-          gc = gspread.Client(auth=creds)
-          gc.session.headers.update({"Authorization": f"Bearer {token}"})
+          gc = gspread.authorize(creds)
 
           sh = gc.open_by_key("${{ env.SHEET_ID }}")
           os.makedirs("${{ env.CSV_DIR }}", exist_ok=True)
