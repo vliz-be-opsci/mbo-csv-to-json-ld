@@ -119,7 +119,7 @@
                 ]
             }
             },
-            "propertyUrl": "https://schema.org/object",
+            {"propertyUrl": "https://schema.org/object",
             "separator": "|",
             "datatype": {
                 "@id": "https://w3id.org/marco-bolo/ConvertIriToNode",
