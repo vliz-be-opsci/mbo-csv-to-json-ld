@@ -209,6 +209,34 @@
                 "resource": "../out/validation/person-or-organization.csv",
                 "columnReference": "id"
             }
+        },
+        {
+            "columnReference": "howToPerformActionMboId",
+            "reference": {
+                "resource": "../HowTo.csv",
+                "columnReference": "id"
+            }
+        },
+        {
+            "columnReference": "participantIds",
+            "reference": {
+                "resource": "../out/validation/person-or-organization.csv",
+                "columnReference": "id"
+            }
+        },
+        {
+            "columnReference": "resultingDatasetMboIds",
+            "reference": {
+                "resource": "../Dataset.csv",
+                "columnReference": "id"
+            }
+        },
+        {
+            "columnReference": "childActionMboIds",
+            "reference": {
+                "resource": "../Action.csv",
+                "columnReference": "id"
+            }
         }
     ]
 }
