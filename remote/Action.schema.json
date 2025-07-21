@@ -98,65 +98,61 @@
             "valueUrl": "https://w3id.org/marco-bolo/{+howToPerformActionMboId}"
         },
         {
-              "name": "participantIds",
-              "titles": {
+            "name": "participantIds",
+            "titles": {
                 "en": [
-                  "Participants (mPIDs)"
+                    "Participants (mPIDs)"
                 ]
-              },
-              "propertyUrl": "https://schema.org/participant",
-              "separator": "|",
-              "@type": "array",
-              "datatype": {
+            },
+            "propertyUrl": "https://schema.org/participant",
+            "separator": "|",
+            "datatype": {
                 "@id": "https://w3id.org/marco-bolo/ConvertMboIdToNode",
                 "base": "string"
-              }
-            },
+            }
+        },
         {
-              "name": "actionInputPids",
-              "titles": {
+            "name": "actionInputPids",
+            "titles": {
                 "en": [
-                  "Inputs (URL PIDs)"
+                    "Inputs (URL PIDs)"
                 ]
-              },
-              "propertyUrl": "https://schema.org/object",
-              "separator": "|",
-              "@type": "array",
-              "datatype": {
+            },
+            "propertyUrl": "https://schema.org/object",
+            "separator": "|",
+            "datatype": {
                 "@id": "https://w3id.org/marco-bolo/ConvertIriToNode",
                 "base": "string"
-              }
-            },
+            }
+        },
         {
-              "name": "resultingDatasetMboIds",
-              "titles": {
+            "name": "resultingDatasetMboIds",
+            "titles": {
                 "en": [
-                  "Resulting Datasets (mPIDs)"
+                    "Resulting Datasets (mPIDs)"
                 ]
-              },
-              "propertyUrl": "https://schema.org/result",
-              "separator": "|",
-              "@type": "array",
-              "datatype": {
+            },
+            "propertyUrl": "https://schema.org/result",
+            "separator": "|",
+            "datatype": {
                 "@id": "https://w3id.org/marco-bolo/ConvertMboIdToNode",
                 "base": "string"
-              }
-            },
+            }
+        },
         {
-              "name": "childActionMboIds",
-              "titles": {
+            "name": "childActionMboIds",
+            "titles": {
                 "en": [
-                  "Child Actions (mPIDs)"
+                    "Child Actions (mPIDs)"
                 ]
-              },
-              "propertyUrl": "https://schema.org/result",
-              "separator": "|",
-              "@type": "array",
-              "datatype": {
+            },
+            "propertyUrl": "https://schema.org/result",
+            "separator": "|",
+            "datatype": {
                 "@id": "https://w3id.org/marco-bolo/ConvertMboIdToNode",
                 "base": "string"
-              }
-            },
+            }
+        },
         {
             "virtual": true,
             "propertyUrl": "rdf:type",
@@ -210,34 +206,6 @@
             "columnReference": "agentId",
             "reference": {
                 "resource": "../out/validation/person-or-organization.csv",
-                "columnReference": "id"
-            }
-        },
-        {
-            "columnReference": "howToPerformActionMboId",
-            "reference": {
-                "resource": "../HowTo.csv",
-                "columnReference": "id"
-            }
-        },
-        {
-            "columnReference": "participantIds",
-            "reference": {
-                "resource": "../out/validation/person-or-organization.csv",
-                "columnReference": "id"
-            }
-        },
-        {
-            "columnReference": "resultingDatasetMboIds",
-            "reference": {
-                "resource": "../Dataset.csv",
-                "columnReference": "id"
-            }
-        },
-        {
-            "columnReference": "childActionMboIds",
-            "reference": {
-                "resource": "../Action.csv",
                 "columnReference": "id"
             }
         }
