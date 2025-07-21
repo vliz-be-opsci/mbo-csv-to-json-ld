@@ -52,24 +52,22 @@ jobs:
           import pandas as pd
           from gspread_dataframe import get_as_dataframe
       
-          # Read the access token from the GitHub-provided environment variable
+          # Get Google access token from environment
           token = os.environ.get("GOOGLE_ACCESS_TOKEN")
       
-          # Create a requests session with the Bearer token
+          # Create a requests session with Bearer token
           session = requests.Session()
           session.headers.update({"Authorization": f"Bearer {token}"})
       
-          # Initialize gspread with the custom session
-          gc = gspread.Client(auth=None)
-          gc.session = session
+          # Inject the session directly into gspread.Client
+          gc = gspread.Client(auth=object(), session=session)
       
-          # Access the shared sheet
+          # Access the spreadsheet
           sh = gc.open_by_key("${{ env.SHEET_ID }}")
       
-          # Output directory
+          # Create output directory
           os.makedirs("${{ env.CSV_DIR }}", exist_ok=True)
       
-          # Export each tab
           for worksheet in sh.worksheets():
               name = worksheet.title
               df = get_as_dataframe(worksheet, evaluate_formulas=True, header=0)
@@ -78,6 +76,7 @@ jobs:
               df.to_csv(path, index=False)
               print(f"✅ Exported tab '{name}' to '{path}'")
           EOF
+
 
       - name: Commit updated CSVs
         run: |
