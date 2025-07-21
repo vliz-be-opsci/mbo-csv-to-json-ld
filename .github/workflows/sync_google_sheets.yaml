@@ -43,6 +43,13 @@ jobs:
         run: |
           pip install gspread pandas gspread_dataframe google-auth
 
+      - name: Authenticate to Google Cloud via WIF
+        uses: google-github-actions/auth@v2
+        with:
+          token_format: 'access_token'
+          workload_identity_provider: "projects/YOUR_PROJECT_NUMBER/locations/global/workloadIdentityPools/github/providers/github"
+          service_account: github-sheets-reader@YOUR_PROJECT_ID.iam.gserviceaccount.com
+
       - name: Export each sheet tab as CSV
         run: |
           python <<EOF
