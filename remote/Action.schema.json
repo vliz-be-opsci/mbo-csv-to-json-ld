@@ -117,10 +117,19 @@
                 "en": [
                     "Inputs (URL PIDs)"
                 ]
+<<<<<<< HEAD
             },
             "propertyUrl": "https://schema.org/object",
             "separator": "|",
             "datatype": {
+=======
+              },
+              "propertyUrl": "https://schema.org/object",
+              "separator": "|",
+              "@type": "Column",
+              "datatype": {
+                "@type": "array",
+>>>>>>> fbcb53cd81741a7dc2a8928555218f8af1ed02f1
                 "@id": "https://w3id.org/marco-bolo/ConvertIriToNode",
                 "base": "string"
             }
@@ -131,10 +140,19 @@
                 "en": [
                     "Resulting Datasets (mPIDs)"
                 ]
+<<<<<<< HEAD
             },
             "propertyUrl": "https://schema.org/result",
             "separator": "|",
             "datatype": {
+=======
+              },
+              "propertyUrl": "https://schema.org/result",
+              "separator": "|",
+              "@type": "Column",
+              "datatype": {
+                "@type": "array",
+>>>>>>> fbcb53cd81741a7dc2a8928555218f8af1ed02f1
                 "@id": "https://w3id.org/marco-bolo/ConvertMboIdToNode",
                 "base": "string"
             }
@@ -145,10 +163,19 @@
                 "en": [
                     "Child Actions (mPIDs)"
                 ]
+<<<<<<< HEAD
             },
             "propertyUrl": "https://schema.org/result",
             "separator": "|",
             "datatype": {
+=======
+              },
+              "propertyUrl": "https://schema.org/result",
+              "separator": "|",
+              "@type": "Column",
+              "datatype": {
+                "@type": "array",
+>>>>>>> fbcb53cd81741a7dc2a8928555218f8af1ed02f1
                 "@id": "https://w3id.org/marco-bolo/ConvertMboIdToNode",
                 "base": "string"
             }
