@@ -45,6 +45,7 @@ jobs:
 
       - name: Export each sheet tab as CSV
         run: |
+          python <<EOF
           import os
           import gspread
           import pandas as pd
@@ -72,7 +73,7 @@ jobs:
               path = f"${{ env.CSV_DIR }}/{name}.csv"
               df.to_csv(path, index=False)
               print(f"✅ Exported tab '{name}' to '{path}'")
-
+          EOF
 
       - name: Commit updated CSVs
         run: |
