@@ -47,25 +47,29 @@ jobs:
         run: |
           python <<EOF
           import os
+          import requests
           import gspread
           import pandas as pd
-          from google.auth.credentials import Credentials
-          from google.auth.transport.requests import AuthorizedSession
           from gspread_dataframe import get_as_dataframe
-          
-          # Load the OIDC access token from GitHub
+      
+          # Read the access token from the GitHub-provided environment variable
           token = os.environ.get("GOOGLE_ACCESS_TOKEN")
-          creds = Credentials(token=token)
-          authed_session = AuthorizedSession(creds)
-          
-          # Authorize gspread with this session
-          gc = gspread.Client(auth=creds)
-          gc.session = authed_session  # 👈 manually inject the session
-          
-          # Open and process the spreadsheet
+      
+          # Create a requests session with the Bearer token
+          session = requests.Session()
+          session.headers.update({"Authorization": f"Bearer {token}"})
+      
+          # Initialize gspread with the custom session
+          gc = gspread.Client(auth=None)
+          gc.session = session
+      
+          # Access the shared sheet
           sh = gc.open_by_key("${{ env.SHEET_ID }}")
+      
+          # Output directory
           os.makedirs("${{ env.CSV_DIR }}", exist_ok=True)
-          
+      
+          # Export each tab
           for worksheet in sh.worksheets():
               name = worksheet.title
               df = get_as_dataframe(worksheet, evaluate_formulas=True, header=0)
