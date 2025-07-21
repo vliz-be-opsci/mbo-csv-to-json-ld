@@ -1,0 +1,81 @@
+name: Sync Google Sheet to CSV
+
+on:
+  workflow_dispatch:  # allow manual trigger
+  # schedule:
+  #   - cron: '0 1 * * *'  # 3:00 AM CET/CEST (01:00 UTC)
+
+jobs:
+  export-sheet-tabs:
+    runs-on: ubuntu-latest
+
+    env:
+      SHEET_ID: 1PBFK3LW3DAdvXdbk2v8bSdtTf87mBhabeeegwRjOBRg
+      CSV_DIR: .  # This sets the directory for writing the CVSs to the repo. Currently the root directory.
+      GOOGLE_PROJECT_ID: mbo-wp1-csv-to-json-ld
+      GOOGLE_POOL_ID: github
+      GOOGLE_PROVIDER_ID: github
+      GOOGLE_SERVICE_ACCOUNT: github-sheets-reader@mbo-wp1-csv-to-json-ld.iam.gserviceaccount.com
+
+    steps:
+      - name: Checkout google_sheets branch
+        uses: actions/checkout@v4
+        with:
+          ref: google_sheets
+
+      - name: Authenticate to Google Cloud via Workload Identity Federation
+        uses: google-github-actions/auth@v2
+        with:
+          token_format: 'access_token'
+          workload_identity_provider: "projects/137568280356/locations/global/workloadIdentityPools/github/providers/github"
+          service_account: ${{ env.GOOGLE_SERVICE_ACCOUNT }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.11
+
+      - name: Install dependencies
+        run: |
+          pip install gspread pandas gspread_dataframe google-auth
+
+      - name: Export each sheet tab as CSV
+        run: |
+          python <<EOF
+          import os
+          import gspread
+          import pandas as pd
+          from google.auth.transport.requests import Request
+          from google.oauth2.credentials import Credentials
+          from gspread_dataframe import get_as_dataframe
+
+          token = os.environ.get("GOOGLE_ACCESS_TOKEN")
+          creds = Credentials(token=token)
+          gc = gspread.Client(auth=creds)
+          gc.session.headers.update({"Authorization": f"Bearer {token}"})
+
+          sh = gc.open_by_key("${{ env.SHEET_ID }}")
+          os.makedirs("${{ env.CSV_DIR }}", exist_ok=True)
+
+          for worksheet in sh.worksheets():
+              name = worksheet.title
+              df = get_as_dataframe(worksheet, evaluate_formulas=True, header=0)
+              df.dropna(how="all", inplace=True)
+              path = f"${{ env.CSV_DIR }}/{name}.csv"
+              df.to_csv(path, index=False)
+              print(f"✅ Exported tab '{name}' to '{path}'")
+          EOF
+
+      - name: Commit updated CSVs
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add $CSV_DIR/*.csv
+
+          if git diff --cached --quiet; then
+            echo "🟢 No changes to commit."
+          else
+            TIMESTAMP=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
+            git commit -m "Sync Google Sheet tabs as CSV — $TIMESTAMP"
+            git push origin HEAD:google_sheets
+          fi
