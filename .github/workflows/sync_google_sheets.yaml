@@ -1,25 +1,21 @@
 name: Sync Google Sheet to CSV
 
 on:
-  workflow_dispatch:  # allow manual trigger
-  # schedule:
-  #   - cron: '0 1 * * *'  # 3:00 AM CET/CEST (01:00 UTC)
+  workflow_dispatch:
 
 permissions:
-    id-token: write  # required for OIDC
-    contents: read   # required to checkout repo
-    
+  id-token: write
+  contents: write  # Needed to commit CSVs
+
+env:
+  SHEET_ID: 1PBFK3LW3DAdvXdbk2v8bSdtTf87mBhabeeegwRjOBRg
+  CSV_DIR: .
+  GOOGLE_PROJECT_ID: mbo-wp1-csv-to-json-ld
+  GOOGLE_SERVICE_ACCOUNT: github-sheets-reader@mbo-wp1-csv-to-json-ld.iam.gserviceaccount.com
+
 jobs:
   export-sheet-tabs:
     runs-on: ubuntu-latest
-
-    env:
-      SHEET_ID: 1PBFK3LW3DAdvXdbk2v8bSdtTf87mBhabeeegwRjOBRg
-      CSV_DIR: .  # This sets the directory for writing the CVSs to the repo. Currently the root directory.
-      GOOGLE_PROJECT_ID: mbo-wp1-csv-to-json-ld
-      GOOGLE_POOL_ID: github
-      GOOGLE_PROVIDER_ID: github
-      GOOGLE_SERVICE_ACCOUNT: github-sheets-reader@mbo-wp1-csv-to-json-ld.iam.gserviceaccount.com
 
     steps:
       - name: Checkout google_sheets branch
@@ -27,10 +23,13 @@ jobs:
         with:
           ref: google_sheets
 
-      - name: Authenticate to Google Cloud via Workload Identity Federation
+      - name: Authenticate with Google via WIF
+        id: auth
         uses: google-github-actions/auth@v2
         with:
           token_format: 'access_token'
+          access_token_scopes: "https://www.googleapis.com/auth/cloud-platform"
+          create_credentials_file: true
           workload_identity_provider: "projects/137568280356/locations/global/workloadIdentityPools/github/providers/github"
           service_account: ${{ env.GOOGLE_SERVICE_ACCOUNT }}
 
@@ -41,14 +40,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install gspread pandas gspread_dataframe google-auth
-
-      - name: Authenticate to Google Cloud via WIF
-        uses: google-github-actions/auth@v2
-        with:
-          token_format: 'access_token'
-          workload_identity_provider: "projects/YOUR_PROJECT_NUMBER/locations/global/workloadIdentityPools/github/providers/github"
-          service_account: github-sheets-reader@YOUR_PROJECT_ID.iam.gserviceaccount.com
+          pip install gspread pandas gspread_dataframe requests
 
       - name: Export each sheet tab as CSV
         run: |
@@ -58,23 +50,16 @@ jobs:
           import gspread
           import pandas as pd
           from gspread_dataframe import get_as_dataframe
-      
-          # Get Google access token from environment
-          token = os.environ.get("GOOGLE_ACCESS_TOKEN")
-      
-          # Create a requests session with Bearer token
+
+          token = "${{ steps.auth.outputs.access_token }}"
           session = requests.Session()
           session.headers.update({"Authorization": f"Bearer {token}"})
-      
-          # Inject the session directly into gspread.Client
+
           gc = gspread.Client(auth=object(), session=session)
-      
-          # Access the spreadsheet
           sh = gc.open_by_key("${{ env.SHEET_ID }}")
-      
-          # Create output directory
+
           os.makedirs("${{ env.CSV_DIR }}", exist_ok=True)
-      
+
           for worksheet in sh.worksheets():
               name = worksheet.title
               df = get_as_dataframe(worksheet, evaluate_formulas=True, header=0)
@@ -83,7 +68,6 @@ jobs:
               df.to_csv(path, index=False)
               print(f"✅ Exported tab '{name}' to '{path}'")
           EOF
-
 
       - name: Commit updated CSVs
         run: |
