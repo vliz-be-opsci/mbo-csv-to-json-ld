@@ -12,12 +12,23 @@ jobs:
     env:
       SHEET_ID: 1PBFK3LW3DAdvXdbk2v8bSdtTf87mBhabeeegwRjOBRg
       CSV_DIR: sheet-sync
+      GOOGLE_PROJECT_ID: mbo-wp1-csv-to-json-ld
+      GOOGLE_POOL_ID: github
+      GOOGLE_PROVIDER_ID: github
+      GOOGLE_SERVICE_ACCOUNT: github-sheets-reader@mbo-wp1-csv-to-json-ld.iam.gserviceaccount.com
 
     steps:
       - name: Checkout google_sheets branch
         uses: actions/checkout@v4
         with:
           ref: google_sheets
+
+      - name: Authenticate to Google Cloud via Workload Identity Federation
+        uses: google-github-actions/auth@v2
+        with:
+          token_format: 'access_token'
+          workload_identity_provider: "projects/137568280356/locations/global/workloadIdentityPools/github/providers/github"
+          service_account: ${{ env.GOOGLE_SERVICE_ACCOUNT }}
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -26,24 +37,23 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install gspread pandas gspread_dataframe oauth2client
-
-      - name: Authenticate with Google (via service account)
-        env:
-          GOOGLE_CREDENTIALS_JSON: ${{ secrets.GOOGLE_SHEET_SERVICE_ACCOUNT }}
-        run: |
-          mkdir -p ~/.config/gspread
-          echo "$GOOGLE_CREDENTIALS_JSON" > ~/.config/gspread/credentials.json
+          pip install gspread pandas gspread_dataframe google-auth
 
       - name: Export each sheet tab as CSV
         run: |
           python <<EOF
+          import os
           import gspread
           import pandas as pd
+          from google.auth.transport.requests import Request
+          from google.oauth2.credentials import Credentials
           from gspread_dataframe import get_as_dataframe
-          import os
 
-          gc = gspread.service_account()
+          token = os.environ.get("GOOGLE_ACCESS_TOKEN")
+          creds = Credentials(token=token)
+          gc = gspread.Client(auth=creds)
+          gc.session.headers.update({"Authorization": f"Bearer {token}"})
+
           sh = gc.open_by_key("${{ env.SHEET_ID }}")
           os.makedirs("${{ env.CSV_DIR }}", exist_ok=True)
 
