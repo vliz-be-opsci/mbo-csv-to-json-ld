@@ -106,8 +106,9 @@
               },
               "propertyUrl": "https://schema.org/participant",
               "separator": "|",
-              "@type": "array",
+              "@type": "Column",
               "datatype": {
+                "@type": "array",
                 "@id": "https://w3id.org/marco-bolo/ConvertMboIdToNode",
                 "base": "string"
               }
@@ -121,8 +122,9 @@
               },
               "propertyUrl": "https://schema.org/object",
               "separator": "|",
-              "@type": "array",
+              "@type": "Column",
               "datatype": {
+                "@type": "array",
                 "@id": "https://w3id.org/marco-bolo/ConvertIriToNode",
                 "base": "string"
               }
@@ -136,8 +138,9 @@
               },
               "propertyUrl": "https://schema.org/result",
               "separator": "|",
-              "@type": "array",
+              "@type": "Column",
               "datatype": {
+                "@type": "array",
                 "@id": "https://w3id.org/marco-bolo/ConvertMboIdToNode",
                 "base": "string"
               }
@@ -151,8 +154,9 @@
               },
               "propertyUrl": "https://schema.org/result",
               "separator": "|",
-              "@type": "array",
+              "@type": "Column",
               "datatype": {
+                "@type": "array",
                 "@id": "https://w3id.org/marco-bolo/ConvertMboIdToNode",
                 "base": "string"
               }
