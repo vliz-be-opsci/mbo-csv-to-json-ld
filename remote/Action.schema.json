@@ -117,6 +117,7 @@
                 "en": [
                     "Inputs (URL PIDs)"
                 ]
+            }
             },
             "propertyUrl": "https://schema.org/object",
             "separator": "|",
