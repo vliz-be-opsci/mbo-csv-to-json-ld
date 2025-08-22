@@ -18,7 +18,7 @@ slots:
     required: true
     title: "MBO Permanent Identifier"
     description: |
-      An identifier chosen from the range given to your work package by WP1. 
+      An identifier chosen from the range given to your work package by WP1.  
       Note that when inputting into CSV files this should not be the full URI, 
       but just the last part, e.g. `mbo_0000001`.
     range: string
