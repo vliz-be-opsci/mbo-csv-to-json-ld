@@ -13,6 +13,11 @@
             "datatype": {
                 "base": "string",
                 "format": "^mbo_[_0-9a-z]+$"
+            },
+            "dc:description": {
+                "en": [
+                    "This is the permanent identifier (mPID) for this row of the spreadsheet and therefore for whatever object is being described in this row. It should be unique in this column."
+                ]
             }
         },
         {
