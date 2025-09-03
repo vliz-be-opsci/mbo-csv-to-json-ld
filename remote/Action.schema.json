@@ -179,7 +179,7 @@
             },
             "dc:description": {
                 "en": [
-                    "This child action must be defined in the CSV file action.csv. What defines a child action vs a subsequent action is up to you: for example, if you are creating your own datasets from published data, for 2 different parameters, the parent action could be "collating physical parameters" and the child actions could be, '...for CO2', '...for Chla'"
+                    "This child action must be defined in the CSV file action.csv. What defines a child action vs a subsequent action is up to you: for example, if you are creating your own datasets from published data, for 2 different parameters, the parent action could be 'collating physical parameters' and the child actions could be, '...for CO2', '...for Chla'"
                 ]
             }
         },
