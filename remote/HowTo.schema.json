@@ -53,6 +53,20 @@
             }
         },
         {
+            "name": "url",
+            "titles": {
+                "en": [
+                    "URL"
+                ]
+            },
+            "propertyUrl": "https://schema.org/url",
+            "separator": "|",
+            "datatype": {
+                "@id": "https://w3id.org/marco-bolo/url",
+                "base": "string"
+            }
+        },
+        {
             "name": "howToStepMboId",
             "titles": {
                 "en": [
