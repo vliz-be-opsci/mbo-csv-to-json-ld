@@ -198,6 +198,20 @@
             }
         },
         {
+            "name": "url",
+            "titles": {
+                "en": [
+                    "URL"
+                ]
+            },
+            "propertyUrl": "https://schema.org/url",
+            "separator": "|",
+            "datatype": {
+                "@id": "https://w3id.org/marco-bolo/url",
+                "base": "string"
+            }
+        },
+        {
             "virtual": true,
             "propertyUrl": "rdf:type",
             "valueUrl": "https://schema.org/HowToStep"
