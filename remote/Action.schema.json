@@ -42,7 +42,12 @@
             "required": true,
             "propertyUrl": "https://w3id.org/marco-bolo/isResultOf",
             "aboutUrl": "https://w3id.org/marco-bolo/{+id}#input-metadata",
-            "valueUrl": "https://w3id.org/marco-bolo/{+metadataDescribedForActionId}"
+            "valueUrl": "https://w3id.org/marco-bolo/{+metadataDescribedForActionId}",
+            "dc:description": {
+                "en": [
+                    "An identifier chosen by you, possibly from a range assigned by your task, which is unique to the action that resulted in ... Note that you can repeat action ids in multiple rows"
+                ]
+            }
         },
         {
             "name": "name",
@@ -66,7 +71,12 @@
             },
             "required": true,
             "propertyUrl": "https://schema.org/agent",
-            "valueUrl": "https://w3id.org/marco-bolo/{+agentId}"
+            "valueUrl": "https://w3id.org/marco-bolo/{+agentId}",
+            "dc:description": {
+                "en": [
+                    "This identifier must be defined in the CSV file Agent.csv or organisation.csv"
+                ]
+            }
         },
         {
             "name": "abstract",
@@ -100,7 +110,12 @@
                 ]
             },
             "propertyUrl": "https://schema.org/actionProcess",
-            "valueUrl": "https://w3id.org/marco-bolo/{+howToPerformActionMboId}"
+            "valueUrl": "https://w3id.org/marco-bolo/{+howToPerformActionMboId}",
+            "dc:description": {
+                "en": [
+                    "This identifier must be defined in the CSV file HowTo.csv"
+                ]
+            }
         },
         {
             "name": "participantIds",
@@ -128,6 +143,11 @@
             "datatype": {
                 "@id": "https://w3id.org/marco-bolo/ConvertIriToNode",
                 "base": "string"
+            },
+            "dc:description": {
+                "en": [
+            "This should be a URL to a digital object (dataset, publication, etc)"
+                ]
             }
         },
         {
@@ -156,6 +176,11 @@
             "datatype": {
                 "@id": "https://w3id.org/marco-bolo/ConvertMboIdToNode",
                 "base": "string"
+            },
+            "dc:description": {
+                "en": [
+                    "This child action must be defined in the CSV file action.csv. What defines a child action vs a subsequent action is up to you: for example, if you are creating your own datasets from published data, for 2 different parameters, the parent action could be "collating physical parameters" and the child actions could be, '...for CO2', '...for Chla'"
+                ]
             }
         },
         {
