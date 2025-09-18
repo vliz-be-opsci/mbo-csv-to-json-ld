@@ -59,7 +59,11 @@ slots:
     slot_uri: schema:alternateName
     comments: |
       A less commonly used name for the same entity. 
-      For example: DASSH for MBA
+      For example: 
+      `DASSH` for MBA
+      `ICES Survey Protocol` for Manual for the International Bottom Trawl Surveys
+
+
 
   description:
     title: "Description"
