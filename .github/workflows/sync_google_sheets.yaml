@@ -18,10 +18,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout google_sheets branch
-        uses: actions/checkout@v4
-        with:
-          ref: google_sheets
+     - name: Checkout repository
+       uses: actions/checkout@v4
 
       - name: Authenticate with Google via WIF
         id: auth
