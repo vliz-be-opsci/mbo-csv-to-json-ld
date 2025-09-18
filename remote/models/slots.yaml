@@ -723,7 +723,7 @@ slots:
     range: SoftwareApplication
     slot_uri: schema:citation
     comments: |
-      mPID(s) from the first column of SoftwareSourceCode.csv
+      mPID(s) from the first column of SoftwareApplication.csv
       Pipe-delimited when there are multiple values
 
   citeServiceMboIds:
