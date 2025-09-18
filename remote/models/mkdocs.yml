@@ -4,7 +4,7 @@ theme:
 use_directory_urls: false
 nav:
   - User Guide: user-guide.md
-    - Model Revision Protocol: LinkML-model-update-protocol.md
+  - Model Revision Protocol: LinkML-model-update-protocol.md
   - Model Overview: index.md
   - CSV files:
     - Action: Action.md
@@ -13,6 +13,7 @@ nav:
     - DataDownload: DataDownload.md
     - DatasetComment: DatasetComment.md
     - Dataset: Dataset.md
+    - Document: Document.md
     - EmbargoStatement: EmbargoStatement.md
     - GeoShape: GeoShape.md
     - HowTo: HowTo.md
