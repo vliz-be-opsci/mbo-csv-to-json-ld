@@ -536,7 +536,7 @@ def _generate_csv_and_schema_for_class(
         )
 
     basic_schema = {
-        "@context": "http://www.w3.org/ns/csvw",
+        "@context": ["http://www.w3.org/ns/csvw", {"dc": "http://purl.org/dc/terms/"}],
         "columns": column_definitions,
         "aboutUrl": f"{_MBO_PREFIX}{{+{identifier_slot.name}}}",
         "primaryKey": primary_key_definition,
