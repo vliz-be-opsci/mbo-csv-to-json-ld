@@ -257,7 +257,7 @@ def _generate_unioned_identifiers_schema(out_dir: Path):
         out_dir / _REMOTE_DIR_NAME / _UNIONED_IDENTIFIERS_SCHEMA_FILE_NAME, "w+"
     ) as f:
         unioned_identifiers_schema = {
-            "@context": ["http://www.w3.org/ns/csvw", {"dc": "http://purl.org/dc/terms/"}],
+            "@context": "http://www.w3.org/ns/csvw",
             "columns": [
                 {
                     "name": "id",
@@ -377,9 +377,10 @@ def _generate_csv_metadata_documents(
         ]
 
         metadata_document: Dict[str, Any] = {
-            "@context": ["http://www.w3.org/ns/csvw", {"dc": "http://purl.org/dc/terms/"}],
+            "@context": "http://www.w3.org/ns/csvw",
             "tables": [],
         }
+
 
         for dependency_class_name, dependency_csv_file_path in class_csv_map.items():
             if dependency_csv_file_path in csv_dependencies_for_class:
@@ -535,7 +536,7 @@ def _generate_csv_and_schema_for_class(
         )
 
     basic_schema = {
-        "@context": ["http://www.w3.org/ns/csvw", {"dc": "http://purl.org/dc/terms/"}],
+        "@context": "http://www.w3.org/ns/csvw",
         "columns": column_definitions,
         "aboutUrl": f"{_MBO_PREFIX}{{+{identifier_slot.name}}}",
         "primaryKey": primary_key_definition,
