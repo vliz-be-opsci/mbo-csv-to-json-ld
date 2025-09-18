@@ -206,6 +206,25 @@
             }
         },
         {
+            "name": "citeDocumentMboIds",
+            "titles": {
+                "en": [
+                    "Document Citations (mPIDs)"
+                ]
+            },
+            "dc:description": {
+                "en": [
+                    "mPID(s) from the first column of Document.csv\nPipe-delimited when there are multiple values"
+                ]
+            },
+            "propertyUrl": "https://schema.org/citation",
+            "separator": "|",
+            "datatype": {
+                "@id": "https://w3id.org/marco-bolo/ConvertMboIdToNode",
+                "base": "string"
+            }
+        },
+        {
             "name": "childStepMboIds",
             "titles": {
                 "en": [
@@ -254,6 +273,24 @@
             "separator": "|",
             "datatype": {
                 "@id": "https://w3id.org/marco-bolo/ConvertMboIdToNode",
+                "base": "string"
+            }
+        },
+        {
+            "name": "url",
+            "titles": {
+                "en": [
+                    "URL"
+                ]
+            },
+            "dc:description": {
+                "en": [
+                    "Must include the protocol (scheme) and should follow RFC 3986 standards\n\nFor example: `https://example.com`, `http://example.com`\n`ftp://ftp.example.org/data`, `doi:10.1000/example123`, `urn:isbn:1234567890`, `mailto:contact@example.com`"
+                ]
+            },
+            "propertyUrl": "https://schema.org/url",
+            "datatype": {
+                "@id": "https://schema.org/URL",
                 "base": "string"
             }
         },
