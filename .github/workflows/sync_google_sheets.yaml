@@ -88,5 +88,5 @@ jobs:
           else
             TIMESTAMP=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
             git commit -m "Sync Google Sheet tabs as CSV — $TIMESTAMP"
-            git push origin HEAD:google_sheets
+            git push origin HEAD
           fi
