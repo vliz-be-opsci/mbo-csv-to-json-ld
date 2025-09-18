@@ -4,28 +4,28 @@ theme:
 use_directory_urls: false
 nav:
   - User Guide: user-guide.md
-      - Model Revision Protocol: LinkML-model-update-protocol.md
+    - Model Revision Protocol: LinkML-model-update-protocol.md
   - Model Overview: index.md
   - CSV files:
-      - Action: Action.md
-      - Audience: Audience.md
-      - ContactPoint: ContactPoint.md
-      - DataDownload: DataDownload.md
-      - DatasetComment: DatasetComment.md
-      - Dataset: Dataset.md
-      - EmbargoStatement: EmbargoStatement.md
-      - GeoShape: GeoShape.md
-      - HowTo: HowTo.md
-      - HowToStep: HowToStep.md
-      - HowToTip: HowToTip.md
-      - License: License.md
-      - MonetaryGrant: MonetaryGrant.md
-      - Organization: Organization.md
-      - Person: Person.md
-      - Place: Place.md
-      - PropertyValue: PropertyValue.md
-      - PublishingStatusDefinedTerm: PublishingStatusDefinedTerm.md
-      - Service: Service.md
-      - SoftwareApplication: SoftwareApplication.md
-      - SoftwareSourceCode: SoftwareSourceCode.md
-      - Taxon: Taxon.md
+    - Action: Action.md
+    - Audience: Audience.md
+    - ContactPoint: ContactPoint.md
+    - DataDownload: DataDownload.md
+    - DatasetComment: DatasetComment.md
+    - Dataset: Dataset.md
+    - EmbargoStatement: EmbargoStatement.md
+    - GeoShape: GeoShape.md
+    - HowTo: HowTo.md
+    - HowToStep: HowToStep.md
+    - HowToTip: HowToTip.md
+    - License: License.md
+    - MonetaryGrant: MonetaryGrant.md
+    - Organization: Organization.md
+    - Person: Person.md
+    - Place: Place.md
+    - PropertyValue: PropertyValue.md
+    - PublishingStatusDefinedTerm: PublishingStatusDefinedTerm.md
+    - Service: Service.md
+    - SoftwareApplication: SoftwareApplication.md
+    - SoftwareSourceCode: SoftwareSourceCode.md
+    - Taxon: Taxon.md
