@@ -4,7 +4,7 @@ theme:
 use_directory_urls: false
 nav:
   - User Guide: user-guide.md
-  - Model Revision Protocol: LinkML-model-update-protocol.md
+  - Model Maintenance and Management: model_management.md
   - Model Overview: index.md
   - CSV files:
     - Action: Action.md

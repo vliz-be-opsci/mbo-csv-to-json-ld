@@ -1,4 +1,4 @@
-# MARCO-BOLO Complete System Documentation
+# MARCO-BOLO Model and Tool Management Documentation
 
 ## System Overview
 
@@ -49,9 +49,22 @@ flowchart TD
 **Purpose**: Defines the semantic model for marine biodiversity data using LinkML, which generates CSV-W schemas for validation and JSON-LD mapping.
 
 ### 2. Google Apps Script Integration
-**Location**: Google Apps Script project linked to spreadsheet
-**Key Script**: "update sheets from GitHub.gs"
-**Purpose**: Automatically creates and maintains Google Sheets based on CSV-W schemas, providing user-friendly data entry interface.
+**Location:** Google Apps Script project bound to [Google spreadsheet](https://docs.google.com/spreadsheets/d/1PBFK3LW3DAdvXdbk2v8bSdtTf87mBhabeeegwRjOBRg/edit?gid=2060946820#gid=2060946820)
+**Key Script**: 
+
+Script ID: 1bbb5P0gCpMq7FAhnMG5ec4ukF_C8F5H-EPKvfmK2bSbEUXwrOL8-PH8d
+GCP Project: mbo-wp1-csv-to-json-ld (managed through Google Cloud Platform IAM)
+Key Function: generateSheetsFromCSVW()
+Repository Location: google-apps-script/ directory
+
+**Purpose**: Reads CSV-W schema files from the repository and creates or updates Google Sheets with appropriate column structures, validation rules, and user guidance. Provides user-friendly data entry interface without overwriting existing data.
+**Access Model:**
+
+Script editing: Controlled through GCP IAM permissions (requires Google account)
+Sheet editing: Many users can enter data without script access
+Automation: Service account (github-sheets-reader) provides read access for GitHub Actions
+
+**Deployment:** Changes made in repository are deployed to Google Apps Script using clasp push command.
 
 ### 3. CSV-W Schema Generation
 **Location**: `remote/scripts/mbocsvwscripts/generatecsvwdefinitions.py`
@@ -78,124 +91,230 @@ flowchart TD
 
 #### Process
 
-1. **Create Development Branch**
-   ```bash
-   git checkout -b feature/model-update-$(date +%Y-%m-%d)
-   ```
+## LinkML Schema Update Process
 
-2. **Update LinkML Schema**
-   
-   **Add new slots** to `remote/models/slots.yaml`:
-   ```yaml
-   new_slot_name:
-     title: "User-Facing Column Name"
-     description: "Technical definition for developers"
-     required: true
-     multivalued: false
-     range: string
-     slot_uri: schema:propertyName
-     comments: |
-       User-friendly explanation that becomes tooltip in Google Sheets.
-       Include examples: `example1`, `example2`
-       For multivalued fields: Pipe-delimited when multiple values
-   ```
+### Prerequisites
+- Git repository access with development branch permissions
+- Python environment with LinkML dependencies (for local testing)
+- Text editor with YAML syntax highlighting
+- Google account with appropriate GCP project permissions (for Google Sheets integration)
 
-   **Add/modify classes** in `remote/models/classes.yaml`:
-   ```yaml
-   NewEntityType:
-     description: "What this entity represents"
-     class_uri: schema:Thing
-     slots:
-       - id
-       - metadataPublisherId
-       - metadataDescribedForActionId
-       - new_slot_name
-       # ... other slots
-   ```
+### Phase 1: Schema Updates (Adding New Data Types)
 
-   **Update PID mapping** in `generatecsvwdefinitions.py`:
-   ```python
-   _MAP_CSV_NAME_TO_PID_URI = {
-       # ... existing mappings ...
-       'NewEntityType.csv': f"{_MBO_PREFIX}mbo_0000XXX",  # Use next sequential number
-   }
-   ```
+#### 1. Plan and Document Changes
+- [ ] Identify what needs to be changed (new slots, classes, constraints, etc.)
+- [ ] Check for impacts on existing data (migration needs)
+- [ ] Document the rationale for changes
 
-3. **Validate Locally**
-   ```bash
-   # Check YAML syntax
-   python -c "import yaml; yaml.safe_load(open('remote/models/slots.yaml'))"
-   python -c "import yaml; yaml.safe_load(open('remote/models/classes.yaml'))"
-   
-   # Test schema generation
-   python remote/scripts/mbocsvwscripts/generatecsvwdefinitions.py -o test-output remote/models/classes.yaml
-   rm -rf test-output
-   ```
+#### 2. Create Development Branch
+```bash
+git checkout -b feature/model-update-$(date +%Y-%m-%d)
+```
 
-4. **Generate CSV-W Schemas**
-   ```bash
-   python remote/scripts/mbocsvwscripts/generatecsvwdefinitions.py -o temp-output remote/models/classes.yaml
-   cp -r temp-output/remote/* remote/
-   rm -rf temp-output
-   ```
+#### 3. Update LinkML Schema Files
 
-5. **Update Documentation**
-   Add new entity to `remote/models/mkdocs.yml`:
-   ```yaml
-   nav:
-     - CSV files:
-       # ... existing entries ...
-       - NewEntityType: NewEntityType.md
-   ```
+**Add new slots** to `remote/models/slots.yaml`:
+```yaml
+new_slot_name:
+  title: "User-Facing Column Name"
+  description: "Technical definition for developers"
+  required: true
+  multivalued: false
+  range: string
+  slot_uri: schema:propertyName
+  comments: |
+    User-friendly explanation that becomes tooltip in Google Sheets.
+    Include examples: `example1`, `example2`
+    For multivalued fields: Pipe-delimited when multiple values
+```
 
-6. **Commit and Push**
-   ```bash
-   git add remote/models/ remote/scripts/ remote/*.json remote/*.md
-   git commit -m "Add NewEntityType to LinkML model
-   
-   - Added slots: new_slot_name
-   - Updated CSV-W schemas with validation rules  
-   - Added documentation structure"
-   
-   git push origin feature/model-update-$(date +%Y-%m-%d)
-   ```
+**Add/modify classes** in `remote/models/classes.yaml`:
+Classes represent the CSV files that will be produced from these specifications.
+```yaml
+NewEntityType:
+  description: "What this entity represents"
+  class_uri: schema:Thing
+  slots:
+    - id
+    - metadataPublisherId
+    - metadataDescribedForActionId
+    - new_slot_name
+    # ... other slots in logical order
+```
 
-7. **Test with PR Container**
-   ```bash
-   # Wait for GitHub Actions to build PR container
-   docker pull ghcr.io/marco-bolo/csv-to-json-ld-tools:pr-XX  # Replace XX with PR number
-   # Test your changes if needed
-   ```
+**Update PID mapping** in `generatecsvwdefinitions.py`:
+```python
+_MAP_CSV_NAME_TO_PID_URI = {
+    # ... existing mappings ...
+    'NewEntityType.csv': f"{_MBO_PREFIX}mbo_0000XXX",  # Use next sequential number
+}
+```
+
+**Update data types** in `remote/models/literals.yaml` (rarely needed):
+- [ ] Add new custom data types if required
+- [ ] Only needed for specialized validation patterns
+
+#### 4. Validate YAML Syntax
+```bash
+# Quick syntax check
+python -c "import yaml; yaml.safe_load(open('remote/models/slots.yaml'))"
+python -c "import yaml; yaml.safe_load(open('remote/models/classes.yaml'))"
+```
+
+#### 5. Test Generation Locally
+```bash
+# Test with your local changes
+python remote/scripts/mbocsvwscripts/generatecsvwdefinitions.py -o test-output remote/models/classes.yaml
+
+# Verify dc:description fields are present
+grep -n "dc:description" test-output/remote/*.json | head -5
+
+# Check Dublin Core context
+grep -A 3 "@context" test-output/remote/Dataset.schema.json
+
+# Clean up test
+rm -rf test-output
+```
+
+#### 6. Generate CSV-W Schemas
+```bash
+# Generate final schemas
+python remote/scripts/mbocsvwscripts/generatecsvwdefinitions.py -o temp-output remote/models/classes.yaml
+
+# Apply the changes (WARNING: This replaces all schema files)
+cp -r temp-output/remote/* remote/
+
+# Clean up
+rm -rf temp-output
+```
+
+#### 7. Validate Generated Files
+- [ ] Check that all expected schema files were generated
+- [ ] Verify `dc:description` fields contain your comments
+- [ ] Spot-check a few schema files for correct structure
+- [ ] Ensure foreign key relationships are maintained
+
+#### 8. Update Documentation
+Add new entity to `remote/models/mkdocs.yml`:
+```yaml
+nav:
+  - CSV files:
+    # ... existing entries ...
+    - NewEntityType: NewEntityType.md
+```
+
+#### 9. Test Data Migration (if applicable)
+- [ ] If structure changed, plan migration for existing CSV data
+- [ ] Test with sample data files
+- [ ] Document migration steps for users
+
+#### 10. Commit Changes
+```bash
+# Stage all changes
+git add remote/models/ remote/scripts/ remote/*.json remote/*.md
+
+# Commit with descriptive message
+git commit -m "Add NewEntityType to LinkML model
+
+- Added slots: new_slot_name
+- Updated CSV-W schemas with validation rules
+- Added documentation structure
+- [Any other significant changes]"
+```
+
+#### 11. Create Pull Request
+- [ ] Push branch to GitHub: `git push origin feature/model-update-$(date +%Y-%m-%d)`
+- [ ] Create pull request with detailed description
+- [ ] Wait for PR-specific Docker container to build
+- [ ] Test with PR container if needed: `docker pull ghcr.io/marco-bolo/csv-to-json-ld-tools:pr-XX`
+
+#### 12. Review and Merge
+- [ ] Address review feedback
+- [ ] Ensure CI/CD validation passes
+- [ ] Merge to main branch
+- [ ] Update documentation if needed
 
 ### Phase 2: Google Sheets Integration (After Schema Merge)
 
 #### Prerequisites
 - Schema changes merged to main branch
-- Access to Google Apps Script project
+- Access to Google Apps Script project through GCP IAM
 - Google Sheets with appropriate sharing permissions
 
 #### Process
 
-1. **Update Google Apps Script URLs** (if needed)
-   Ensure these point to main branch:
+1. **Verify Google Apps Script URLs** (if needed)
+   Ensure these point to main branch in the script constants:
    ```javascript
    const GITHUB_RAW_BASE = "https://raw.githubusercontent.com/marco-bolo/csv-to-json-ld/main/remote/";
    const SLOT_YAML_URL = "https://raw.githubusercontent.com/marco-bolo/csv-to-json-ld/main/remote/models/slots.yaml";
    ```
 
 2. **Run Sheet Generation Script**
-   - Open Google Apps Script project
-   - Run `generateSheetsFromCSVW()` function
+   - Open [MARCO-BOLO spreadsheet](https://docs.google.com/spreadsheets/d/1PBFK3LW3DAdvXdbk2v8bSdtTf87mBhabeeegwRjOBRg/edit)
+   - Go to `Extensions` → `Apps Script`
+   - Select `generateSheetsFromCSVW` function
+   - Click `Run`
    - Monitor execution logs for errors
-   - Verify new sheets are created with proper validation
 
 3. **Verify Sheet Structure**
-   - Check that all columns are present
-   - Verify required fields are highlighted
+   - Check that all columns are present for new entity type
+   - Verify required fields are highlighted (bold headers, yellow background)
    - Test dropdown validations for foreign keys
-   - Confirm header tooltips show user guidance
+   - Confirm header tooltips show user guidance from `comments` field
 
-### Phase 3: Data Collection and Processing
+### Validation Checklist
+
+Before committing, verify:
+- [ ] YAML files parse without errors
+- [ ] Local generation completes successfully  
+- [ ] Generated schemas contain dc:description fields
+- [ ] Dublin Core namespace is present in @context
+- [ ] Foreign key relationships are intact
+- [ ] Comments provide clear user guidance with examples
+- [ ] Multivalued fields mention pipe delimiters
+- [ ] New sheets are created successfully in Google Sheets
+- [ ] Validation rules work correctly in sheets
+
+### Common Troubleshooting
+
+**"AttributeError: 'list' object has no attribute 'strip'"**
+- Comments in LinkML are always lists, even single comments
+- Use: `comment_text = "\n".join(comment.strip() for comment in slot.comments)`
+
+**"yaml.parser.ParserError: did not find expected key"**
+- Check indentation around the reported line (spaces only, no tabs)
+- Ensure all keys have colons
+- Verify quotes are properly closed
+
+**Missing dc:description in CSV-W output**
+- Check that generation script handles comments correctly
+- Verify Dublin Core namespace is in @context
+- Ensure comments exist in the LinkML slot definition
+
+**Google Apps Script 404 errors**
+- Verify schema files exist in main branch
+- Check that file URLs are accessible
+- Confirm GitHub repository is public or script has access
+
+**Foreign key validation errors**
+- Update CSV file references in comments after structural changes
+- Check that referenced classes still exist
+- Verify range definitions point to correct classes
+- Ensure target sheets exist before creating source sheets
+
+### Emergency Rollback
+
+If changes break production:
+```bash
+# Revert to previous working commit
+git log --oneline  # Find last working commit hash
+git revert [commit-hash]
+git push origin main
+
+# Re-run Google Apps Script to update sheets
+```
+### Phase 3: Data Entry and Processing
 
 #### Data Entry Process
 1. **Users enter data** in Google Sheets with real-time validation
@@ -405,3 +524,137 @@ For someone taking over this system:
 - Google Apps Script: Only when schema structure changes significantly  
 - Documentation: With each schema update
 - User training: When interface changes affect data entry process
+
+
+
+## LinkML Slot Definition Reference
+
+Understanding the components of a slot definition:
+
+```yaml
+slotName:                           # The internal identifier for this slot
+  identifier: true                  # OPTIONAL: Makes this the primary key (only one per class)
+  title: "Human Readable Title"     # REQUIRED: Column header in CSV files
+  description: |                    # OPTIONAL: Technical definition of the field
+    Formal definition of what this slot represents.
+    Used for technical documentation.
+  required: true                    # REQUIRED: true/false - whether field is mandatory
+  multivalued: false               # REQUIRED: true/false - whether multiple values allowed
+  range: string                    # REQUIRED: Data type (string/decimal/date/uri/ClassName)
+  slot_uri: schema:name            # OPTIONAL: Maps to schema.org or other vocabulary property
+  pattern: "^[A-Z]+$"              # OPTIONAL: Regex validation pattern for string values
+  minimum_value: 0                 # OPTIONAL: For numeric ranges
+  maximum_value: 100               # OPTIONAL: For numeric ranges
+  subproperty_of: parentSlot       # OPTIONAL: Inherits from another slot
+  designates_type: true            # OPTIONAL: Used for rdf:type assignments
+  implicit_prefix: schema          # OPTIONAL: Prepends namespace to values
+  comments: |                      # OPTIONAL: User-friendly guidance (becomes dc:description)
+    Clear explanation for data entry users.
+    Include examples and formatting guidance.
+    For multivalued fields, mention pipe delimiter.
+  extensions:                      # OPTIONAL: Custom CSV-W extensions
+    csvw_about_url: "#Fragment"    # Changes the subject URI for this property
+    csvw_virtual_triples: |        # Adds extra RDF triples
+      <> schema:additionalType <#CustomType>.
+```
+## Validation Checklist
+
+Before committing, verify:
+- [ ] YAML files parse without errors
+- [ ] Local generation completes successfully  
+- [ ] Generated schemas contain dc:description fields
+- [ ] Dublin Core namespace is present in @context
+- [ ] Foreign key relationships are intact
+- [ ] Comments provide clear user guidance
+- [ ] Examples are consistent and helpful
+- [ ] Multivalued fields mention pipe delimiters
+
+## Troubleshooting
+
+### "AttributeError: 'list' object has no attribute 'strip'"
+- Comments in LinkML are always lists, even single comments
+- Use: `comment_text = "\n".join(comment.strip() for comment in slot.comments)`
+
+### "yaml.parser.ParserError: did not find expected key"
+- Check indentation around the reported line
+- Ensure all keys have colons
+- Verify no mixed tabs/spaces
+
+### Missing dc:description in output
+- Check that generation script was modified to handle comments
+- Verify Dublin Core namespace is in @context
+- Ensure comments exist in the LinkML slot definition
+
+### Foreign key validation errors
+- Update CSV file references in comments after structural changes
+- Check that referenced classes still exist
+- Verify range definitions point to correct classes
+
+
+### Field Explanations
+
+**Basic Identity:**
+- `slotName`: Internal name used in code and references
+- `title`: What users see as column header (add `*` for required fields)
+- `description`: Technical definition for developers/documentation
+
+**Constraints:**
+- `required`: Enforces mandatory fields in validation
+- `multivalued`: Allows pipe-delimited multiple values (`value1|value2|value3`)
+- `range`: Defines data type or references another class for relationships
+- `pattern`: Regex validation for string formats
+- `minimum_value`/`maximum_value`: Numeric bounds
+
+**Semantic Mapping:**
+- `slot_uri`: Maps to standard vocabularies (schema.org, Dublin Core, etc.)
+- `subproperty_of`: Inherits behavior from parent slot
+- `designates_type`: For rdf:type assignments (organization types, audience types)
+- `implicit_prefix`: Automatically prepends namespace to values
+
+**User Experience:**
+- `comments`: Becomes `dc:description` in CSV-W, provides user guidance
+- `extensions.csvw_about_url`: Changes RDF subject for this property
+- `extensions.csvw_virtual_triples`: Adds custom RDF relationships
+
+### Common Patterns
+
+**Simple text field:**
+```yaml
+name:
+  title: "Name"
+  required: true
+  multivalued: false
+  range: string
+  slot_uri: schema:name
+```
+
+**Reference to another entity:**
+```yaml
+authorId:
+  title: "Author (mPID)"
+  required: false
+  multivalued: false
+  range: PersonOrOrganization
+  slot_uri: schema:author
+```
+
+**Multivalued with validation:**
+```yaml
+keywords:
+  title: "Keywords"
+  required: false
+  multivalued: true
+  range: string
+  slot_uri: schema:keywords
+  comments: |
+    Separate multiple keywords with '|'
+    For example: Marine Biology|Climate Change
+```
+
+## Documentation Updates
+
+After major model changes:
+- [ ] Update user documentation
+- [ ] Update example CSV files if structure changed
+- [ ] Notify users of breaking changes
+- [ ] Update any training materials
