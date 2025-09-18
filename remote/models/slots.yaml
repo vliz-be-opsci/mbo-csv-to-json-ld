@@ -18,11 +18,16 @@ slots:
     required: true
     title: "MBO Permanent Identifier"
     description: |
-      An identifier chosen from the range given to your work package by WP1.  
-      Note that when inputting into CSV files this should not be the full URI, 
-      but just the last part, e.g. `mbo_0000001`.
+      An identifier chosen from the range given to your work package by WP1.
     range: string
     pattern: "^mbo_[_0-9a-z]+$"
+    comments: |
+      Note that when inputting into CSV files this should not be the full URI, 
+      but just the last part, e.g. `mbo_0000001`.
+      This is the identifier (mPID) for this row of the spreadsheet 
+      and for whatever information is being described in this row. 
+      It should be unique in this column. 
+
   identifiers:
     title: "Identifiers"
     multivalued: true
@@ -30,6 +35,8 @@ slots:
     description: A generic identifier for this entity. Should not hold the MBO identifier.
     range: string
     slot_uri: schema:identifier
+    comments: |
+      Can include any kind on non-MBO identifiers like ROR, ORCID, DOI, ISBNs, IGSN, UUIDs, etc.
 
   # Generic Thing slots
   name:
@@ -39,6 +46,10 @@ slots:
     multivalued: false
     range: string
     slot_uri: schema:name
+    comments: |
+      The commonly used name. 
+      For example: `MBA` for Marine Biological Association
+
   alternateName:
     title: "Alternate Name"
     required: false
@@ -46,6 +57,10 @@ slots:
     description: "An alternative name."
     range: string
     slot_uri: schema:alternateName
+    comments: |
+      A less commonly used name for the same entity. 
+      For example: DASSH for MBA
+
   description:
     title: "Description"
     required: false
@@ -53,6 +68,9 @@ slots:
     description: "A description for this entity."
     range: string
     slot_uri: schema:description
+    comments: |
+      A concise one-sentence summary of the main point or purpose.
+
   url:
     title: "URL"
     required: false
@@ -60,12 +78,23 @@ slots:
     range: schemaURL
     slot_uri: schema:url
     multivalued: false
+    comments: |
+      Must include the protocol (scheme) and should follow RFC 3986 standards
+
+      For example: `https://example.com`, `http://example.com`
+      `ftp://ftp.example.org/data`, `doi:10.1000/example123`, `urn:isbn:1234567890`, `mailto:contact@example.com`
+
   licenseMboId:
     title: "License (mPID)"
     required: false
     description: "The MBO PID of the license which covers the entity you are describing."
     slot_uri: schema:license
     range: License
+    comments: |
+      If you are unsure, please use 'undefined' as a placeholder until
+      you can update it.
+      If restriction is needed, please use 'Restricted. Please contact product owner.'
+
   metadataDescribedForActionId:
     title: "Data Entered for Action (mPID)"
     required: true
@@ -77,6 +106,9 @@ slots:
     range: Action
     slot_uri: mbo:isResultOf
     comments: |
+      The mPID from the first column of the Action.csv. 
+      Note that you can reference the same mPID in multiple rows.
+      
       Uses the <https://w3id.org/marco-bolo/isResultOf> predicate but ultimately ends up being 
       represented as a triple in the form `<action> schema:result <this-entity>`.
 
@@ -88,6 +120,9 @@ slots:
     multivalued: false
     range: PublishingStatusDefinedTerm
     slot_uri: schema:creativeWorkStatus
+    comments: |
+      Should be an mPID from the first column of PublishingStatusDefinedTerm.csv
+
   keywords:
     title: "Keywords"
     description: "Key words classifying this entity."
@@ -95,6 +130,10 @@ slots:
     multivalued: true
     range: string
     slot_uri: schema:keywords
+    comments: |
+      Separate multiple keyword with a '|'.
+      e.g. Whales|Population Genetics
+
   abstract:
     title: "Abstract"
     description: "A short description summarising this entity."
@@ -102,6 +141,11 @@ slots:
     multivalued: false
     range: string
     slot_uri: schema:abstract
+    comments: |
+      A brief summary that captures the essence of this entity in ~ 1-5 sentences. 
+      Think of this as what would appear in search results or catalog listings,
+      it should quickly convey the main purpose or key points without technical details.
+
   audienceMboIds:
     title: "Audiences (mPIDs)"
     description: |
@@ -110,6 +154,8 @@ slots:
     multivalued: true
     range: Audience
     slot_uri: schema:audience
+    comments: |
+      Should be an mPID from the first column of Audience.csv
 
   # People or organization slots
   authorId:
@@ -119,6 +165,9 @@ slots:
     multivalued: false
     range: PersonOrOrganization
     slot_uri: schema:author
+    comments: |
+      Should be an mPID from the first column of either Person.csv or Organization.csv
+
   ownerId:
     title: "Owner (mPID)"
     required: false
@@ -128,8 +177,8 @@ slots:
     range: PersonOrOrganization
     slot_uri: schema:copyrightHolder
     comments: |
-      TODO: I'm not sure `schema:copyrightHolder` is the right choice here. 
-      Could use `schema:sourceOrganization` but that isn't that good either.
+      Should be an mPID from the first column of either Person.csv or Organization.csv
+
   publisherId:
     title: "Publisher (mPID)"
     required: false
@@ -137,6 +186,9 @@ slots:
     description: "The Permanent Identifier of an person or organization who created the entity."
     range: PersonOrOrganization
     slot_uri: schema:publisher
+    comments: |
+      Should be an mPID from the first column of either Person.csv or Organization.csv
+
   providerId:
     title: "Provider (mPID)"
     required: false
@@ -144,6 +196,9 @@ slots:
     description: "The Permanent Identifier of an person or organization who provides or provided the service."
     range: PersonOrOrganization
     slot_uri: schema:provider
+    comments: |
+      Should be an mPID from the first column of either Person.csv or Organization.csv
+
   contributorIds:
     title: "Contributors (mPIDs)"
     required: false
@@ -151,6 +206,10 @@ slots:
     description: "The Permanent Identifiers of people or organizations who contributed to the entity."
     range: PersonOrOrganization
     slot_uri: schema:contributor
+    comments: |
+      Should be an mPID from the first column of either Person.csv or Organization.csv
+      Pipe-delimited when there are multiple values.
+
   maintainerId:
     title: "Maintainer (mPID)"
     required: false
@@ -158,6 +217,9 @@ slots:
     description: "The Permanent Identifier of an person or organization who maintains this entity."
     range: PersonOrOrganization
     slot_uri: schema:maintainer
+    comments: |
+      Should be an mPID from the first column of either Person.csv or Organization.csv
+
   metadataPublisherId:
     title: "Data Entry Person (mPID - you)"
     required: true
@@ -166,6 +228,8 @@ slots:
       The MBO Persistent IDentifier (mPID) of the person who entered this row of data.
     range: PersonOrOrganization
     slot_uri: schema:creator
+    comments: |
+      Should be an mPID from the first column of Person.csv
 
   # PropertyValue slots
   propertyId:
@@ -174,12 +238,16 @@ slots:
     multivalued: false
     description: |
       A URL persistent identifer representing this property.
-
-      e.g. `http://vocab.nerc.ac.uk/collection/P07/current/CFSN0376/`
-
-      This should generally be sourced from [NERC P07 - Climate and Forecast Standard Names](https://vocab.nerc.ac.uk/collection/P07).
     range: uri
     slot_uri: schema:propertyID
+    comments: |
+      e.g. `http://vocab.nerc.ac.uk/collection/P07/current/CFSN0376/` to represent 'sea_surface_salinity' 
+
+      These should generally be sourced from well-established controlled vocbularies,
+      like [NERC P01 - BODC Parameter Usage Vocabulary](https://vocab.nerc.ac.uk/collection/P01),
+      [NERC P07 - Climate and Forecast Standard Names](https://vocab.nerc.ac.uk/collection/P07),
+      and [ENVO](https://www.ebi.ac.uk/ols4/ontologies/envo).
+
   measurementMethod:
     title: "Measurement Method"
     required: false
@@ -187,6 +255,12 @@ slots:
     description: "How the property was measured."
     range: string
     slot_uri: schema:measurementMethod
+    comments: |
+      The what - the overall approach or protocol used
+      More general/categorical description
+      Often refers to standardized procedures or methodologies
+      Examples: "CTD profiling"
+
   measurementTechnique:
     title: "Measurement Technique"
     required: false
@@ -195,6 +269,12 @@ slots:
       A textual descripion of the measurement technique.
     range: string
     slot_uri: schema:measurementTechnique
+    comments: |
+      The how - the specific technical implementation or procedural details
+      More specific technical description
+      Often includes instrument settings, protocols, or analytical steps
+      Examples: "CTD rosette deployment to 1000m depth with 2-minute sampling intervals"
+
   value:
     title: "Value"
     required: false
@@ -203,6 +283,7 @@ slots:
       The single value observed.
     range: decimal
     slot_uri: schema:value
+
   minValue:
     title: "Min Value"
     required: false
@@ -211,6 +292,7 @@ slots:
       The minimum value observed.
     range: decimal
     slot_uri: schema:minValue
+ 
   maxValue:
     title: "Max Value"
     required: false
@@ -219,20 +301,24 @@ slots:
       The maximum value observed.
     range: decimal
     slot_uri: schema:maxValue
+ 
   unitId:
     title: "Units (URL PIDs)"
     required: false
     multivalued: true
     description: |
       One or more URL Persistent Identifers in which the min/max/values are recorded.
-
-      e.g. `http://vocab.nerc.ac.uk/collection/P06/current/UPMM/`, `http://qudt.org/vocab/unit/NUM-PER-M3`, or `http://vocab.nerc.ac.uk/collection/P06/current/UPMM/|http://qudt.org/vocab/unit/NUM-PER-M3`.
-
-      The primary source of units should be [NERC P06: BODC-approved data storage units](https://vocab.nerc.ac.uk/collection/P06). 
-      If a suitable unit cannot be found there, then a more general unit can be chosen from [QUDT](https://www.qudt.org/doc/2025/01/DOC_VOCAB-UNITS.html).
     range: uri
     pattern: "^[A-Za-z0-9-_]+$"
     slot_uri: schema:unitCode
+    comments: |
+      For example: `http://vocab.nerc.ac.uk/collection/P06/current/UPMM/`, 
+      `http://qudt.org/vocab/unit/NUM-PER-M3`, 
+      `http://vocab.nerc.ac.uk/collection/P06/current/UPMM/|http://qudt.org/vocab/unit/NUM-PER-M3`.
+
+      The primary source of units should be [NERC P06: BODC-approved data storage units](https://vocab.nerc.ac.uk/collection/P06). 
+      If a suitable unit cannot be found there, then a more general unit can be chosen from [QUDT](https://www.qudt.org/doc/2025/01/DOC_VOCAB-UNITS.html).
+
   unitText:
     title: "Unit Text"
     required: false
@@ -241,6 +327,10 @@ slots:
       A textual description of the unit.
     range: string
     slot_uri: schema:unitText
+    comments: |
+      Human-readable string corresponding to the identifier in 'Units (URL PIDs)'
+      For example: `Number per cubic metre`,  `#/m^3`
+
   isTypeOfPropertyValueMboId:
     title: "Is Sub-Type Of (PropertyValue mPIDs)"
     required: false
@@ -249,6 +339,8 @@ slots:
       Parent PropertyValues for which this is a more specific sub-type of.
     range: PropertyValue
     slot_uri: schema:valueReference
+    comments: |
+      An mPID from the first column of PropertyValue.csv
 
   # Dataset slots
   landingPage:
@@ -257,15 +349,22 @@ slots:
     slot_uri: schema:url
     required: false
     multivalued: true
-    description: "The location where the dataset can be acquired."
+    description: "The digital location where the dataset can be acquired."
     range: schemaURL
+    comments: |
+      For example: `https://example.com`, `http://example.com`, 
+      `ftp://ftp.example.org/data`, `doi:10.1000/example123`
+
+      Pipe-delimited when there are multiple values
+
   embargoStatementMboId:
     title: "Embargo Statement (mPID)"
     required: false
     multivalued: false
-    description: "Embargo information."
+    description: "an MBO identifier for Embargo information"
     range: EmbargoStatement
     slot_uri: schema:usageInfo
+
   inProgressDataDate:
     title: "In Progress Data Date"
     description: "The point in time when you expect that the data will be accessible."
@@ -273,6 +372,10 @@ slots:
     multivalued: false
     range: date
     slot_uri: mbo:inProgressDataDate
+    comments: |
+      A date in ISO8601 format
+      For example: `2025-12-31`
+
   containsVariablesMboIds:
     title: "Contains Variables (PropertyValue mPIDs)"
     description: |
@@ -281,13 +384,21 @@ slots:
     multivalued: true
     range: PropertyValue
     slot_uri: schema:variableMeasured
+    comments: |
+      mPID(s) from the first column of the PropertyValue.csv
+      Pipe-delimited when there are multiple values
+
   aboutTaxonMboIds:
     title: "Taxa (mPIDs)"
     description: The MBO Ids of the taxa observed in your dataset.
     required: false
     multivalued: true
     range: Taxon
-    slot_uri: schema:about
+    slot_uri: schema:about 
+    comments: |
+      mPID(s) from the first column of the Taxon.csv
+      Pipe-delimited when there are multiple values
+      
   spatialCoveragePlaceMboId:
     title: "Spatial Coverage (Place - mPID)"
     description: "A place defining the spatial coverage of the dataset."
@@ -298,34 +409,50 @@ slots:
   temporalCoverage:
     title: "Temporal Coverage"
     description: |
-      The temporal range which this dataset covers. For example `2012-01/2013-02`.
-
-      Must conform to the [ISO8601 time interal specification](https://en.wikipedia.org/wiki/ISO_8601#Time_intervals).
-      The MBO project only currently supports the start&end variety.
+      The temporal range which this dataset covers.
     required: false
     range: string
     pattern: '^([+-]?\d{4}((-?(-?(W[0-5][0-9]|[0-1][0-9])|([0-3][0-9][0-9])|((W[0-5][0-9]-?[0-7]|[0-3][0-9][0-9]|[0-1][0-9]-?[0-3][0-9])(T[0-2][0-9](:?[0-5][0-9](:?[0-5][0-9](\.\d+)?)?)?(Z|([+-][0-2][0-9](:?[0-5][0-9])?))?)?)))?)?)/(\.\.|[+-]?\d{4}((-?(-?(W[0-5][0-9]|[0-1][0-9])|([0-3][0-9][0-9])|((W[0-5][0-9]-?[0-7]|[0-3][0-9][0-9]|[0-1][0-9]-?[0-3][0-9])(T[0-2][0-9](:?[0-5][0-9](:?[0-5][0-9](\.\d+)?)?)?(Z|([+-][0-2][0-9](:?[0-5][0-9])?))?)?)))?)?)$'
     slot_uri: schema:temporalCoverage
+    comments: |
+       For example: `2012-01/2013-02`.
+
+      Must conform to the [ISO8601 time interal specification](https://en.wikipedia.org/wiki/ISO_8601#Time_intervals).
+      The MBO project only currently supports the start&end variety.
+
   basedOnIds:
     title: "Based On (URL PIDs)"
     description: |
       The URL PID of any datasets which yours is based on.
-
-      WARNING: There are no foreign key checks.
     required: false
     multivalued: true
     range: uri
     slot_uri: schema:isBasedOn
+    comments: |
+      WARNING: There are no foreign key checks.
+
+      For example: `https://example.com`, `http://example.com`, 
+      `ftp://ftp.example.org/data`, `doi:10.1000/example123`
+
+      Pipe-delimited when there are multiple values
+
   hasPartIds:
     title: "Has Parts (URL PIDs)"
     description: |
-      Used in aggregate datasets which are composed of multiple parts. You are required to use the full URI here to reference pre-existing Datasets. 
-
-      WARNING: There are no foreign key checks.
+      Pipe-delimited list of the parts which comprise the aggregate dataset being referenced. 
     required: false
     multivalued: true
     range: uri
     slot_uri: schema:hasPart
+    comments: |
+      WARNING: There are no foreign key checks.
+      You are required to use the full URI here to reference pre-existing Datasets.
+
+      For example: `https://example.com`, `http://example.com`, 
+      `ftp://ftp.example.org/data`, `doi:10.1000/example123`
+
+      Pipe-delimited when there are multiple values
+
   dataDownloadMboIds:
     title: "Data Downloads (mPIDs)"
     description: "The different formats in which the dataset can be accessed or downloaded."
@@ -333,6 +460,9 @@ slots:
     multivalued: true
     range: DataDownload
     slot_uri: schema:distribution
+    comments: |
+      a list of Pipe-delimited mPIDs from the first column of DataDownload.csv
+
   conditionsOfAccess:
     title: "Conditions of Access"
     description: "A description of how the data may be accessed; for use when data is not publicly accessible."
@@ -340,6 +470,10 @@ slots:
     multivalued: false
     range: string
     slot_uri: schema:conditionsOfAccess
+    comments: |
+      For example: `Access controlled by [Country] Fisheries Management Authority due to commercial sensitivity 
+      and resource management considerations. Contact [specific office/person] at [contact details]`
+
   datasetMboId:
     title: "Dataset (mPID)"
     description: "The MBO ID of the dataset."
@@ -356,6 +490,7 @@ slots:
     multivalued: false
     range: string
     slot_uri: schema:version
+
   contentSize:
     title: "Content Size (MB/KB)"
     description: "The size of the content in MB or KB"
@@ -363,6 +498,9 @@ slots:
     multivalued: false
     range: string
     slot_uri: schema:contentSize
+    comments: |
+      For example: `156 KB`, `2.5 MB`, `9500 MB`
+
   encodingFormat:
     title: "Encoding Format"
     description: "The MIME type of the content."
@@ -370,12 +508,23 @@ slots:
     multivalued: false
     range: string
     slot_uri: schema:encodingFormat
+    comments: |
+      The MIME type describing the file format. 
+      Common examples for oceanographic data:
+        `text/csv` (CSV files), `application/netcdf` (NetCDF files), `application/json` (JSON data), 
+        `application/pdf` (PDF documents), `text/plain` (text files). 
+
+        See https://www.iana.org/assignments/media-types/ for complete list of official MIME types.
+
   sha256:
     title: "File Hash (SHA256)"
     required: false
     multivalued: false
     range: string
     slot_uri: schema:sha256
+    comments: |
+      For example: `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855`
+
   downloadUrl:
     title: "Download URL"
     subproperty_of: url
@@ -384,6 +533,9 @@ slots:
     multivalued: false
     range: schemaURL
     slot_uri: schema:url
+    comments: |
+      For example: `https://example.com`, `http://example.com`, 
+      `ftp://ftp.example.org/data`, `doi:10.1000/example123`
 
   # License slots
   licenseUrl:
@@ -394,6 +546,9 @@ slots:
     description: "The location where the license can be acquired."
     range: schemaURL
     multivalued: false
+    comments: |
+      For example: `https://creativecommons.org/publicdomain/zero/1.0/`
+      `https://opensource.org/licenses/MIT`
 
   # Date slots
   dateCreated:
@@ -402,26 +557,41 @@ slots:
     multivalued: false
     range: date
     slot_uri: schema:dateCreated
+    comments: |
+      A date in ISO8601 format
+      For example: `2025-12-31`
+
   dateModified:
     title: "Dates Modified"
     required: false
     multivalued: true
     range: date
     slot_uri: schema:dateModified
+    comments: |
+      A date in ISO8601 format
+      For example: `2025-12-31`
+
+      Pipe-delimited when there are multiple values
+
   datePublished:
     title: "Date Published"
     required: false
     multivalued: false
     range: date
     slot_uri: schema:datePublished
+    comments: |
+      A date in ISO8601 format
+      For example: `2025-12-31`
 
   # Comment slots
   commentText:
     title: "Comment Text"
+    description: "Comments about the referenced dataset."
     required: true
     multivalued: false
     range: string
-    slot_uri: schema:text
+    slot_uri: schema:text      
+
   commentAboutDatasetMboId:
     title: "Dataset (mPID)"
     description: "The MBO ID of the dataset this comment describes."
@@ -438,6 +608,13 @@ slots:
     multivalued: true
     range: uri
     slot_uri: schema:object
+    comments: |
+      This should be a URL to a digital object (dataset, publication, etc)
+      For example: `https://example.com`, `http://example.com`, 
+      `ftp://ftp.example.org/data`, `doi:10.1000/example123`
+
+      Pipe-delimited when there are multiple values
+
   howToPerformActionMboId:
     title: "How To (mPID)"
     description: "How the action was performed."
@@ -445,6 +622,9 @@ slots:
     multivalued: false
     range: HowTo
     slot_uri: schema:actionProcess
+    comments: |
+      This identifier must be defined in the CSV file HowTo.csv
+
   agentId:
     title: "Agent (mPID)"
     description: "The person or organization who performed the action."
@@ -452,6 +632,9 @@ slots:
     multivalued: false
     range: PersonOrOrganization
     slot_uri: schema:agent
+    comments: |
+      This identifier must be defined in the CSV file Person.csv or Organization.csv
+
   participantIds:
     title: "Participants (mPIDs)"
     description: "The IDs of the people or organizations who collaborated in the action."
@@ -459,6 +642,10 @@ slots:
     multivalued: true
     range: PersonOrOrganization
     slot_uri: schema:participant
+    comments: |
+      mPID(s) from the first column of either Person.csv or Organization.csv
+      Pipe-delimited when there are multiple values
+
   resultingDatasetMboIds:
     title: "Resulting Datasets (mPIDs)"
     description: "The MBO identifiers of any datasets created in this action."
@@ -466,6 +653,10 @@ slots:
     multivalued: true
     range: Dataset
     slot_uri: schema:result
+    comments: |
+      mPID(s) from the first column of Dataset.csv
+      Pipe-delimited when there are multiple values
+
   childActionMboIds:
     title: "Child Actions (mPIDs)"
     description: "The MBO identifiers of any child actions created or performed as a result of this action."
@@ -473,6 +664,14 @@ slots:
     multivalued: true
     range: Action
     slot_uri: schema:result
+    comments: |
+      This child action must be defined in the CSV file Action.csv. 
+      What defines a child action vs a subsequent action is up to you: 
+      for example, if you are creating your own datasets from published data, 
+      for 2 different parameters, the parent action could be 
+      `collating physical parameters` and the child actions could be, `...for CO2`, `...for Chla`
+
+      Pipe-delimited when there are multiple values
 
   # HowTo slots
   howToStepMboId:
@@ -482,6 +681,7 @@ slots:
     multivalued: false
     range: HowToStep
     slot_uri: schema:step
+
   supportingDocumentationUrls:
     subproperty_of: url
     title: "Supporting documentation (URLs)"
@@ -491,6 +691,12 @@ slots:
     multivalued: true
     range: schemaURL
     slot_uri: schema:url
+    comments: |
+      This should be a URL to a digital object (dataset, publication, etc)
+      For example: `https://example.com`, `http://example.com`, 
+      `ftp://ftp.example.org/data`, `doi:10.1000/example123`
+
+      Pipe-delimited when there are multiple values
 
   # HowToStep slots
   positionInParent:
@@ -500,6 +706,7 @@ slots:
     multivalued: false
     range: integer
     slot_uri: schema:position
+
   citeSourceCodeMboIds:
     title: "Source Code Citations (mPIDs)"
     description: "The MBO identifiers for source code used in this HowToStep."
@@ -507,6 +714,7 @@ slots:
     multivalued: true
     range: SoftwareSourceCode
     slot_uri: schema:citation
+
   citeSoftwareApplicationMboIds:
     title: "Software Application Citations (mPIDs)"
     description: "The MBO identifiers for software or web applications used in this HowToStep."
@@ -514,6 +722,10 @@ slots:
     multivalued: true
     range: SoftwareApplication
     slot_uri: schema:citation
+    comments: |
+      mPID(s) from the first column of SoftwareSourceCode.csv
+      Pipe-delimited when there are multiple values
+
   citeServiceMboIds:
     title: "Service Citations (mPIDs)"
     description: "The MBO identifiers for services used in this HowToStep."
@@ -521,6 +733,10 @@ slots:
     multivalued: true
     range: Service
     slot_uri: schema:citation
+    comments: |
+      mPID(s) from the first column of Service.csv
+      Pipe-delimited when there are multiple values
+
   childStepMboIds:
     title: "Child Steps (mPIDs)"
     description: "The MBO identifiers for steps which are children of this one."
@@ -528,6 +744,10 @@ slots:
     multivalued: true
     range: HowToStep
     slot_uri: schema:itemListElement
+    comments: |
+      mPID(s) from the first column of HowToStep.csv
+      Pipe-delimited when there are multiple values
+
   howToImplementTipMboIds:
     title: "Implementation Tips (mPIDs)"
     description: |
@@ -536,8 +756,6 @@ slots:
     multivalued: true
     range: HowToTip
     slot_uri: schema:usageInfo
-    comments: |
-      TODO: This could be `schema:itemListElement`, but I prefer `schema:usageInfo` for our use-case.
 
   # SoftwareSourceCode slots
   codeRepositoryUrl:
@@ -547,6 +765,10 @@ slots:
     multivalued: false
     range: schemaURL
     slot_uri: schema:codeRepository
+    comments: |
+      For example: `https://example.com`, `http://example.com`, 
+      `ftp://ftp.example.org/data`, `doi:10.1000/example123`
+
   programmingLanguage:
     title: "Programming Language"
     description: "The programming languages primarily used in the source code."
@@ -554,13 +776,25 @@ slots:
     multivalued: true
     range: string
     slot_uri: schema:programmingLanguage
+    comments: |
+      Recommend using languages from the [GitHub Linguist Library](https://github.com/github-linguist/linguist/blob/main/lib/linguist/languages.yml)
+      For example: `R`, `Python`, `Markdown`
+
+      Pipe-delimited when there are multiple values
+
   runtimePlatform:
     title: "Runtime Platform"
-    description: "The runtime on which the code runs (for example Java 17, .NET Framework 4.6, Python 3.6, etc.)"
+    description: "The runtime on which the code runs"
     required: false
     multivalued: false
     range: string
     slot_uri: schema:runtimePlatform
+    comments: |
+      Specify the runtime environment needed to execute this code. 
+      Include language and version or platform details. 
+      For example: `Python 3.9`, `R 4.2.0`, `MATLAB R2023a`, `Node.js 18.x`
+
+      For containerized applications, you might specify `Docker` or the base image used.
 
   # SoftwareApplication
   softwareApplicationType:
@@ -574,6 +808,7 @@ slots:
     slot_uri: rdf:type
     implicit_prefix: schema
     pattern: "^(SoftwareApplication|WebApplication)$"
+
   softwareVersion:
     title: "Software Version"
     description: "The version of a software or web application."
@@ -581,6 +816,7 @@ slots:
     multivalued: false
     range: string
     slot_uri: schema:softwareVersion
+
   softwareDownloadUrl:
     title: "Software Download URL"
     description: "The download url of a software application."
@@ -588,6 +824,9 @@ slots:
     multivalued: false
     range: schemaURL
     slot_uri: schema:downloadUrl
+    comments: |
+      For example: `https://example.com`, `http://example.com`, 
+      `ftp://ftp.example.org/data`, `doi:10.1000/example123`
 
   # Service slots
   placesServedMboIds:
@@ -597,13 +836,26 @@ slots:
     multivalued: true
     range: Place
     slot_uri: schema:areaServed
+    comments: |
+      mPID(s) from the first column of Place.csv
+      Pipe-delimited when there are multiple values
+
   serviceType:
     title: "Service Type"
-    description: The type of service being offered, e.g. veterans' benefits, emergency relief, etc.
+    description: A description of the type of service being offered.
     required: true
     multivalued: false
     range: string
     slot_uri: schema:serviceType
+    comments: |
+      For example:
+        `Data repository service`
+        `Laboratory analysis service`
+        `Field sampling service`
+        `Technical support service`
+        `Training and education service`
+        `Equipment calibration service`
+
   serviceProviderOrganizationMboId:
     title: "Service Provider Organization (mPID)"
     description: |
@@ -614,6 +866,8 @@ slots:
     multivalued: false
     range: Organization
     slot_uri: schema:provider
+    comments: |
+      A mPID from the first column of Organization.csv
 
   # EmbargoStatement
   embargoExpires:
@@ -623,6 +877,10 @@ slots:
     multivalued: false
     range: date
     slot_uri: schema:expires
+    comments: |
+      A date in ISO8601 format
+      For example: `2025-12-31`
+
   embargoedDatasetMboId:
     title: "Embargo Dataset (mPID)"
     description: "The dataset that this embargo statement describes."
@@ -630,6 +888,9 @@ slots:
     multivalued: false
     range: Dataset
     slot_uri: schema:mainEntity
+    comments: |
+      A mPID from the first column of Dataset.csv
+
   embargoDescription:
     title: "Explanation/Description"
     description: "The textual description of the embargo."
@@ -637,6 +898,10 @@ slots:
     multivalued: false
     range: string
     slot_uri: schema:text
+    comments: |
+      For example: 
+      `Preliminary dataset undergoing quality control and validation procedures. 
+      Embargo in place until data quality flags are finalized.`
 
   # DefinedTerm slots
   termCode:
@@ -646,6 +911,7 @@ slots:
     multivalued: false
     range: string
     slot_uri: schema:termCode
+
   inDefinedTermSetId:
     title: "In Term-Set (URL PID)"
     description: |
@@ -654,6 +920,7 @@ slots:
     multivalued: false
     range: uri
     slot_uri: schema:inDefinedTermSet
+
   existingTermId:
     title: "Existing Term (URL PID)"
     description: "An existing URI PID which describes what this term represents."
@@ -661,30 +928,35 @@ slots:
     multivalued: false
     range: uri
     slot_uri: schema:identifier
+    comments: |
+      For example: `https://example.com`, `http://example.com`, 
+      `ftp://ftp.example.org/data`, `doi:10.1000/example123`
 
   # Place slots
   geoShapeMboId:
     title: "GeoShape (mPID)"
     description: |
-      The location specified by geographic coordinates.
+      The MBO PID for a location, specified by geographic coordinates.
     required: false
     multivalued: false
     range: GeoShape
     slot_uri: schema:geo
+
   latitude:
     title: "Latitude (WGS 84)"
     description: |
-      The latitude of the place (WGS 84).
+      The latitude of the place in decimal degrees with a geodetic datum of WGS 84 (EPSG:4326).
     required: false
     multivalued: false
     range: decimal
     minimum_value: -180
     maximum_value: +180
     slot_uri: schema:latitude
+
   longitude:
     title: "Longitude (WGS 84)"
     description: |
-      The longitude of the place (WGS 84)
+      The longitude of the place in decimal degrees with a geodetic datum of WGS 84 (EPSG:4326).
     required: false
     multivalued: false
     minimum_value: -180
@@ -696,29 +968,31 @@ slots:
   box:
     title: "Box"
     description: |
-      schema.org expects lat long (Y X) coordinate order.  Box syntax is: miny minx maxy maxx
-
-      For example `-30.0 10.0 50.0 12.0`.
+      schema.org expects decimal degree latitude longitude (Y X) coordinate order.  Box syntax is: miny minx maxy maxx
     required: false
     multivalued: false
     range: string
     slot_uri: schema:box
     pattern: '^[+-]?[\d.]+\ [+-]?[\d.]+\ [+-]?[\d.]+\ [+-]?[\d.]+$'
+    comments: |
+      For example: `-30.0 10.0 50.0 12.0`.
+
   circle:
     title: "Circle"
     description: |
       schema.org expects lat long (Y X) coordinate order followed by a radius in metres.
-
-      For example `-30.0 +10.0 600.0`.
     required: false
     multivalued: false
     range: string
     slot_uri: schema:circle
     pattern: '^[+-]?[\d.]+\ [+-]?[\d.]+\ [+-]?[\d.]+$'
+    comments: |
+      For example: `-30.0 +10.0 600.0`.
+
   elevation:
     title: "Elevation (m)"
     description: |
-      The elevation of a location (WGS 84), for example '-300 m'.
+      Elevation relative to the WGS84 ellipsoid in meters. 
 
       Numbers without units are assumed to be in metres.
     required: false
@@ -726,30 +1000,36 @@ slots:
     range: string
     slot_uri: schema:elevation
     pattern: '^[+-]?[\d.]+(\s\w+)$'
+    comments: |
+      Use positive values for heights above the ellipsoid, negative values for depths below
+      (e.g., "-150" for 150 meters below the WGS84 ellipsoid, "25" for 25 meters above). 
+      Include units if not in meters (e.g., "150 ft").
+
   line:
     title: "Line"
     description: |
-      lat long (Y X) coordinates describing waypoints on the line; each waypoint is sepearated from the others by a space. 
+      lat long (Y X) coordinates describing waypoints on the line; each waypoint is separated from the others by a space. 
       There must be at least two waypoints.
-
-      For example `50.0 60.0 70.0 80.0 90.0 100.0`.
     required: false
     multivalued: false
     range: string
     slot_uri: schema:line
     pattern: '^([+-]?[\d.]+\ [+-]?[\d.]+\ ){1,}([+-]?[\d.]+\ [+-]?[\d.]+)$'
+    comments: |
+      For example: `50.0 60.0 70.0 80.0 90.0 100.0`.
+
   polygon:
     title: "Polygon"
     description: |
       A polygon is the area enclosed by a point-to-point path for which the starting and ending points are the same. 
-      A polygon is expressed as a series of four or more space delimited points where the first and final points are identical. 
-
-      For example `50.0 60.0 70.0 80.0 90.0 100.0 50.0 60.0`.
+      A polygon is expressed as a series of four or more space delimited points where the first and final points are identical.
     required: false
     multivalued: false
     range: string
     slot_uri: schema:polygon
     pattern: '^([+-]?[\d.]+\ [+-]?[\d.]+)\ ([+-]?[\d.]+\ [+-]?[\d.]+\ ){2,}(\1)$'
+    comments: |
+      For example: `50.0 60.0 70.0 80.0 90.0 100.0 50.0 60.0`.
 
   # Person slots
   givenName:
@@ -759,6 +1039,7 @@ slots:
     multivalued: false
     range: string
     slot_uri: schema:givenName
+
   familyName:
     title: "Family Name"
     description: "The person's surname."
@@ -766,6 +1047,7 @@ slots:
     multivalued: false
     range: string
     slot_uri: schema:familyName
+
   worksForOrganizationMboIds:
     title: "Works for Organizations (mPIDs)"
     description: "The MBO identifiers of organizations which that the person works for."
@@ -773,6 +1055,10 @@ slots:
     multivalued: true
     range: Organization
     slot_uri: schema:worksFor
+    comments: |
+      mPID(s) from the first column of Organization.csv
+      Pipe-delimited when there are multiple values
+
   affiliatedOrganizationMboIds:
     title: "Affiliated to Organizations (mPIDs)"
     description: "The mbo identifiers of organizations which that the person is affiliated with."
@@ -780,6 +1066,10 @@ slots:
     multivalued: true
     range: Organization
     slot_uri: schema:affiliation
+    comments: |
+      mPID(s) from the first column of Organization.csv
+      Pipe-delimited when there are multiple values
+
   contactPointMboIds:
     title: "Contact Points (mPIDs)"
     description: The MBO identifiers of contact points for this person or organization.
@@ -787,18 +1077,56 @@ slots:
     multivalued: true
     range: ContactPoint
     slot_uri: schema:contactPoint
+    comments: |
+      mPID(s) from the first column of ContactPoint.csv
+      Pipe-delimited when there are multiple values
 
   # Organization slots
   organizationType:
     title: "Organization Type"
     designates_type: true
-    description: Specifies the type of organization that this represents. There is a long list, but `ResearchOrganization` is a good one.
+    description: Specifies the type of organization that this represents, according to schema.org organizationTypes.
     required: true
     multivalued: false
     range: uri
     pattern: "^(Organization|Airline|Consortium|Corporation|EducationalOrganization|CollegeOrUniversity|ElementarySchool|HighSchool|MiddleSchool|Preschool|School|FundingScheme|GovernmentOrganization|LibrarySystem|LocalBusiness|AnimalShelter|ArchiveOrganization|AutomotiveBusiness|AutoBodyShop|AutoDealer|AutoPartsStore|AutoRental|AutoRepair|AutoWash|GasStation|MotorcycleDealer|MotorcycleRepair|ChildCare|Dentist|DryCleaningOrLaundry|EmergencyService|FireStation|Hospital|PoliceStation|EmploymentAgency|EntertainmentBusiness|AdultEntertainment|AmusementPark|ArtGallery|Casino|ComedyClub|MovieTheater|NightClub|FinancialService|AccountingService|AutomatedTeller|BankOrCreditUnion|InsuranceAgency|FoodEstablishment|Bakery|BarOrPub|Brewery|CafeOrCoffeeShop|Distillery|FastFoodRestaurant|IceCreamShop|Restaurant|Winery|GovernmentOffice|HealthAndBeautyBusiness|BeautySalon|DaySpa|HairSalon|HealthClub|NailSalon|TattooParlor|HomeAndConstructionBusiness|Electrician|GeneralContractor|HVACBusiness|HousePainter|Locksmith|MovingCompany|Plumber|RoofingContractor|InternetCafe|LegalService|Attorney|Notary|Library|LodgingBusiness|BedAndBreakfast|Campground|Hostel|Hotel|Motel|Resort|VacationRental|MedicalBusiness|CommunityHealth|Dentist|Dermatology|DietNutrition|Emergency|Geriatric|Gynecologic|MedicalClinic|CovidTestingFacility|Midwifery|Nursing|Obstetric|Oncologic|Optician|Optometric|Otolaryngologic|Pediatric|Pharmacy|Physician|Physiotherapy|PlasticSurgery|Podiatric|PrimaryCare|Psychiatric|PublicHealth|ProfessionalService|RadioStation|RealEstateAgent|RecyclingCenter|SelfStorage|ShoppingCenter|SportsActivityLocation|BowlingAlley|ExerciseGym|GolfCourse|HealthClub|PublicSwimmingPool|SkiResort|SportsClub|StadiumOrArena|TennisComplex|Store|AutoPartsStore|BikeStore|BookStore|ClothingStore|ComputerStore|ConvenienceStore|DepartmentStore|ElectronicsStore|Florist|FurnitureStore|GardenStore|GroceryStore|HardwareStore|HobbyShop|HomeGoodsStore|JewelryStore|LiquorStore|MensClothingStore|MobilePhoneStore|MovieRentalStore|MusicStore|OfficeEquipmentStore|OutletStore|PawnShop|PetStore|ShoeStore|SportingGoodsStore|TireShop|ToyStore|WholesaleStore|TelevisionStation|TouristInformationCenter|TravelAgency|MedicalOrganization|Dentist|DiagnosticLab|Hospital|MedicalClinic|Pharmacy|Physician|VeterinaryCare|NGO|NewsMediaOrganization|OnlineBusiness|OnlineStore|PerformingGroup|DanceGroup|MusicGroup|TheaterGroup|PoliticalParty|Project|FundingAgency|ResearchProject|ResearchOrganization|SearchRescueOrganization|SportsOrganization|SportsTeam|WorkersUnion)$"
     slot_uri: rdf:type
     implicit_prefix: schema
+    comments: |
+      There is a long list included in the pattern of this slot. 
+      Some types that likely apply to MBO organizations include:
+        Core research organizations:
+
+          ResearchOrganization
+          EducationalOrganization
+          CollegeOrUniversity
+          GovernmentOrganization
+
+        Funding and project types:
+
+          FundingAgency
+          FundingScheme
+          Project
+          ResearchProject
+          Consortium
+
+        Specialized organizations:
+
+          NGO
+          ArchiveOrganization (for data repositories)
+          Library (for data/information services)
+          MedicalOrganization (for health-related marine research)
+
+        Generic fallbacks:
+
+          Organization (base type for anything that doesn't fit other categories)
+          ProfessionalService (for consulting or specialized services)
+
+        Possibly relevant:
+
+          NewsMediaOrganization (for science communication partners)
+          GovernmentOffice (for specific agency departments)
+
   departmentMboIds:
     title: "Has Departments (mPIDs)"
     description: A department within the organization.
@@ -806,6 +1134,10 @@ slots:
     multivalued: true
     range: Organization
     slot_uri: schema:department
+    comments: |
+      mPID(s) from the first column of Organization.csv
+      Pipe-delimited when there are multiple values
+
   parentOrganizationMboId:
     title: "Parent Organization (mPID)"
     description: Parent organization of this one (inverse of `subOrganizationMboIds`).
@@ -813,6 +1145,9 @@ slots:
     multivalued: false
     range: Organization
     slot_uri: schema:parentOrganization
+    comments: |
+      A mPID from the first column of Organization.csv
+
   memberOfOrganizationMboIds:
     title: "Member of Organizations (mPIDs)"
     description: Other organizations that this one is part of.
@@ -820,6 +1155,10 @@ slots:
     multivalued: true
     range: Organization
     slot_uri: schema:memberOf
+    comments: |
+      mPID(s) from the first column of Organization.csv
+      Pipe-delimited when there are multiple values
+
   subOrganizationMboIds:
     title: "Sub-organizations (mPIDs)"
     description: Organizations which are subsidiaries of this one (inverse of `parentOrganizationMboId`).
@@ -827,6 +1166,10 @@ slots:
     multivalued: true
     range: Organization
     slot_uri: schema:memberOf
+    comments: |
+      mPID(s) from the first column of Organization.csv
+      Pipe-delimited when there are multiple values
+
   legalName:
     title: "Legal Name"
     description: The legal name of an organization.
@@ -834,6 +1177,9 @@ slots:
     multivalued: false
     range: string
     slot_uri: schema:legalName
+    comments: |
+      For example: the legal name of MBA is `Marine Biological Association`.
+
   foundingDate:
     title: "Founding Date"
     description: The date that the organization was founded.
@@ -841,6 +1187,10 @@ slots:
     multivalued: false
     range: date
     slot_uri: schema:foundingDate
+    comments: |
+      A date in ISO8601 format
+      For example: `2025-12-31`
+
   dissolutionDate:
     title: "Dissolution Date"
     description: The date that the organization was (or will be) dissolved.
@@ -848,6 +1198,10 @@ slots:
     multivalued: false
     range: date
     slot_uri: schema:dissolutionDate
+    comments: |
+      A date in ISO8601 format
+      For example: `2025-12-31`
+
   fundingGrantMboIds:
     title: "Grants (mPIDs)"
     description: Some source of funding for the organization.
@@ -855,6 +1209,9 @@ slots:
     multivalued: true
     range: MonetaryGrant
     slot_uri: schema:funding
+    comments: |
+      mPID(s) from the first column of MonetaryGrant.csv
+      Pipe-delimited when there are multiple values
 
   # ContactPoint slots
   contactType:
@@ -864,6 +1221,7 @@ slots:
     multivalued: false
     range: string
     slot_uri: schema:contactType
+
   email:
     title: "Email"
     description: The email address on which this contact can be reached.
@@ -871,6 +1229,7 @@ slots:
     multivalued: false
     range: string
     slot_uri: schema:email
+
   telephone:
     title: "Telephone (+00)"
     description: The phone number on which this contact can be reached.
@@ -879,21 +1238,27 @@ slots:
     range: string
     pattern: '^\+[0-9-() #]+$'
     slot_uri: schema:telephone
+    comments: |
+      Please include country code with the telephone number.
+      For example: `+33 1 42 86 83 26` (France)
+
   availableLanguages:
     title: "Available Languages (en)"
     description: |
       The languages in which it is possible to communicate with this contact.
-
-      Languages should be supplied as [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language sub-tags.
-
-      There is no currently no validation performed on this field, please make sure it is accurate.
-
-      https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry
     required: false
     multivalued: true
     range: string
     slot_uri: schema:availableLanguage
+    comments: |
+      Languages should be supplied as [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language sub-tags.
+      For full list see: https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry
 
+      For example: `es` (Spanish)
+      Pipe-delimited when there are multiple values
+
+      There is no currently no validation performed on this field, please make sure it is accurate.
+      
   # MonetaryGrant slots
   funderOrganizationMboIds:
     title: "Funder Organizations (mPIDs)"
@@ -902,6 +1267,10 @@ slots:
     multivalued: true
     range: Organization
     slot_uri: schema:funder
+    comments: |
+      mPID(s) from the first column of Organization.csv
+      Pipe-delimited when there are multiple values
+
   sponsorOrganizationMboIds:
     title: "Sponsor Organizations (mPIDs)"
     description: The MBO identifiers for organizations which sponsored this grant.
@@ -909,6 +1278,10 @@ slots:
     multivalued: true
     range: Organization
     slot_uri: schema:sponsor
+    comments: |
+      mPID(s) from the first column of Organization.csv
+      Pipe-delimited when there are multiple values
+
   amount:
     title: "Amount"
     description: |
@@ -933,6 +1306,10 @@ slots:
     slot_uri: schema:currency
     extensions:
       csvw_about_url: "#MonetaryAmount"
+    comments: |
+      Use [ISO 4217 currency format](https://en.wikipedia.org/wiki/ISO_4217)
+      For example: `EUR`
+
   # Taxon slots
   taxonIdentifier:
     title: "Identifier"
@@ -943,24 +1320,25 @@ slots:
     multivalued: false
     range: string
     slot_uri: schema:identifier
+
   taxonLifeScienceIdentifier:
     title: "Life Science Identifier (PID)"
     subproperty_of: identifier
     description: |
-      The life science identifier for this taxon, for example `urn:lsid:marinespecies.org:taxname:578941`.
-
-      For more information, see https://www.lsid.info/
+      The life science identifier for this taxon.
     required: false
     multivalued: false
     range: URN
     pattern: '^urn:lsid:[^:\s]+:[^:\s]+:[^:\s]+(:[^:\s]+)?$'
     slot_uri: schema:identifier
+    comments: |
+      For example: `urn:lsid:marinespecies.org:taxname:578941`
+      For more information, see https://www.lsid.info/
+
   taxonScientificName:
     title: "Scientific Name"
     description: |
-      The full scientific name, with authorship and date information if known. When forming part of a dwc:Identification, 
-      this should be the name in lowest level taxonomic rank that can be determined. This term should not contain 
-      identification qualifications, which should instead be supplied in the dwc:identificationQualifier term.
+      The full scientific name, with authorship and date information, if known. 
 
       Actually represents dwc:scientificName via a schema:PropertyValue (schema:additionalProperty/schema:value).
     required: true
@@ -969,6 +1347,11 @@ slots:
     slot_uri: schema:value
     extensions:
       csvw_about_url: "#ScientificName"
+    comments: |
+      When forming part of a dwc:Identification, 
+      this should be the name in lowest level taxonomic rank that can be determined. This term should not contain 
+      identification qualifications (e.g. 'cf.'), which should instead be supplied in the dwc:identificationQualifier term.
+
   taxonKingdom:
     title: "Kingdom"
     description: |
@@ -981,6 +1364,7 @@ slots:
     slot_uri: schema:value
     extensions:
       csvw_about_url: "#Kingdom"
+
   taxonPhylum:
     title: "Phylum"
     description: |
@@ -993,6 +1377,7 @@ slots:
     slot_uri: schema:value
     extensions:
       csvw_about_url: "#Phylum"
+
   taxonOrder:
     title: "Order"
     description: |
@@ -1005,6 +1390,7 @@ slots:
     slot_uri: schema:value
     extensions:
       csvw_about_url: "#Order"
+
   taxonFamily:
     title: "Family"
     description: |
@@ -1017,6 +1403,7 @@ slots:
     slot_uri: schema:value
     extensions:
       csvw_about_url: "#Family"
+
   taxonGenus:
     title: "Genus"
     description: |
@@ -1029,6 +1416,7 @@ slots:
     slot_uri: schema:value
     extensions:
       csvw_about_url: "#Genus"
+
   taxonSpecificEpithet:
     title: "Specific Epithet"
     description: |
@@ -1041,6 +1429,7 @@ slots:
     slot_uri: schema:value
     extensions:
       csvw_about_url: "#SpecificEpithet"
+
   taxonomicStatus:
     title: "Status"
     description: |
@@ -1057,6 +1446,7 @@ slots:
     slot_uri: schema:value
     extensions:
       csvw_about_url: "#Status"
+
   taxonVerbatimTaxonRank:
     title: "Verbatim Taxon Rank"
     description: |
@@ -1075,15 +1465,18 @@ slots:
     title: "Audience Type"
     designates_type: true
     description: |
-      The specific type of audience, for example `Researcher`.
-
-      One of: `Audience`, `BusinessAudience`, `EducationalAudience`, `MedicalAudience`, `Patient`, `PeopleAudience`, `MedicalAudience`, `ParentAudience` or `Researcher`.
+      The specific type of audience.
+      One of: 
+        `Audience`, `BusinessAudience`, `EducationalAudience`, 
+        `MedicalAudience`, `Patient`, `PeopleAudience`, 
+        `MedicalAudience`, `ParentAudience` or `Researcher`
     required: true
     multivalued: false
     range: uri
     pattern: "^(Audience|BusinessAudience|EducationalAudience|MedicalAudience|Patient|PeopleAudience|MedicalAudience|ParentAudience|Researcher)$"
     slot_uri: rdf:type
     implicit_prefix: schema
+
   audienceTypeDescription:
     title: "Description"
     description: |
@@ -1092,3 +1485,8 @@ slots:
     multivalued: false
     range: string
     slot_uri: schema:audienceType
+    comments: |
+      For example:
+      `Environmental consultants, fisheries managers, and marine technology 
+      companies requiring scientific data for impact assessments, 
+      resource management decisions, or product development`.
