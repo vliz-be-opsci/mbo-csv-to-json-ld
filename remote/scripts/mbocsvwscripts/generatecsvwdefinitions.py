@@ -377,7 +377,7 @@ def _generate_csv_metadata_documents(
         ]
 
         metadata_document: Dict[str, Any] = {
-            "@context": "http://www.w3.org/ns/csvw",
+            "@context": ["http://www.w3.org/ns/csvw", {"dc": "http://purl.org/dc/terms/"}],
             "tables": [],
         }
 
