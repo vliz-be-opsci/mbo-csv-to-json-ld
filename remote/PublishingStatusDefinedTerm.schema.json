@@ -1,11 +1,21 @@
 {
-    "@context": "http://www.w3.org/ns/csvw",
+    "@context": [
+        "http://www.w3.org/ns/csvw",
+        {
+            "dc": "http://purl.org/dc/terms/"
+        }
+    ],
     "columns": [
         {
             "name": "id",
             "titles": {
                 "en": [
                     "MBO Permanent Identifier*"
+                ]
+            },
+            "dc:description": {
+                "en": [
+                    "Note that when inputting into CSV files this should not be the full URI, \nbut just the last part, e.g. `mbo_0000001`.\nThis is the identifier (mPID) for this row of the spreadsheet \nand for whatever information is being described in this row. \nIt should be unique in this column."
                 ]
             },
             "required": true,
@@ -22,6 +32,11 @@
                     "Data Entry Person (mPID - you)*"
                 ]
             },
+            "dc:description": {
+                "en": [
+                    "Should be an mPID from the first column of Person.csv"
+                ]
+            },
             "required": true,
             "propertyUrl": "https://schema.org/creator",
             "aboutUrl": "https://w3id.org/marco-bolo/{+id}#input-metadata",
@@ -32,6 +47,11 @@
             "titles": {
                 "en": [
                     "Data Entered for Action (mPID)*"
+                ]
+            },
+            "dc:description": {
+                "en": [
+                    "The mPID from the first column of the Action.csv. \nNote that you can reference the same mPID in multiple rows.\n\nUses the <https://w3id.org/marco-bolo/isResultOf> predicate but ultimately ends up being \nrepresented as a triple in the form `<action> schema:result <this-entity>`."
                 ]
             },
             "required": true,
@@ -70,6 +90,11 @@
                     "Existing Term (URL PID)"
                 ]
             },
+            "dc:description": {
+                "en": [
+                    "For example: `https://example.com`, `http://example.com`, \n`ftp://ftp.example.org/data`, `doi:10.1000/example123`"
+                ]
+            },
             "propertyUrl": "https://schema.org/identifier",
             "valueUrl": "{+existingTermId}"
         },
@@ -78,6 +103,11 @@
             "titles": {
                 "en": [
                     "Description"
+                ]
+            },
+            "dc:description": {
+                "en": [
+                    "A concise one-sentence summary of the main point or purpose."
                 ]
             },
             "propertyUrl": "https://schema.org/description",

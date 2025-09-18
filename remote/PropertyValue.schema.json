@@ -1,11 +1,21 @@
 {
-    "@context": "http://www.w3.org/ns/csvw",
+    "@context": [
+        "http://www.w3.org/ns/csvw",
+        {
+            "dc": "http://purl.org/dc/terms/"
+        }
+    ],
     "columns": [
         {
             "name": "id",
             "titles": {
                 "en": [
                     "MBO Permanent Identifier*"
+                ]
+            },
+            "dc:description": {
+                "en": [
+                    "Note that when inputting into CSV files this should not be the full URI, \nbut just the last part, e.g. `mbo_0000001`.\nThis is the identifier (mPID) for this row of the spreadsheet \nand for whatever information is being described in this row. \nIt should be unique in this column."
                 ]
             },
             "required": true,
@@ -22,6 +32,11 @@
                     "Data Entry Person (mPID - you)*"
                 ]
             },
+            "dc:description": {
+                "en": [
+                    "Should be an mPID from the first column of Person.csv"
+                ]
+            },
             "required": true,
             "propertyUrl": "https://schema.org/creator",
             "aboutUrl": "https://w3id.org/marco-bolo/{+id}#input-metadata",
@@ -34,6 +49,11 @@
                     "Data Entered for Action (mPID)*"
                 ]
             },
+            "dc:description": {
+                "en": [
+                    "The mPID from the first column of the Action.csv. \nNote that you can reference the same mPID in multiple rows.\n\nUses the <https://w3id.org/marco-bolo/isResultOf> predicate but ultimately ends up being \nrepresented as a triple in the form `<action> schema:result <this-entity>`."
+                ]
+            },
             "required": true,
             "propertyUrl": "https://w3id.org/marco-bolo/isResultOf",
             "aboutUrl": "https://w3id.org/marco-bolo/{+id}#input-metadata",
@@ -44,6 +64,11 @@
             "titles": {
                 "en": [
                     "Name*"
+                ]
+            },
+            "dc:description": {
+                "en": [
+                    "The commonly used name. \nFor example: `MBA` for Marine Biological Association"
                 ]
             },
             "required": true,
@@ -59,6 +84,11 @@
                     "Description"
                 ]
             },
+            "dc:description": {
+                "en": [
+                    "A concise one-sentence summary of the main point or purpose."
+                ]
+            },
             "propertyUrl": "https://schema.org/description",
             "datatype": {
                 "base": "string"
@@ -71,6 +101,11 @@
                     "Property ID (URL PID)"
                 ]
             },
+            "dc:description": {
+                "en": [
+                    "e.g. `http://vocab.nerc.ac.uk/collection/P07/current/CFSN0376/` to represent 'sea_surface_salinity' \n\nThese should generally be sourced from well-established controlled vocbularies,\nlike [NERC P01 - BODC Parameter Usage Vocabulary](https://vocab.nerc.ac.uk/collection/P01),\n[NERC P07 - Climate and Forecast Standard Names](https://vocab.nerc.ac.uk/collection/P07),\nand [ENVO](https://www.ebi.ac.uk/ols4/ontologies/envo)."
+                ]
+            },
             "propertyUrl": "https://schema.org/propertyID",
             "valueUrl": "{+propertyId}"
         },
@@ -79,6 +114,11 @@
             "titles": {
                 "en": [
                     "Measurement Method"
+                ]
+            },
+            "dc:description": {
+                "en": [
+                    "The what - the overall approach or protocol used\nMore general/categorical description\nOften refers to standardized procedures or methodologies\nExamples: \"CTD profiling\""
                 ]
             },
             "propertyUrl": "https://schema.org/measurementMethod",
@@ -91,6 +131,11 @@
             "titles": {
                 "en": [
                     "Measurement Technique"
+                ]
+            },
+            "dc:description": {
+                "en": [
+                    "The how - the specific technical implementation or procedural details\nMore specific technical description\nOften includes instrument settings, protocols, or analytical steps\nExamples: \"CTD rosette deployment to 1000m depth with 2-minute sampling intervals\""
                 ]
             },
             "propertyUrl": "https://schema.org/measurementTechnique",
@@ -141,6 +186,11 @@
                     "Units (URL PIDs)"
                 ]
             },
+            "dc:description": {
+                "en": [
+                    "For example: `http://vocab.nerc.ac.uk/collection/P06/current/UPMM/`, \n`http://qudt.org/vocab/unit/NUM-PER-M3`, \n`http://vocab.nerc.ac.uk/collection/P06/current/UPMM/|http://qudt.org/vocab/unit/NUM-PER-M3`.\n\nThe primary source of units should be [NERC P06: BODC-approved data storage units](https://vocab.nerc.ac.uk/collection/P06). \nIf a suitable unit cannot be found there, then a more general unit can be chosen from [QUDT](https://www.qudt.org/doc/2025/01/DOC_VOCAB-UNITS.html)."
+                ]
+            },
             "propertyUrl": "https://schema.org/unitCode",
             "separator": "|",
             "datatype": {
@@ -155,6 +205,11 @@
                     "Unit Text"
                 ]
             },
+            "dc:description": {
+                "en": [
+                    "Human-readable string corresponding to the identifier in 'Units (URL PIDs)'\nFor example: `Number per cubic metre`,  `#/m^3`"
+                ]
+            },
             "propertyUrl": "https://schema.org/unitText",
             "datatype": {
                 "base": "string"
@@ -165,6 +220,11 @@
             "titles": {
                 "en": [
                     "Is Sub-Type Of (PropertyValue mPIDs)"
+                ]
+            },
+            "dc:description": {
+                "en": [
+                    "An mPID from the first column of PropertyValue.csv"
                 ]
             },
             "propertyUrl": "https://schema.org/valueReference",
@@ -222,14 +282,6 @@
                 "resource": "../Action.csv",
                 "columnReference": "id"
             }
-        },
-        {
-          "columnReference": "isTypeOfPropertyValueMboId",
-          "reference": {
-            "resource": "../PropertyValue.csv",
-            "columnReference": "id"
-          }
         }
-
     ]
 }

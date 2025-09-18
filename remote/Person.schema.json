@@ -1,11 +1,21 @@
 {
-    "@context": "http://www.w3.org/ns/csvw",
+    "@context": [
+        "http://www.w3.org/ns/csvw",
+        {
+            "dc": "http://purl.org/dc/terms/"
+        }
+    ],
     "columns": [
         {
             "name": "id",
             "titles": {
                 "en": [
                     "MBO Permanent Identifier*"
+                ]
+            },
+            "dc:description": {
+                "en": [
+                    "Note that when inputting into CSV files this should not be the full URI, \nbut just the last part, e.g. `mbo_0000001`.\nThis is the identifier (mPID) for this row of the spreadsheet \nand for whatever information is being described in this row. \nIt should be unique in this column."
                 ]
             },
             "required": true,
@@ -22,6 +32,11 @@
                     "Data Entry Person (mPID - you)*"
                 ]
             },
+            "dc:description": {
+                "en": [
+                    "Should be an mPID from the first column of Person.csv"
+                ]
+            },
             "required": true,
             "propertyUrl": "https://schema.org/creator",
             "aboutUrl": "https://w3id.org/marco-bolo/{+id}#input-metadata",
@@ -32,6 +47,11 @@
             "titles": {
                 "en": [
                     "Data Entered for Action (mPID)*"
+                ]
+            },
+            "dc:description": {
+                "en": [
+                    "The mPID from the first column of the Action.csv. \nNote that you can reference the same mPID in multiple rows.\n\nUses the <https://w3id.org/marco-bolo/isResultOf> predicate but ultimately ends up being \nrepresented as a triple in the form `<action> schema:result <this-entity>`."
                 ]
             },
             "required": true,
@@ -72,6 +92,11 @@
                     "Works for Organizations (mPIDs)"
                 ]
             },
+            "dc:description": {
+                "en": [
+                    "mPID(s) from the first column of Organization.csv\nPipe-delimited when there are multiple values"
+                ]
+            },
             "propertyUrl": "https://schema.org/worksFor",
             "separator": "|",
             "datatype": {
@@ -84,6 +109,11 @@
             "titles": {
                 "en": [
                     "Affiliated to Organizations (mPIDs)"
+                ]
+            },
+            "dc:description": {
+                "en": [
+                    "mPID(s) from the first column of Organization.csv\nPipe-delimited when there are multiple values"
                 ]
             },
             "propertyUrl": "https://schema.org/affiliation",
@@ -100,6 +130,11 @@
                     "Contact Points (mPIDs)"
                 ]
             },
+            "dc:description": {
+                "en": [
+                    "mPID(s) from the first column of ContactPoint.csv\nPipe-delimited when there are multiple values"
+                ]
+            },
             "propertyUrl": "https://schema.org/contactPoint",
             "separator": "|",
             "datatype": {
@@ -107,22 +142,6 @@
                 "base": "string"
             }
         },
-        {
-            "name": "oceanExpertId",
-            "titles": {
-                "en": [
-                    "OceanExpert ID"
-                ]
-              },
-            "propertyUrl": "https://schema.org/identifier",
-            "datatype": {
-                "base": "string"
-            },
-            "description": {
-                "en": "Must be a full OceanExpert URL like https://oceanexpert.org/expert/54167"
-            }
-        },
-
         {
             "virtual": true,
             "propertyUrl": "rdf:type",
@@ -171,28 +190,6 @@
                 "resource": "../Action.csv",
                 "columnReference": "id"
             }
-        },
-        {
-          "columnReference": "worksForOrganizationMboIds",
-          "reference": {
-            "resource": "../Organization.csv",
-            "columnReference": "id"
-          }
-        },
-        {
-          "columnReference": "affiliatedOrganizationMboIds",
-          "reference": {
-            "resource": "../Organization.csv",
-            "columnReference": "id"
-          }
-        },
-        {
-          "columnReference": "contactPointMboIds",
-          "reference": {
-            "resource": "../ContactPoint.csv",
-            "columnReference": "id"
-          }
         }
-
     ]
 }

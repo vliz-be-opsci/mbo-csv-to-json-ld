@@ -649,8 +649,10 @@ def _get_column_definition_for_slot(
 
     # Add Dublin Core description from comments field
     if slot.comments:
+        # Handle both single and multiple comments
+        comment_text = "\n".join(comment.strip() for comment in slot.comments)
         column_definition["dc:description"] = {
-            "en": [slot.comments.strip()]
+            "en": [comment_text]
         }
 
     if slot.identifier is True:

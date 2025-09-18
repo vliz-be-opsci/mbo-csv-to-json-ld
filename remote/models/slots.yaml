@@ -417,8 +417,8 @@ slots:
     comments: |
        For example: `2012-01/2013-02`.
 
-      Must conform to the [ISO8601 time interal specification](https://en.wikipedia.org/wiki/ISO_8601#Time_intervals).
-      The MBO project only currently supports the start&end variety.
+       Must conform to the [ISO8601 time interal specification](https://en.wikipedia.org/wiki/ISO_8601#Time_intervals).
+       The MBO project only currently supports the start&end variety.
 
   basedOnIds:
     title: "Based On (URL PIDs)"
