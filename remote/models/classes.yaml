@@ -147,6 +147,7 @@ classes:
       - worksForOrganizationMboIds
       - affiliatedOrganizationMboIds
       - contactPointMboIds
+      - oceanExpertIt
 
   Organization:
     is_a: PersonOrOrganization
