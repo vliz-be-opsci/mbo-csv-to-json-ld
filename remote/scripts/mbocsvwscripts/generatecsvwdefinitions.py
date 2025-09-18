@@ -257,10 +257,7 @@ def _generate_unioned_identifiers_schema(out_dir: Path):
         out_dir / _REMOTE_DIR_NAME / _UNIONED_IDENTIFIERS_SCHEMA_FILE_NAME, "w+"
     ) as f:
         unioned_identifiers_schema = {
-            unioned_identifiers_schema = {
-                "@context": ["http://www.w3.org/ns/csvw", {"dc": "http://purl.org/dc/terms/"}],
-                # ... rest of schema
-            },
+            "@context": ["http://www.w3.org/ns/csvw", {"dc": "http://purl.org/dc/terms/"}],
             "columns": [
                 {
                     "name": "id",
@@ -273,7 +270,6 @@ def _generate_unioned_identifiers_schema(out_dir: Path):
             "primaryKey": ["id"],
         }
         f.writelines(json.dumps(unioned_identifiers_schema, indent=4))
-
 
 def _generate_makefile_manual_foreign_key_checks(
     class_manual_foreign_key_checks: Dict[str, List[ManualForeignKeyCheckConfig]],
