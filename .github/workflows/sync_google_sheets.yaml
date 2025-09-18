@@ -54,20 +54,30 @@ jobs:
           token = "${{ steps.auth.outputs.access_token }}"
           session = requests.Session()
           session.headers.update({"Authorization": f"Bearer {token}"})
-
           gc = gspread.Client(auth=object(), session=session)
           sh = gc.open_by_key("${{ env.SHEET_ID }}")
-
           os.makedirs("${{ env.CSV_DIR }}", exist_ok=True)
 
           for worksheet in sh.worksheets():
               name = worksheet.title
-              df = get_as_dataframe(worksheet, evaluate_formulas=True, header=0)
-              df.dropna(how="all", inplace=True)
-              path = f"${{ env.CSV_DIR }}/{name}.csv"
-              df.to_csv(path, index=False)
-              print(f"✅ Exported tab '{name}' to '{path}'")
+              try:
+                  df = get_as_dataframe(worksheet, evaluate_formulas=True, header=0)
+                  df.dropna(how="all", inplace=True)
+                  path = f"${{ env.CSV_DIR }}/{name}.csv"
+                  df.to_csv(path, index=False)
+                  print(f"✅ Exported tab '{name}' to '{path}'")
+              except Exception as e:
+                  print(f"❌ Failed to export tab '{name}': {e}")
+                  continue
           EOF
+
+          try:
+            df = get_as_dataframe(worksheet, evaluate_formulas=True, header=0)
+            # ... rest of processing
+            print(f"✅ Exported tab '{name}' to '{path}'")
+        except Exception as e:
+            print(f"❌ Failed to export tab '{name}': {e}")
+            continue
 
       - name: Commit updated CSVs
         run: |
