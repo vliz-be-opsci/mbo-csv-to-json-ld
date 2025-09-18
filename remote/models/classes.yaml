@@ -74,9 +74,11 @@ classes:
       - citeSourceCodeMboIds
       - citeSoftwareApplicationMboIds
       - citeServiceMboIds
+      - citeDocumentMboIds
       - childStepMboIds
       - howToImplementTipMboIds
       - audienceMboIds
+      - url
 
   HowToTip:
     description: |
