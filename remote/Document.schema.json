@@ -81,7 +81,7 @@
             },
             "dc:description": {
                 "en": [
-                    "A less commonly used name for the same entity. \nFor example: DASSH for MBA"
+                    "A less commonly used name for the same entity. \nFor example: \n`DASSH` for MBA\n`ICES Survey Protocol` for Manual for the International Bottom Trawl Surveys"
                 ]
             },
             "propertyUrl": "https://schema.org/alternateName",
