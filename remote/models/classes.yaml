@@ -122,7 +122,7 @@ classes:
       - dateCreated
       - dateModified
       - datePublished
-      - inProgressDataDate
+      - inProgressDate
       - licenseMboId
       - conditionsOfAccess
       - keywords
@@ -473,3 +473,39 @@ classes:
       - audienceType
       - name
       - audienceTypeDescription
+
+  Document:
+    description: |
+      A description of documents used, or produced in the generation of your dataset.
+    class_uri: schema:DigitalDocument
+    slots:
+      - id
+      - metadataPublisherId
+      - metadataDescribedForActionId
+      - name
+      - alternateName
+      - identifiers
+      - description
+      - abstract
+      - keywords
+      - availableLanguages
+      - aboutTaxonMboIds
+      - spatialCoveragePlaceMboId
+      - temporalCoverage
+      - audienceMboIds
+      - authorId
+      - contributorIds
+      - ownerId
+      - maintainerId
+      - publisherId
+      - publishingStatusMboId
+      - dateCreated
+      - dateModified
+      - datePublished
+      - inProgressDate
+      - licenseMboId
+      - embargoStatementMboId
+      - conditionsOfAccess
+      - url
+      - landingPage
+

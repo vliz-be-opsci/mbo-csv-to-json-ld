@@ -377,13 +377,13 @@ slots:
     range: EmbargoStatement
     slot_uri: schema:usageInfo
 
-  inProgressDataDate:
-    title: "In Progress Data Date"
-    description: "The point in time when you expect that the data will be accessible."
+  inProgressDate:
+    title: "In Progress Date"
+    description: "The point in time when you expect that the thing (e.g. data, document) will be accessible."
     required: false
     multivalued: false
     range: date
-    slot_uri: mbo:inProgressDataDate
+    slot_uri: mbo:inProgressDate
     comments: |
       A date in ISO8601 format
       For example: `2025-12-31`
