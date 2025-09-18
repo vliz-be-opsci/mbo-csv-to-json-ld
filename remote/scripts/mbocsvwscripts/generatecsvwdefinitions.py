@@ -257,7 +257,10 @@ def _generate_unioned_identifiers_schema(out_dir: Path):
         out_dir / _REMOTE_DIR_NAME / _UNIONED_IDENTIFIERS_SCHEMA_FILE_NAME, "w+"
     ) as f:
         unioned_identifiers_schema = {
-            "@context": "http://www.w3.org/ns/csvw",
+            unioned_identifiers_schema = {
+                "@context": ["http://www.w3.org/ns/csvw", {"dc": "http://purl.org/dc/terms/"}],
+                # ... rest of schema
+            },
             "columns": [
                 {
                     "name": "id",
