@@ -231,7 +231,7 @@ slots:
     comments: |
       Should be an mPID from the first column of Person.csv
 
-    oceanExpertId:
+  oceanExpertId:
     title: "Ocean Expert ID"
     required: false
     multivalued: false
