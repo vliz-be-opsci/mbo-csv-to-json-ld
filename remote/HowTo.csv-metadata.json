@@ -1,10 +1,5 @@
 {
-    "@context": [
-        "http://www.w3.org/ns/csvw",
-        {
-            "dc": "http://purl.org/dc/terms/"
-        }
-    ],
+    "@context": "http://www.w3.org/ns/csvw",
     "tables": [
         {
             "url": "../Action.csv",
