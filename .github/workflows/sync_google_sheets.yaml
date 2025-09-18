@@ -21,15 +21,15 @@ jobs:
      - name: Checkout repository
        uses: actions/checkout@v4
 
-      - name: Authenticate with Google via WIF
-        id: auth
-        uses: google-github-actions/auth@v2
-        with:
-          token_format: 'access_token'
-          access_token_scopes: "https://www.googleapis.com/auth/spreadsheets.readonly"
-          create_credentials_file: true
-          workload_identity_provider: "projects/137568280356/locations/global/workloadIdentityPools/github/providers/github"
-          service_account: ${{ env.GOOGLE_SERVICE_ACCOUNT }}
+     - name: Authenticate with Google via WIF
+       id: auth
+       uses: google-github-actions/auth@v2
+       with:
+         token_format: 'access_token'
+         access_token_scopes: "https://www.googleapis.com/auth/spreadsheets.readonly"
+         create_credentials_file: true
+         workload_identity_provider: "projects/137568280356/locations/global/workloadIdentityPools/github/providers/github"
+         service_account: ${{ env.GOOGLE_SERVICE_ACCOUNT }} 
 
       - name: Set up Python
         uses: actions/setup-python@v5
