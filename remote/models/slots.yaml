@@ -749,7 +749,7 @@ slots:
       mPID(s) from the first column of Service.csv
       Pipe-delimited when there are multiple values
 
-  citeDocumentMboIds
+  citeDocumentMboIds:
     title: "Document Citations (mPIDs)"
     description: "The MBO identifiers for services used in this HowToStep."
     required: false
@@ -759,7 +759,7 @@ slots:
     comments: |
       mPID(s) from the first column of Document.csv
       Pipe-delimited when there are multiple values
-      
+
   childStepMboIds:
     title: "Child Steps (mPIDs)"
     description: "The MBO identifiers for steps which are children of this one."
