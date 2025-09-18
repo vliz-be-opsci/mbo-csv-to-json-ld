@@ -22,7 +22,6 @@ This tool helps you turn metadata stored in **CSV files** into a format that can
 ### Documentation
 
 - [Rendered model documentation](http://lab.marcobolo-project.eu/csv-to-json-ld/index.html)
-- Protocol for updating the LinkML model: http://lab.marcobolo-project.eu/csv-to-json-ld/LinkML-model-update-protocol.html
 
 To make all this possible, the tool brings together four key technologies:
 
