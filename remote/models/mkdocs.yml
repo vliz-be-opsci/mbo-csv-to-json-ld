@@ -3,7 +3,11 @@ theme:
   name: readthedocs
 use_directory_urls: false
 nav:
-  - User Guide: user-guide.md
+   - User Guide:
+    - Overview: overview.md
+    - Data Entry Guide: data-entry-guide.md
+    - Validation Reference: validation-reference.md
+    - FAQs: faqs.md
   - Model Maintenance and Management: model_management.md
   - Model Overview: index.md
   - CSV files:

@@ -51,6 +51,9 @@ classes:
       - name
       - howToStepMboId
       - description
+      - citeDocumentMboIds
+      - url
+
 
   HowToStep:
     description: |
