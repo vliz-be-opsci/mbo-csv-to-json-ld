@@ -648,6 +648,12 @@ def _get_column_definition_for_slot(
         "titles": {"en": [slot_column_title]},
     }
 
+    # Add Dublin Core description from comments field
+    if slot.comments:
+        column_definition["dc:description"] = {
+            "en": [slot.comments.strip()]
+        }
+
     if slot.identifier is True:
         primary_key_definition.append(slot.name)
 
