@@ -237,7 +237,7 @@ slots:
     multivalued: false
     description: |
       Ocean Expert Identifier in URL form
-    range: PersonOrOrganization
+    range: uri
     slot_uri: schema:URL
     comments: |
       For example: `https://oceanexpert.org/expert/54167`

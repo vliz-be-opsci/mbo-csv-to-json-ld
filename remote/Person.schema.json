@@ -150,7 +150,7 @@
                 ]
             },
             "propertyUrl": "https://schema.org/URL",
-            "valueUrl": "https://w3id.org/marco-bolo/{+oceanExpertId}"
+            "valueUrl": "{+oceanExpertId}"
         },
         {
             "virtual": true,
