@@ -73,22 +73,37 @@
             }
         },
         {
-            "name": "containsVariablesMboIds",
+            "name": "alternateName",
             "titles": {
                 "en": [
-                    "Contains Variables (PropertyValue mPIDs)*"
+                    "Alternate Name"
                 ]
             },
             "dc:description": {
                 "en": [
-                    "mPID(s) from the first column of the PropertyValue.csv\nPipe-delimited when there are multiple values"
+                    "A less commonly used name for the same entity. \nFor example: DASSH for MBA"
                 ]
             },
-            "required": true,
-            "propertyUrl": "https://schema.org/variableMeasured",
+            "propertyUrl": "https://schema.org/alternateName",
+            "datatype": {
+                "base": "string"
+            }
+        },
+        {
+            "name": "identifiers",
+            "titles": {
+                "en": [
+                    "Identifiers"
+                ]
+            },
+            "dc:description": {
+                "en": [
+                    "Can include any kind on non-MBO identifiers like ROR, ORCID, DOI, ISBNs, IGSN, UUIDs, etc."
+                ]
+            },
+            "propertyUrl": "https://schema.org/identifier",
             "separator": "|",
             "datatype": {
-                "@id": "https://w3id.org/marco-bolo/ConvertMboIdToNode",
                 "base": "string"
             }
         },
@@ -110,21 +125,55 @@
             }
         },
         {
-            "name": "landingPage",
+            "name": "abstract",
             "titles": {
                 "en": [
-                    "Landing Pages (URLs)"
+                    "Abstract"
                 ]
             },
             "dc:description": {
                 "en": [
-                    "For example: `https://example.com`, `http://example.com`, \n`ftp://ftp.example.org/data`, `doi:10.1000/example123`\n\nPipe-delimited when there are multiple values"
+                    "A brief summary that captures the essence of this entity in ~ 1-5 sentences. \nThink of this as what would appear in search results or catalog listings,\nit should quickly convey the main purpose or key points without technical details."
                 ]
             },
-            "propertyUrl": "https://schema.org/url",
+            "propertyUrl": "https://schema.org/abstract",
+            "datatype": {
+                "base": "string"
+            }
+        },
+        {
+            "name": "keywords",
+            "titles": {
+                "en": [
+                    "Keywords"
+                ]
+            },
+            "dc:description": {
+                "en": [
+                    "Separate multiple keyword with a '|'.\ne.g. Whales|Population Genetics"
+                ]
+            },
+            "propertyUrl": "https://schema.org/keywords",
             "separator": "|",
             "datatype": {
-                "@id": "https://schema.org/URL",
+                "base": "string"
+            }
+        },
+        {
+            "name": "availableLanguages",
+            "titles": {
+                "en": [
+                    "Available Languages (en)"
+                ]
+            },
+            "dc:description": {
+                "en": [
+                    "Languages should be supplied as [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language sub-tags.\nFor full list see: https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry\n\nFor example: `es` (Spanish)\nPipe-delimited when there are multiple values\n\nThere is no currently no validation performed on this field, please make sure it is accurate."
+                ]
+            },
+            "propertyUrl": "https://schema.org/availableLanguage",
+            "separator": "|",
+            "datatype": {
                 "base": "string"
             }
         },
@@ -176,18 +225,18 @@
             }
         },
         {
-            "name": "dataDownloadMboIds",
+            "name": "audienceMboIds",
             "titles": {
                 "en": [
-                    "Data Downloads (mPIDs)"
+                    "Audiences (mPIDs)"
                 ]
             },
             "dc:description": {
                 "en": [
-                    "a list of Pipe-delimited mPIDs from the first column of DataDownload.csv"
+                    "Should be an mPID from the first column of Audience.csv"
                 ]
             },
-            "propertyUrl": "https://schema.org/distribution",
+            "propertyUrl": "https://schema.org/audience",
             "separator": "|",
             "datatype": {
                 "@id": "https://w3id.org/marco-bolo/ConvertMboIdToNode",
@@ -274,44 +323,6 @@
             "valueUrl": "https://w3id.org/marco-bolo/{+publisherId}"
         },
         {
-            "name": "basedOnIds",
-            "titles": {
-                "en": [
-                    "Based On (URL PIDs)"
-                ]
-            },
-            "dc:description": {
-                "en": [
-                    "WARNING: There are no foreign key checks.\n\nFor example: `https://example.com`, `http://example.com`, \n`ftp://ftp.example.org/data`, `doi:10.1000/example123`\n\nPipe-delimited when there are multiple values"
-                ]
-            },
-            "propertyUrl": "https://schema.org/isBasedOn",
-            "separator": "|",
-            "datatype": {
-                "@id": "https://w3id.org/marco-bolo/ConvertIriToNode",
-                "base": "string"
-            }
-        },
-        {
-            "name": "hasPartIds",
-            "titles": {
-                "en": [
-                    "Has Parts (URL PIDs)"
-                ]
-            },
-            "dc:description": {
-                "en": [
-                    "WARNING: There are no foreign key checks.\nYou are required to use the full URI here to reference pre-existing Datasets.\n\nFor example: `https://example.com`, `http://example.com`, \n`ftp://ftp.example.org/data`, `doi:10.1000/example123`\n\nPipe-delimited when there are multiple values"
-                ]
-            },
-            "propertyUrl": "https://schema.org/hasPart",
-            "separator": "|",
-            "datatype": {
-                "@id": "https://w3id.org/marco-bolo/ConvertIriToNode",
-                "base": "string"
-            }
-        },
-        {
             "name": "publishingStatusMboId",
             "titles": {
                 "en": [
@@ -325,16 +336,6 @@
             },
             "propertyUrl": "https://schema.org/creativeWorkStatus",
             "valueUrl": "https://w3id.org/marco-bolo/{+publishingStatusMboId}"
-        },
-        {
-            "name": "embargoStatementMboId",
-            "titles": {
-                "en": [
-                    "Embargo Statement (mPID)"
-                ]
-            },
-            "propertyUrl": "https://schema.org/usageInfo",
-            "valueUrl": "https://w3id.org/marco-bolo/{+embargoStatementMboId}"
         },
         {
             "name": "dateCreated",
@@ -425,6 +426,16 @@
             "valueUrl": "https://w3id.org/marco-bolo/{+licenseMboId}"
         },
         {
+            "name": "embargoStatementMboId",
+            "titles": {
+                "en": [
+                    "Embargo Statement (mPID)"
+                ]
+            },
+            "propertyUrl": "https://schema.org/usageInfo",
+            "valueUrl": "https://w3id.org/marco-bolo/{+embargoStatementMboId}"
+        },
+        {
             "name": "conditionsOfAccess",
             "titles": {
                 "en": [
@@ -442,46 +453,46 @@
             }
         },
         {
-            "name": "keywords",
+            "name": "url",
             "titles": {
                 "en": [
-                    "Keywords"
+                    "URL"
                 ]
             },
             "dc:description": {
                 "en": [
-                    "Separate multiple keyword with a '|'.\ne.g. Whales|Population Genetics"
+                    "Must include the protocol (scheme) and should follow RFC 3986 standards\n\nFor example: `https://example.com`, `http://example.com`\n`ftp://ftp.example.org/data`, `doi:10.1000/example123`, `urn:isbn:1234567890`, `mailto:contact@example.com`"
                 ]
             },
-            "propertyUrl": "https://schema.org/keywords",
-            "separator": "|",
+            "propertyUrl": "https://schema.org/url",
             "datatype": {
+                "@id": "https://schema.org/URL",
                 "base": "string"
             }
         },
         {
-            "name": "audienceMboIds",
+            "name": "landingPage",
             "titles": {
                 "en": [
-                    "Audiences (mPIDs)"
+                    "Landing Pages (URLs)"
                 ]
             },
             "dc:description": {
                 "en": [
-                    "Should be an mPID from the first column of Audience.csv"
+                    "For example: `https://example.com`, `http://example.com`, \n`ftp://ftp.example.org/data`, `doi:10.1000/example123`\n\nPipe-delimited when there are multiple values"
                 ]
             },
-            "propertyUrl": "https://schema.org/audience",
+            "propertyUrl": "https://schema.org/url",
             "separator": "|",
             "datatype": {
-                "@id": "https://w3id.org/marco-bolo/ConvertMboIdToNode",
+                "@id": "https://schema.org/URL",
                 "base": "string"
             }
         },
         {
             "virtual": true,
             "propertyUrl": "rdf:type",
-            "valueUrl": "https://schema.org/Dataset"
+            "valueUrl": "https://schema.org/DigitalDocument"
         },
         {
             "virtual": true,
@@ -505,7 +516,7 @@
             "virtual": true,
             "aboutUrl": "https://w3id.org/marco-bolo/{+id}#input-metadata",
             "propertyUrl": "https://schema.org/contentUrl",
-            "valueUrl": "https://w3id.org/marco-bolo/mbo_0000009#row={_row}"
+            "valueUrl": "https://w3id.org/marco-bolo/mbo_0000027#row={_row}"
         }
     ],
     "aboutUrl": "https://w3id.org/marco-bolo/{+id}",
