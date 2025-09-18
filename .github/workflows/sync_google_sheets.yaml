@@ -1,47 +1,38 @@
 name: Sync Google Sheet to CSV
-
 on:  
   workflow_dispatch:  # allows manual triggering
   schedule:
-    - cron: "0 1 * * *"  # runs every day at 01:00 UTC
-
+    - cron: "0 1 * * *"  # runs every day at 01:00 UTC (fixed)
 permissions:
   id-token: write
   contents: write  # Needed to commit CSVs
-
 env:
   SHEET_ID: 1PBFK3LW3DAdvXdbk2v8bSdtTf87mBhabeeegwRjOBRg
   CSV_DIR: .
   GOOGLE_PROJECT_ID: mbo-wp1-csv-to-json-ld
   GOOGLE_SERVICE_ACCOUNT: github-sheets-reader@mbo-wp1-csv-to-json-ld.iam.gserviceaccount.com
-
 jobs:
   export-sheet-tabs:
     runs-on: ubuntu-latest
-
     steps:
-     - name: Checkout repository
-       uses: actions/checkout@v4
-
-     - name: Authenticate with Google via WIF
-       id: auth
-       uses: google-github-actions/auth@v2
-       with:
-         token_format: 'access_token'
-         access_token_scopes: "https://www.googleapis.com/auth/spreadsheets.readonly"
-         create_credentials_file: true
-         workload_identity_provider: "projects/137568280356/locations/global/workloadIdentityPools/github/providers/github"
-         service_account: ${{ env.GOOGLE_SERVICE_ACCOUNT }} 
-
-      - name: Set up Python
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Authenticate with Google via WIF
+        id: auth
+        uses: google-github-actions/auth@v2
+        with:
+          token_format: 'access_token'
+          access_token_scopes: "https://www.googleapis.com/auth/spreadsheets.readonly"
+          create_credentials_file: true
+          workload_identity_provider: "projects/137568280356/locations/global/workloadIdentityPools/github/providers/github"
+          service_account: ${{ env.GOOGLE_SERVICE_ACCOUNT }} 
+      - name: Set up Python  # Fixed indentation here
         uses: actions/setup-python@v5
         with:
           python-version: 3.11
-
       - name: Install dependencies
         run: |
           pip install gspread pandas gspread_dataframe requests
-
       - name: Export each sheet tab as CSV
         run: |
           python <<EOF
@@ -50,14 +41,12 @@ jobs:
           import gspread
           import pandas as pd
           from gspread_dataframe import get_as_dataframe
-
           token = "${{ steps.auth.outputs.access_token }}"
           session = requests.Session()
           session.headers.update({"Authorization": f"Bearer {token}"})
           gc = gspread.Client(auth=object(), session=session)
           sh = gc.open_by_key("${{ env.SHEET_ID }}")
           os.makedirs("${{ env.CSV_DIR }}", exist_ok=True)
-
           for worksheet in sh.worksheets():
               name = worksheet.title
               try:
@@ -70,21 +59,11 @@ jobs:
                   print(f"❌ Failed to export tab '{name}': {e}")
                   continue
           EOF
-
-          try:
-            df = get_as_dataframe(worksheet, evaluate_formulas=True, header=0)
-            # ... rest of processing
-            print(f"✅ Exported tab '{name}' to '{path}'")
-        except Exception as e:
-            print(f"❌ Failed to export tab '{name}': {e}")
-            continue
-
       - name: Commit updated CSVs
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add $CSV_DIR/*.csv
-
           if git diff --cached --quiet; then
             echo "🟢 No changes to commit."
           else
