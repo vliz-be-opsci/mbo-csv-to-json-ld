@@ -56,7 +56,7 @@ check-csv-format:
 
 out/validation/person-or-organization.csv: data/Person.csv data/Organization.csv 
 	@mkdir -p out/validation
-	@$(UNION_UNIQUE_IDENTIFIERS) --out out/validation/person-or-organization.csv --column-name "MBO Permanent Identifier*" Person.csv Organization.csv
+	@$(UNION_UNIQUE_IDENTIFIERS) --out out/validation/person-or-organization.csv --column-name "MBO Permanent Identifier*" data/Person.csv data/Organization.csv
 
 validate: check-csv-format $(CSVW_METADATA_VALIDATION_FILES) $(MANUAL_FOREIGN_KEY_VALIDATION_LOGS)
 	@EXIT_CODE=0; \
