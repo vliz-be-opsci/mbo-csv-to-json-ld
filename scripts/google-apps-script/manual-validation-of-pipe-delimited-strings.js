@@ -68,7 +68,7 @@ function validatePipeDelimitedFKs() {
       
       if (!isArray || !fk) return;
 
-      const rawTargetName = fk.reference.resource.replace(".csv", "").replace("../data/", "").replace("../", "").replace("out/validation/", "");
+      const rawTargetName = fk.reference.resource.replace(".csv", "").replace("../", "").replace("out/validation/", "");
       const targetColumnName = fk.reference.columnReference;
       const targetSheets = syntheticSheetMap[rawTargetName] || [rawTargetName];
 

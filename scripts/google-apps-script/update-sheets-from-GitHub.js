@@ -91,6 +91,71 @@ function buildHeaderNote(col, slotInfoByName) {
   return note || null;
 }
 
+// Apply column formatting and validation based on LinkML slot properties
+function applySlotValidation(sheet, colIndex, colName, slotInfo, foreignKeyMap, sheetName) {
+  const colRange = sheet.getRange(2, colIndex, sheet.getMaxRows() - 1);
+  
+  // Check if this column is a foreign key
+  const fkKey = `${sheetName}.${colName}`;
+  const isForeignKey = foreignKeyMap.hasOwnProperty(fkKey);
+  
+  if (isForeignKey) {
+    // Foreign keys get dropdown validation - handled later in the main loop
+    Logger.log(`Column ${colName} is a foreign key - dropdown will be applied later`);
+    return;
+  }
+  
+  if (slotInfo) {
+    // Format columns with string range and pattern as text to prevent number conversion
+    if (slotInfo.range === 'string' && slotInfo.pattern) {
+      colRange.setNumberFormat('@'); // Force text formatting
+      
+      // Apply regex validation using the LinkML pattern
+      const regex = slotInfo.pattern;
+      const rule = SpreadsheetApp.newDataValidation()
+        .requireFormulaSatisfied(`=REGEXMATCH(INDIRECT("RC", FALSE), "${regex}")`)
+        .setAllowInvalid(true)
+        .build();
+      colRange.setDataValidation(rule);
+      Logger.log(`Applied pattern validation '${regex}' to column ${colName}`);
+      
+    } else if (slotInfo.range === 'date') {
+      // Format date columns appropriately
+      colRange.setNumberFormat('yyyy-mm-dd');
+      Logger.log(`Applied date formatting to column ${colName}`);
+    }
+  }
+}
+
+// Normalize values that Google Sheets may have converted incorrectly
+function normalizeSheetValues(sheet, colIndex, slotInfo) {
+  if (!slotInfo || slotInfo.range !== 'string' || !slotInfo.pattern) return;
+  
+  const colRange = sheet.getRange(2, colIndex, sheet.getMaxRows() - 1);
+  const values = colRange.getValues();
+  let changed = false;
+  
+  for (let i = 0; i < values.length; i++) {
+    let cellValue = values[i][0];
+    
+    if (cellValue === '' || cellValue == null) continue;
+    
+    let originalValue = cellValue;
+    cellValue = String(cellValue).trim();
+    
+    // Fix floating point numbers that should be integers (like 2026.0 -> 2026)
+    if (/^\d+\.0+$/.test(cellValue)) {
+      cellValue = cellValue.replace(/\.0+$/, '');
+      values[i][0] = cellValue;
+      changed = true;
+      Logger.log(`Normalized ${originalValue} to ${cellValue} in row ${i + 2}`);
+    }
+  }
+  
+  if (changed) {
+    colRange.setValues(values);
+  }
+}
 
 function generateSheetsFromCSVW() {
   // Discover schema files (CSVW JSON Schemas) from GitHub and sort for stable order.
@@ -166,6 +231,32 @@ function generateSheetsFromCSVW() {
     protection.removeEditors(protection.getEditors()); // removes everyone
     protection.addEditor(Session.getEffectiveUser());  // keeps script owner
 
+    // Collect foreign key info early for validation logic
+    (schema.foreignKeys || []).forEach((fk) => {
+      const fromCol = fk.columnReference;
+      const to = fk.reference;
+
+      // Normalize target sheet name from CSVW resource path to a sheet tab name (strip extensions/paths).
+      const toSheet = to.resource.replace(".csv", "").replace("../data/", "").replace("../", "").replace("out/validation/", "");
+
+      // Store mapping from "ThisSheet.fromCol" to { targetSheet, targetColumn } for the dropdown phase.
+      foreignKeyMap[`${sheetName}.${fromCol}`] = {
+        targetSheet: toSheet,
+        targetColumn: to.columnReference
+      };
+
+      // Detect array-typed foreign keys: CSVW columns with a string `separator` imply arrays.
+      // We skip dropdowns for array-typed FKs, because a single-cell dropdown doesn't suit multi-valued entries.
+      const matchingCol = schema.columns.find(col => col.name === fromCol);
+      if (matchingCol) {
+        const isArrayType = typeof matchingCol.separator === "string";
+        if (isArrayType) {
+          Logger.log(`↪️ Marking '${sheetName}.${fromCol}' as array-typed foreign key`);
+          arrayTypedFKs[`${sheetName}.${fromCol}`] = true;
+        }
+      }
+    });
+
     // For each schema column, configure appearance, notes, and validation for the corresponding sheet column.
     columns.forEach((col, i) => {
 
@@ -190,17 +281,21 @@ function generateSheetsFromCSVW() {
         headerCell.setBackground("#fff3cd"); // pale yellow
       }
 
-      // 🔑 THIS IS WHERE HEADER "NOTES" ARE APPLIED:
-      // Look up a description for this slot (by its raw `name`) from the parsed YAML.
-      // If present, attach it to the header cell via setNote() so users see helpful tooltips.
-      // Merge dc:description (CSVW) + slots.yaml + optional hints
+      // Apply header notes with LinkML slot information
       const mergedNote = buildHeaderNote(col, slotDescriptions);
       if (mergedNote) headerCell.setNote(mergedNote);
 
+      // Get LinkML slot info for this column
+      const slotInfo = slotDescriptions[col.name];
+      
+      // Apply validation and formatting based on LinkML slot properties
+      applySlotValidation(currentSheet, colIndex, col.name, slotInfo, foreignKeyMap, sheetName);
+      
+      // Normalize any existing values that were mangled by Sheets formatting
+      normalizeSheetValues(currentSheet, colIndex, slotInfo);
 
-      // If the CSVW declares a regex `format` for the column's datatype, enforce it with REGEXMATCH.
-      // The validation uses R1C1 INDIRECT("RC", FALSE) to reference the current cell dynamically.
-      if (col.datatype?.format) {
+      // Handle legacy CSVW regex validation (if not already handled by LinkML)
+      if (col.datatype?.format && (!slotInfo || !slotInfo.pattern)) {
         const regex = col.datatype.format;
         const rule = SpreadsheetApp.newDataValidation()
           .requireFormulaSatisfied(`=REGEXMATCH(INDIRECT("RC", FALSE), "${regex}")`)
@@ -220,33 +315,6 @@ function generateSheetsFromCSVW() {
         const rules = currentSheet.getConditionalFormatRules();
         rules.push(rule);
         currentSheet.setConditionalFormatRules(rules);
-      }
-    });
-
-    // Collect foreign key info for later creation of data-validation dropdowns.
-    // Each fk defines: from (this sheet, columnReference) -> to (target resource/csv and target columnReference).
-    (schema.foreignKeys || []).forEach((fk) => {
-      const fromCol = fk.columnReference;
-      const to = fk.reference;
-
-      // Normalize target sheet name from CSVW resource path to a sheet tab name (strip extensions/paths).
-      const toSheet = to.resource.replace(".csv", "").replace("../data/", "").replace("../", "").replace("out/validation/", "");
-
-      // Store mapping from "ThisSheet.fromCol" to { targetSheet, targetColumn } for the dropdown phase.
-      foreignKeyMap[`${sheetName}.${fromCol}`] = {
-        targetSheet: toSheet,
-        targetColumn: to.columnReference
-      };
-
-      // Detect array-typed foreign keys: CSVW columns with a string `separator` imply arrays.
-      // We skip dropdowns for array-typed FKs, because a single-cell dropdown doesn't suit multi-valued entries.
-      const matchingCol = schema.columns.find(col => col.name === fromCol);
-      if (matchingCol) {
-        const isArrayType = typeof matchingCol.separator === "string";
-        if (isArrayType) {
-          Logger.log(`↪️ Marking '${sheetName}.${fromCol}' as array-typed foreign key`);
-          arrayTypedFKs[`${sheetName}.${fromCol}`] = true;
-        }
       }
     });
 
