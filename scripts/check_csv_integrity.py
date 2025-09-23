@@ -3,6 +3,7 @@
 import csv
 import sys
 import glob
+import os
 
 def check_file(file_path):
     with open(file_path, newline='', encoding='utf-8') as csvfile:
@@ -18,9 +19,27 @@ def check_file(file_path):
                 error_found = 1
         return error_found
 
+# Determine the data directory path relative to this script
+script_dir = os.path.dirname(os.path.abspath(__file__))
+project_root = os.path.dirname(script_dir)  # Go up one level from scripts/ to project root
+data_dir = os.path.join(project_root, "data")
+
+# Check if data directory exists
+if not os.path.exists(data_dir):
+    print(f"❌ Data directory not found: {data_dir}")
+    sys.exit(1)
+
 errors = 0
-for f in glob.glob("*.csv"):
-    print(f"Checking {f}")
+csv_pattern = os.path.join(data_dir, "*.csv")
+csv_files = glob.glob(csv_pattern)
+
+if not csv_files:
+    print(f"⚠️  No CSV files found in {data_dir}")
+    sys.exit(1)
+
+for f in csv_files:
+    filename = os.path.basename(f)
+    print(f"Checking {filename}")
     errors += check_file(f)
 
 if errors:

@@ -47,6 +47,7 @@ CSV files which don't exist as user inputs, but are instead generated as part of
 We currently assume that they all follow the `unioned-identifiers.schema.json` table schema.
 """
 _REMOTE_DIR_NAME: str = "remote"
+_DATA_DIR_NAME: str = "data"
 
 _UNIONED_IDENTIFIERS_SCHEMA_FILE_NAME = "unioned-identifiers.schema.json"
 """
@@ -134,8 +135,12 @@ def main(classes_yaml: click.Path, output_dir: click.Path):
     all_slots = schema_view.all_slots()
     all_literal_types = schema_view.all_types()
 
+    # Create both remote and data directories
     remote_dir = out_dir / _REMOTE_DIR_NAME
     remote_dir.mkdir(exist_ok=True)
+    
+    data_dir = out_dir / _DATA_DIR_NAME
+    data_dir.mkdir(exist_ok=True)
 
     class_csv_map: Dict[str, Path] = {}
     class_schema_map: Dict[str, Path] = {}
@@ -443,14 +448,15 @@ def _generate_csv_and_schema_for_class(
     class_manual_foreign_key_checks: Dict[str, List[ManualForeignKeyCheckConfig]],
     map_class_name_to_csv_dependencies: Dict[str, Set[Path]],
 ) -> None:
-    # Create Basic CSV
+    # Create Basic CSV in the data directory
     namespaces = schema_view.namespaces()
 
     csv_starter = pd.DataFrame(
         {_get_csv_col_title_for_slot(slot): [] for slot in slots_for_class}
     )
     csv_name_for_class = _get_csv_name_for_class(clazz.name)
-    csv_file_path = output_dir / csv_name_for_class
+    # Put CSV files in data/ directory
+    csv_file_path = output_dir / _DATA_DIR_NAME / csv_name_for_class
     class_csv_map[clazz.name] = csv_file_path
     csv_starter.to_csv(csv_file_path, index=False, quoting=csv.QUOTE_STRINGS)
 
@@ -804,13 +810,14 @@ def _define_related_class_column(
 ) -> None:
     range_class = all_classes[slot.range]
     class_csv_name = _get_csv_name_for_class(clazz.name)
-    class_csv_path = out_dir / class_csv_name
+    # CSV files are now in the data/ directory
+    class_csv_path = out_dir / _DATA_DIR_NAME / class_csv_name
 
     remote_dir_path = out_dir / _REMOTE_DIR_NAME
     range_csv_location = (
         _get_virtual_file_path(out_dir, range_class.name)
         if range_class.name in _VIRTUAL_CSV_FILES
-        else out_dir / _get_csv_name_for_class(range_class.name)
+        else out_dir / _DATA_DIR_NAME / _get_csv_name_for_class(range_class.name)  # Also in data/ directory
     )
     csv_dependencies_for_class.add(range_csv_location)
     range_class_pk_slot = _get_primary_key_identifier_slot_definition(
@@ -1009,8 +1016,9 @@ def _get_markdown_docs_for_class(
             "This CSV is auto-generated. You cannot edit this yourself." + _TWO_LINES
         )
     else:
+        # Update the file location to point to data/ directory
         class_markdown += (
-                f"File location: [{csv_file_name}](./{csv_file_name})" + _TWO_LINES
+                f"File location: [data/{csv_file_name}](./data/{csv_file_name})" + _TWO_LINES
         )
 
     if clazz.description:

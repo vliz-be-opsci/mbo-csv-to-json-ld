@@ -8,7 +8,7 @@ permissions:
   contents: write  # Needed to commit CSVs
 env:
   SHEET_ID: 1PBFK3LW3DAdvXdbk2v8bSdtTf87mBhabeeegwRjOBRg
-  CSV_DIR: .
+  CSV_DIR: data
   GOOGLE_PROJECT_ID: mbo-wp1-csv-to-json-ld
   GOOGLE_SERVICE_ACCOUNT: github-sheets-reader@mbo-wp1-csv-to-json-ld.iam.gserviceaccount.com
 jobs:

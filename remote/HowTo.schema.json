@@ -182,14 +182,14 @@
         {
             "columnReference": "metadataDescribedForActionId",
             "reference": {
-                "resource": "../Action.csv",
+                "resource": "../data/Action.csv",
                 "columnReference": "id"
             }
         },
         {
             "columnReference": "howToStepMboId",
             "reference": {
-                "resource": "../HowToStep.csv",
+                "resource": "../data/HowToStep.csv",
                 "columnReference": "id"
             }
         }

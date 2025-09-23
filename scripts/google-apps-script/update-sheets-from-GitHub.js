@@ -230,7 +230,7 @@ function generateSheetsFromCSVW() {
       const to = fk.reference;
 
       // Normalize target sheet name from CSVW resource path to a sheet tab name (strip extensions/paths).
-      const toSheet = to.resource.replace(".csv", "").replace("../", "").replace("out/validation/", "");
+      const toSheet = to.resource.replace(".csv", "").replace("../data/", "").replace("../", "").replace("out/validation/", "");
 
       // Store mapping from "ThisSheet.fromCol" to { targetSheet, targetColumn } for the dropdown phase.
       foreignKeyMap[`${sheetName}.${fromCol}`] = {

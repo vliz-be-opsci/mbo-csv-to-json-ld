@@ -138,14 +138,14 @@
         {
             "columnReference": "metadataDescribedForActionId",
             "reference": {
-                "resource": "../Action.csv",
+                "resource": "../data/Action.csv",
                 "columnReference": "id"
             }
         },
         {
             "columnReference": "commentAboutDatasetMboId",
             "reference": {
-                "resource": "../Dataset.csv",
+                "resource": "../data/Dataset.csv",
                 "columnReference": "id"
             }
         }
