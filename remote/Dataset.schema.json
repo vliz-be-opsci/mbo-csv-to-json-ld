@@ -345,13 +345,13 @@
             },
             "dc:description": {
                 "en": [
-                    "A date in ISO8601 format\nFor example: `2025-12-31`"
+                    "A date in ISO8601, YYYY, YYYY-MM, or YYYY-MM-DD format\nFor example: `2025`\n`2025-12`\n`2025-12-31`"
                 ]
             },
             "propertyUrl": "https://schema.org/dateCreated",
             "datatype": {
-                "base": "date",
-                "@id": "https://schema.org/Date"
+                "base": "string",
+                "format": "^(\\d{4}(-\\d{2}(-\\d{2})?)?)$"
             }
         },
         {
@@ -363,14 +363,14 @@
             },
             "dc:description": {
                 "en": [
-                    "A date in ISO8601 format\nFor example: `2025-12-31`\n\nPipe-delimited when there are multiple values"
+                    "A date in ISO8601, YYYY, YYYY-MM, or YYYY-MM-DD format\nFor example: `2025`\n`2025-12`\n`2025-12-31`\n\nPipe-delimited when there are multiple values"
                 ]
             },
             "propertyUrl": "https://schema.org/dateModified",
             "separator": "|",
             "datatype": {
-                "base": "date",
-                "@id": "https://schema.org/Date"
+                "base": "string",
+                "format": "^(\\d{4}(-\\d{2}(-\\d{2})?)?)$"
             }
         },
         {
@@ -382,13 +382,13 @@
             },
             "dc:description": {
                 "en": [
-                    "A date in ISO8601 format\nFor example: `2025-12-31`"
+                    "A date in ISO8601, YYYY, YYYY-MM, or YYYY-MM-DD format\nFor example: `2025`\n`2025-12`\n`2025-12-31`"
                 ]
             },
             "propertyUrl": "https://schema.org/datePublished",
             "datatype": {
-                "base": "date",
-                "@id": "https://schema.org/Date"
+                "base": "string",
+                "format": "^(\\d{4}(-\\d{2}(-\\d{2})?)?)$"
             }
         },
         {
@@ -400,13 +400,13 @@
             },
             "dc:description": {
                 "en": [
-                    "A date in ISO8601 format\nFor example: `2025-12-31`"
+                    "A date in ISO8601, YYYY, YYYY-MM, or YYYY-MM-DD format\nFor example: `2025`\n`2025-12`\n`2025-12-31`"
                 ]
             },
             "propertyUrl": "https://w3id.org/marco-bolo/inProgressDate",
             "datatype": {
-                "base": "date",
-                "@id": "https://schema.org/Date"
+                "base": "string",
+                "format": "^(\\d{4}(-\\d{2}(-\\d{2})?)?)$"
             }
         },
         {
