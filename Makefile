@@ -52,9 +52,9 @@ dockersetup:
 
 check-csv-format:
 	@echo "Checking CSV files for incomplete lines..."
-	@python3 check_csv_integrity.py
+	@python3 scripts/check_csv_integrity.py
 
-out/validation/person-or-organization.csv: Person.csv Organization.csv 
+out/validation/person-or-organization.csv: data/Person.csv data/Organization.csv 
 	@mkdir -p out/validation
 	@$(UNION_UNIQUE_IDENTIFIERS) --out out/validation/person-or-organization.csv --column-name "MBO Permanent Identifier*" Person.csv Organization.csv
 
