@@ -207,7 +207,7 @@
         {
             "columnReference": "serviceProviderOrganizationMboId",
             "reference": {
-                "resource": "../Organization.csv",
+                "resource": "../data/Organization.csv",
                 "columnReference": "id"
             }
         }
