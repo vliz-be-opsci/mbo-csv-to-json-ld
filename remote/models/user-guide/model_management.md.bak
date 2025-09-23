@@ -55,7 +55,7 @@ flowchart TD
 Script ID: 1bbb5P0gCpMq7FAhnMG5ec4ukF_C8F5H-EPKvfmK2bSbEUXwrOL8-PH8d
 GCP Project: mbo-wp1-csv-to-json-ld (managed through Google Cloud Platform IAM)
 Key Function: generateSheetsFromCSVW()
-Repository Location: scripts/google-apps-script/ directory
+Repository Location: google-apps-script/ directory
 
 **Purpose**: Reads CSV-W schema files from the repository and creates or updates Google Sheets with appropriate column structures, validation rules, and user guidance. Provides user-friendly data entry interface without overwriting existing data.
 **Access Model:**
