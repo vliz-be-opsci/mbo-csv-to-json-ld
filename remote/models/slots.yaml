@@ -386,11 +386,14 @@ slots:
     description: "The point in time when you expect that the thing (e.g. data, document) will be accessible."
     required: false
     multivalued: false
-    range: date
+    range: string
+    pattern: '^(\d{4}(-\d{2}(-\d{2})?)?)$'
     slot_uri: mbo:inProgressDate
     comments: |
-      A date in ISO8601 format
-      For example: `2025-12-31`
+      A date in ISO8601, YYYY, YYYY-MM, or YYYY-MM-DD format
+      For example: `2025`
+      `2025-12`
+      `2025-12-31`
 
   containsVariablesMboIds:
     title: "Contains Variables (PropertyValue mPIDs)"
@@ -571,21 +574,27 @@ slots:
     title: "Date Created"
     required: false
     multivalued: false
-    range: date
+    range: string
+    pattern: '^(\d{4}(-\d{2}(-\d{2})?)?)$'
     slot_uri: schema:dateCreated
     comments: |
-      A date in ISO8601 format
-      For example: `2025-12-31`
+      A date in ISO8601, YYYY, YYYY-MM, or YYYY-MM-DD format
+      For example: `2025`
+      `2025-12`
+      `2025-12-31`
 
   dateModified:
     title: "Dates Modified"
     required: false
     multivalued: true
-    range: date
+    range: string
+    pattern: '^(\d{4}(-\d{2}(-\d{2})?)?)$'
     slot_uri: schema:dateModified
     comments: |
-      A date in ISO8601 format
-      For example: `2025-12-31`
+      A date in ISO8601, YYYY, YYYY-MM, or YYYY-MM-DD format
+      For example: `2025`
+      `2025-12`
+      `2025-12-31`
 
       Pipe-delimited when there are multiple values
 
@@ -593,11 +602,14 @@ slots:
     title: "Date Published"
     required: false
     multivalued: false
-    range: date
+    range: string
+    pattern: '^(\d{4}(-\d{2}(-\d{2})?)?)$'
     slot_uri: schema:datePublished
     comments: |
-      A date in ISO8601 format
-      For example: `2025-12-31`
+      A date in ISO8601, YYYY, YYYY-MM, or YYYY-MM-DD format
+      For example: `2025`
+      `2025-12`
+      `2025-12-31`
 
   # Comment slots
   commentText:
@@ -902,11 +914,14 @@ slots:
     description: "The date when the embargo expires."
     required: true
     multivalued: false
-    range: date
+    range: string
+    pattern: '^(\d{4}(-\d{2}(-\d{2})?)?)$'
     slot_uri: schema:expires
     comments: |
-      A date in ISO8601 format
-      For example: `2025-12-31`
+      A date in ISO8601, YYYY, YYYY-MM, or YYYY-MM-DD format
+      For example: `2025`
+      `2025-12`
+      `2025-12-31`
 
   embargoedDatasetMboId:
     title: "Embargo Dataset (mPID)"
@@ -1212,22 +1227,28 @@ slots:
     description: The date that the organization was founded.
     required: false
     multivalued: false
-    range: date
+    range: string
+    pattern: '^(\d{4}(-\d{2}(-\d{2})?)?)$'
     slot_uri: schema:foundingDate
     comments: |
-      A date in ISO8601 format
-      For example: `2025-12-31`
+      A date in ISO8601, YYYY, YYYY-MM, or YYYY-MM-DD format
+      For example: `2025`
+      `2025-12`
+      `2025-12-31`
 
   dissolutionDate:
     title: "Dissolution Date"
     description: The date that the organization was (or will be) dissolved.
     required: false
     multivalued: false
-    range: date
+    range: string
+    pattern: '^(\d{4}(-\d{2}(-\d{2})?)?)$'
     slot_uri: schema:dissolutionDate
     comments: |
-      A date in ISO8601 format
-      For example: `2025-12-31`
+      A date in ISO8601, YYYY, YYYY-MM, or YYYY-MM-DD format
+      For example: `2025`
+      `2025-12`
+      `2025-12-31`
 
   fundingGrantMboIds:
     title: "Grants (mPIDs)"
