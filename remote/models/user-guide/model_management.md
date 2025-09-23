@@ -263,6 +263,74 @@ git commit -m "Add NewEntityType to LinkML model
    - Test dropdown validations for foreign keys
    - Confirm header tooltips show user guidance from `comments` field
 
+#### Keeping in Sync
+
+# Syncing Google Apps Script and Repository
+
+This project uses Google Apps Script to generate Google Sheets from LinkML models. Here's how to keep the scripts synchronized between your local repository and Google Apps Script.
+
+## Prerequisites
+
+Install Google's clasp CLI tool:
+```bash
+npm install -g @google/clasp
+clasp login
+```
+
+## Initial Setup
+
+1. In your repository's script directory, create a connection to your Google Apps Script project:
+   ```bash
+   clasp clone YOUR-SCRIPT-ID-HERE
+   ```
+   
+2. This creates a `.clasp.json` file with your script configuration.
+
+**Finding your Script ID:** Look at your Google Apps Script URL - it's the long string between `/d/` and `/edit`:
+`script.google.com/d/{SCRIPT-ID}/edit`
+
+## Syncing Scripts
+
+### From Google Apps Script to Repository (after editing in Google)
+
+```bash
+# Pull latest changes from Google Apps Script
+clasp pull
+
+# Commit the changes to your repository
+git add .
+git commit -m "Sync Google Apps Script changes to repository"
+git push
+```
+
+### From Repository to Google Apps Script (after local edits)
+
+```bash
+# Push your local changes to Google Apps Script
+clasp push
+
+# Commit any local changes first if needed
+git add .
+git commit -m "Update scripts locally"
+git push
+```
+
+## Workflow Recommendations
+
+- **After editing in Google Apps Script UI:** Always run `clasp pull` and commit the changes
+- **After editing locally:** Always run `clasp push` to update Google Apps Script
+- **Test your changes** in Google Apps Script after pushing
+- **Keep both in sync** - don't let them diverge for long periods
+
+## Alternative: Manual Sync
+
+If you prefer not to use clasp:
+
+1. **From Google to Repository:** Download your project as a ZIP from Google Apps Script's Overview page, extract, and copy the `.gs` files to your repository
+2. **From Repository to Google:** Copy and paste code from your repository files into the Google Apps Script editor
+
+The clasp method is recommended for regular development work.
+
 ### Validation Checklist
 
 Before committing, verify:
