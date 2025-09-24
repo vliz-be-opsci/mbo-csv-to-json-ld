@@ -225,6 +225,25 @@
             }
         },
         {
+            "name": "basedOnIds",
+            "titles": {
+                "en": [
+                    "Based On (URL PIDs)"
+                ]
+            },
+            "dc:description": {
+                "en": [
+                    "WARNING: There are no foreign key checks.\n\nFor example: `https://example.com`, `http://example.com`, \n`ftp://ftp.example.org/data`, `doi:10.1000/example123`\n\nPipe-delimited when there are multiple values"
+                ]
+            },
+            "propertyUrl": "https://schema.org/isBasedOn",
+            "separator": "|",
+            "datatype": {
+                "@id": "https://w3id.org/marco-bolo/ConvertIriToNode",
+                "base": "string"
+            }
+        },
+        {
             "name": "audienceMboIds",
             "titles": {
                 "en": [
