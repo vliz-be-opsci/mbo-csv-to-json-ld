@@ -22,16 +22,17 @@ jobs:
           # Pull the latest Docker image with the schema generation tools
           docker pull ghcr.io/marco-bolo/csv-to-json-ld-tools:latest
           
-          # Generate final schemas using Docker
+          # Generate final schemas using Docker (run as current user to avoid permission issues)
           docker run --rm -v $(pwd):/work -w /work \
+            --user $(id -u):$(id -g) \
             ghcr.io/marco-bolo/csv-to-json-ld-tools:latest \
             python remote/scripts/mbocsvwscripts/generatecsvwdefinitions.py -o temp-output remote/models/classes.yaml
           
           # Apply the changes (WARNING: This replaces all schema files)
           cp -r temp-output/remote/* remote/
           
-          # Clean up
-          rm -rf temp-output
+          # Clean up (use sudo if needed for permission issues)
+          rm -rf temp-output || sudo rm -rf temp-output
           
       - name: Generate schema checksums
         run: |
