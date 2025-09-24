@@ -1,0 +1,14 @@
+{
+  "@context": {
+    "@import": "https://schema.org/",
+    "schema": "https://schema.org/"
+  },
+  "@id": "https://w3id.org/marco-bolo/mbo_task_1_1",
+  "@type": "CreateAction",
+  "abstract": "Coordinate and advance standardised and quality-controlled data flows into regional and international long-term archives",
+  "agent": {
+    "@id": "https://w3id.org/marco-bolo/mbo_11770"
+  },
+  "description": "Test",
+  "name": "MBO Task 1.1"
+}

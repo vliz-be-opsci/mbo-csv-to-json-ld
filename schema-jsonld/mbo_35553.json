@@ -1,0 +1,13 @@
+{
+  "@context": {
+    "@import": "https://schema.org/",
+    "schema": "https://schema.org/"
+  },
+  "@id": "https://w3id.org/marco-bolo/mbo_35553",
+  "@type": "Person",
+  "URL": {
+    "@id": "https://oceanexpert.org/expert/35553"
+  },
+  "familyName": "Santi",
+  "givenName": "Ioulia"
+}

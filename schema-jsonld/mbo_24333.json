@@ -1,0 +1,13 @@
+{
+  "@context": {
+    "@import": "https://schema.org/",
+    "schema": "https://schema.org/"
+  },
+  "@id": "https://w3id.org/marco-bolo/mbo_24333",
+  "@type": "Person",
+  "URL": {
+    "@id": "https://oceanexpert.org/expert/24333"
+  },
+  "familyName": "Arvanitidis",
+  "givenName": "Christos"
+}

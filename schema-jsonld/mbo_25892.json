@@ -1,0 +1,13 @@
+{
+  "@context": {
+    "@import": "https://schema.org/",
+    "schema": "https://schema.org/"
+  },
+  "@id": "https://w3id.org/marco-bolo/mbo_25892",
+  "@type": "Person",
+  "URL": {
+    "@id": "https://oceanexpert.org/expert/25892"
+  },
+  "familyName": "Larkin",
+  "givenName": "Kate"
+}

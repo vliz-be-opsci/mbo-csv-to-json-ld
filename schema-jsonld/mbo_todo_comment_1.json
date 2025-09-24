@@ -1,0 +1,15 @@
+{
+  "@context": {
+    "@import": "https://schema.org/",
+    "schema": "https://schema.org/"
+  },
+  "@id": "https://w3id.org/marco-bolo/mbo_todo_comment_1",
+  "@type": "Comment",
+  "author": {
+    "@id": "https://w3id.org/marco-bolo/mbo_todo_person_roblinksdata"
+  },
+  "parentItem": {
+    "@id": "https://w3id.org/marco-bolo/mbo_todo_dataset_5"
+  },
+  "text": "This dataset took a lot of hard work to create."
+}
