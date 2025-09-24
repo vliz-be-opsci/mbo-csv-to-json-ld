@@ -490,6 +490,18 @@
             }
         },
         {
+            "name": "version",
+            "titles": {
+                "en": [
+                    "Version"
+                ]
+            },
+            "propertyUrl": "https://schema.org/version",
+            "datatype": {
+                "base": "string"
+            }
+        },
+        {
             "name": "landingPage",
             "titles": {
                 "en": [
