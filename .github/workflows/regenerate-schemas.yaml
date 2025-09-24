@@ -17,19 +17,15 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-          
-      - name: Install dependencies
+      - name: Generate CSVW schemas using Docker
         run: |
-          pip install -r requirements.txt  # Adjust if you have different requirements
+          # Pull the latest Docker image with the schema generation tools
+          docker pull ghcr.io/marco-bolo/csv-to-json-ld-tools:latest
           
-      - name: Generate CSVW schemas
-        run: |
-          # Generate final schemas
-          python remote/scripts/mbocsvwscripts/generatecsvwdefinitions.py -o temp-output remote/models/classes.yaml
+          # Generate final schemas using Docker
+          docker run --rm -v $(pwd):/work -w /work \
+            ghcr.io/marco-bolo/csv-to-json-ld-tools:latest \
+            python remote/scripts/mbocsvwscripts/generatecsvwdefinitions.py -o temp-output remote/models/classes.yaml
           
           # Apply the changes (WARNING: This replaces all schema files)
           cp -r temp-output/remote/* remote/
