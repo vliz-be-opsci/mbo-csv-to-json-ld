@@ -513,5 +513,6 @@ classes:
       - embargoStatementMboId
       - conditionsOfAccess
       - url
+      - version
       - landingPage
 
