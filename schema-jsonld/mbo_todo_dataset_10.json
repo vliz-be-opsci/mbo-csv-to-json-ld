@@ -19,10 +19,10 @@
   },
   "variableMeasured": [
     {
-      "@id": "https://w3id.org/marco-bolo/mbo_variable_measured_eov_15"
+      "@id": "https://w3id.org/marco-bolo/mbo_variable_measured_eov_4"
     },
     {
-      "@id": "https://w3id.org/marco-bolo/mbo_variable_measured_eov_4"
+      "@id": "https://w3id.org/marco-bolo/mbo_variable_measured_eov_15"
     }
   ]
 }

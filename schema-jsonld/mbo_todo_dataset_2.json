@@ -11,8 +11,8 @@
     "@id": "https://w3id.org/marco-bolo/mbo_todo_data_download_1"
   },
   "isBasedOn": [
-    "https://w3id.org/marco-bolo/mbo_todo_dataset_1",
-    "https://example.com/some-existing-dataset"
+    "https://example.com/some-existing-dataset",
+    "https://w3id.org/marco-bolo/mbo_todo_dataset_1"
   ],
   "license": "https://w3id.org/marco-bolo/mbo_todo_license_1",
   "name": "Some second title",

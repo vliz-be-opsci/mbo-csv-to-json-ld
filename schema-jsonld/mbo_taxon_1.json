@@ -13,6 +13,14 @@
       "value": "Nudibranchia"
     },
     {
+      "@id": "https://w3id.org/marco-bolo/mbo_taxon_1#Status",
+      "@type": "PropertyValue",
+      "propertyID": {
+        "@id": "http://rs.tdwg.org/dwc/terms/taxonomicStatus"
+      },
+      "value": "alternative representation"
+    },
+    {
       "@id": "https://w3id.org/marco-bolo/mbo_taxon_1#VerbatimTaxonRank",
       "@type": "PropertyValue",
       "propertyID": {
@@ -29,20 +37,20 @@
       "value": "“Montereina”"
     },
     {
+      "@id": "https://w3id.org/marco-bolo/mbo_taxon_1#Family",
+      "@type": "PropertyValue",
+      "propertyID": {
+        "@id": "http://rs.tdwg.org/dwc/terms/family"
+      },
+      "value": "Discodorididae"
+    },
+    {
       "@id": "https://w3id.org/marco-bolo/mbo_taxon_1#Kingdom",
       "@type": "PropertyValue",
       "propertyID": {
         "@id": "http://rs.tdwg.org/dwc/terms/kingdom"
       },
       "value": "Animalia"
-    },
-    {
-      "@id": "https://w3id.org/marco-bolo/mbo_taxon_1#Phylum",
-      "@type": "PropertyValue",
-      "propertyID": {
-        "@id": "http://rs.tdwg.org/dwc/terms/phylum"
-      },
-      "value": "Mollusca"
     },
     {
       "@id": "https://w3id.org/marco-bolo/mbo_taxon_1#ScientificName",
@@ -53,54 +61,6 @@
       "value": "Peltodoris aurea Eliot, 1904"
     },
     {
-      "@id": "https://w3id.org/marco-bolo/mbo_taxon_1",
-      "@type": "Taxon",
-      "additionalProperty": [
-        {
-          "@id": "https://w3id.org/marco-bolo/mbo_taxon_1#SpecificEpithet"
-        },
-        {
-          "@id": "https://w3id.org/marco-bolo/mbo_taxon_1#Genus"
-        },
-        {
-          "@id": "https://w3id.org/marco-bolo/mbo_taxon_1#ScientificName"
-        },
-        {
-          "@id": "https://w3id.org/marco-bolo/mbo_taxon_1#Phylum"
-        },
-        {
-          "@id": "https://w3id.org/marco-bolo/mbo_taxon_1#Status"
-        },
-        {
-          "@id": "https://w3id.org/marco-bolo/mbo_taxon_1#Family"
-        },
-        {
-          "@id": "https://w3id.org/marco-bolo/mbo_taxon_1#VerbatimTaxonRank"
-        },
-        {
-          "@id": "https://w3id.org/marco-bolo/mbo_taxon_1#Kingdom"
-        },
-        {
-          "@id": "https://w3id.org/marco-bolo/mbo_taxon_1#Order"
-        }
-      ],
-      "identifier": [
-        {
-          "@id": "urn:lsid:marinespecies.org:taxname:578941"
-        },
-        "578941"
-      ],
-      "name": "Montereina aurea"
-    },
-    {
-      "@id": "https://w3id.org/marco-bolo/mbo_taxon_1#Status",
-      "@type": "PropertyValue",
-      "propertyID": {
-        "@id": "http://rs.tdwg.org/dwc/terms/taxonomicStatus"
-      },
-      "value": "alternative representation"
-    },
-    {
       "@id": "https://w3id.org/marco-bolo/mbo_taxon_1#SpecificEpithet",
       "@type": "PropertyValue",
       "propertyID": {
@@ -109,12 +69,52 @@
       "value": "“Montereina” aurea"
     },
     {
-      "@id": "https://w3id.org/marco-bolo/mbo_taxon_1#Family",
+      "@id": "https://w3id.org/marco-bolo/mbo_taxon_1#Phylum",
       "@type": "PropertyValue",
       "propertyID": {
-        "@id": "http://rs.tdwg.org/dwc/terms/family"
+        "@id": "http://rs.tdwg.org/dwc/terms/phylum"
       },
-      "value": "Discodorididae"
+      "value": "Mollusca"
+    },
+    {
+      "@id": "https://w3id.org/marco-bolo/mbo_taxon_1",
+      "@type": "Taxon",
+      "additionalProperty": [
+        {
+          "@id": "https://w3id.org/marco-bolo/mbo_taxon_1#Kingdom"
+        },
+        {
+          "@id": "https://w3id.org/marco-bolo/mbo_taxon_1#SpecificEpithet"
+        },
+        {
+          "@id": "https://w3id.org/marco-bolo/mbo_taxon_1#VerbatimTaxonRank"
+        },
+        {
+          "@id": "https://w3id.org/marco-bolo/mbo_taxon_1#Genus"
+        },
+        {
+          "@id": "https://w3id.org/marco-bolo/mbo_taxon_1#Order"
+        },
+        {
+          "@id": "https://w3id.org/marco-bolo/mbo_taxon_1#ScientificName"
+        },
+        {
+          "@id": "https://w3id.org/marco-bolo/mbo_taxon_1#Status"
+        },
+        {
+          "@id": "https://w3id.org/marco-bolo/mbo_taxon_1#Phylum"
+        },
+        {
+          "@id": "https://w3id.org/marco-bolo/mbo_taxon_1#Family"
+        }
+      ],
+      "identifier": [
+        "578941",
+        {
+          "@id": "urn:lsid:marinespecies.org:taxname:578941"
+        }
+      ],
+      "name": "Montereina aurea"
     }
   ]
 }

@@ -5,20 +5,12 @@
   },
   "@graph": [
     {
-      "@id": "https://w3id.org/marco-bolo/mbo_taxon_12#VerbatimTaxonRank",
+      "@id": "https://w3id.org/marco-bolo/mbo_taxon_12#SpecificEpithet",
       "@type": "PropertyValue",
       "propertyID": {
-        "@id": "http://rs.tdwg.org/dwc/terms/verbatimTaxonRank"
+        "@id": "http://rs.tdwg.org/dwc/terms/specificEpithet"
       },
-      "value": "Species"
-    },
-    {
-      "@id": "https://w3id.org/marco-bolo/mbo_taxon_12#Phylum",
-      "@type": "PropertyValue",
-      "propertyID": {
-        "@id": "http://rs.tdwg.org/dwc/terms/phylum"
-      },
-      "value": "Mollusca"
+      "value": "“Montereina” aurea"
     },
     {
       "@id": "https://w3id.org/marco-bolo/mbo_taxon_12#Genus",
@@ -29,15 +21,25 @@
       "value": "“Montereina”"
     },
     {
+      "@id": "https://w3id.org/marco-bolo/mbo_taxon_12#Family",
+      "@type": "PropertyValue",
+      "propertyID": {
+        "@id": "http://rs.tdwg.org/dwc/terms/family"
+      },
+      "value": "Discodorididae"
+    },
+    {
+      "@id": "https://w3id.org/marco-bolo/mbo_taxon_12#Order",
+      "@type": "PropertyValue",
+      "propertyID": {
+        "@id": "http://rs.tdwg.org/dwc/terms/order"
+      },
+      "value": "Nudibranchia"
+    },
+    {
       "@id": "https://w3id.org/marco-bolo/mbo_taxon_12",
       "@type": "Taxon",
       "additionalProperty": [
-        {
-          "@id": "https://w3id.org/marco-bolo/mbo_taxon_12#Genus"
-        },
-        {
-          "@id": "https://w3id.org/marco-bolo/mbo_taxon_12#Order"
-        },
         {
           "@id": "https://w3id.org/marco-bolo/mbo_taxon_12#Kingdom"
         },
@@ -45,19 +47,25 @@
           "@id": "https://w3id.org/marco-bolo/mbo_taxon_12#Phylum"
         },
         {
-          "@id": "https://w3id.org/marco-bolo/mbo_taxon_12#ScientificName"
-        },
-        {
-          "@id": "https://w3id.org/marco-bolo/mbo_taxon_12#VerbatimTaxonRank"
-        },
-        {
-          "@id": "https://w3id.org/marco-bolo/mbo_taxon_12#Family"
+          "@id": "https://w3id.org/marco-bolo/mbo_taxon_12#Status"
         },
         {
           "@id": "https://w3id.org/marco-bolo/mbo_taxon_12#SpecificEpithet"
         },
         {
-          "@id": "https://w3id.org/marco-bolo/mbo_taxon_12#Status"
+          "@id": "https://w3id.org/marco-bolo/mbo_taxon_12#VerbatimTaxonRank"
+        },
+        {
+          "@id": "https://w3id.org/marco-bolo/mbo_taxon_12#Genus"
+        },
+        {
+          "@id": "https://w3id.org/marco-bolo/mbo_taxon_12#ScientificName"
+        },
+        {
+          "@id": "https://w3id.org/marco-bolo/mbo_taxon_12#Order"
+        },
+        {
+          "@id": "https://w3id.org/marco-bolo/mbo_taxon_12#Family"
         }
       ],
       "identifier": [
@@ -69,20 +77,12 @@
       "name": "Test"
     },
     {
-      "@id": "https://w3id.org/marco-bolo/mbo_taxon_12#Status",
+      "@id": "https://w3id.org/marco-bolo/mbo_taxon_12#Kingdom",
       "@type": "PropertyValue",
       "propertyID": {
-        "@id": "http://rs.tdwg.org/dwc/terms/taxonomicStatus"
+        "@id": "http://rs.tdwg.org/dwc/terms/kingdom"
       },
-      "value": "alternative representation"
-    },
-    {
-      "@id": "https://w3id.org/marco-bolo/mbo_taxon_12#Family",
-      "@type": "PropertyValue",
-      "propertyID": {
-        "@id": "http://rs.tdwg.org/dwc/terms/family"
-      },
-      "value": "Discodorididae"
+      "value": "Animalia"
     },
     {
       "@id": "https://w3id.org/marco-bolo/mbo_taxon_12#ScientificName",
@@ -93,28 +93,28 @@
       "value": "Test"
     },
     {
-      "@id": "https://w3id.org/marco-bolo/mbo_taxon_12#Kingdom",
+      "@id": "https://w3id.org/marco-bolo/mbo_taxon_12#Phylum",
       "@type": "PropertyValue",
       "propertyID": {
-        "@id": "http://rs.tdwg.org/dwc/terms/kingdom"
+        "@id": "http://rs.tdwg.org/dwc/terms/phylum"
       },
-      "value": "Animalia"
+      "value": "Mollusca"
     },
     {
-      "@id": "https://w3id.org/marco-bolo/mbo_taxon_12#Order",
+      "@id": "https://w3id.org/marco-bolo/mbo_taxon_12#Status",
       "@type": "PropertyValue",
       "propertyID": {
-        "@id": "http://rs.tdwg.org/dwc/terms/order"
+        "@id": "http://rs.tdwg.org/dwc/terms/taxonomicStatus"
       },
-      "value": "Nudibranchia"
+      "value": "alternative representation"
     },
     {
-      "@id": "https://w3id.org/marco-bolo/mbo_taxon_12#SpecificEpithet",
+      "@id": "https://w3id.org/marco-bolo/mbo_taxon_12#VerbatimTaxonRank",
       "@type": "PropertyValue",
       "propertyID": {
-        "@id": "http://rs.tdwg.org/dwc/terms/specificEpithet"
+        "@id": "http://rs.tdwg.org/dwc/terms/verbatimTaxonRank"
       },
-      "value": "“Montereina” aurea"
+      "value": "Species"
     }
   ]
 }
