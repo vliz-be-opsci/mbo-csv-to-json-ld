@@ -1,0 +1,275 @@
+# diagram_config.yaml - Configuration for MBO metadata structure diagram generation
+
+# Color scheme for entity types
+colors:
+  mandatory: "#fff9c4"      # Light yellow
+  conditional: "#b3e5fc"    # Light blue
+  optional: "#c8e6c9"       # Light green
+
+# Entity classifications based on the LinkML schema
+entity_types:
+  mandatory:
+    - Action
+    - Dataset
+    - License
+    - Place
+    - Person
+    - Organization
+  
+  optional:
+    - HowToTip
+    - PublishingStatusDefinedTerm
+    - DefinedTerm
+    - DatasetComment
+    - Audience
+  
+  conditional:
+    - HowTo
+    - HowToStep
+    - Service
+    - SoftwareSourceCode
+    - SoftwareApplication
+    - MonetaryGrant
+    - ContactPoint
+    - GeoShape
+    - DataDownload
+    - PropertyValue
+    - Taxon
+    - EmbargoStatement
+    - Document
+
+# Hierarchical levels for layout (top to bottom flow)
+entity_levels:
+  1:
+    - HowToTip
+    - Service
+  2:
+    - Action  
+    - HowToStep
+    - HowTo
+    - SoftwareSourceCode
+    - PublishingStatusDefinedTerm
+    - DefinedTerm
+  3:
+    - SoftwareApplication
+  4:
+    - Organization
+    - Person
+    - MonetaryGrant
+    - ContactPoint
+  5:
+    - Place
+    - GeoShape
+  6:
+    - License
+  7:
+    - Dataset
+    - Document
+  8:  
+    - DataDownload
+    - PropertyValue
+    - Taxon
+    - EmbargoStatement
+    - Audience
+  9:
+    - DatasetComment
+
+level_order:
+  "2":
+    - Action
+    - HowTo
+    - HowToStep
+    - SoftwareSourceCode
+    - PublishingStatusDefinedTerm
+    - DefinedTerm
+
+# Entities that should be horizontally aligned (same x-coordinate)
+center_align_entities:
+  - Service
+  #- HowToStep
+  - SoftwareApplication
+
+# Optional: specify the x-coordinate (defaults to canvas center)
+center_align_x: 900
+
+# Explicit relationships to display
+relationships:
+  connections:
+    - source: Action
+      target: "@People & Organizations Group"
+      label: ""
+    - source: Organization
+      target: Person
+      label: ""
+    - source: License
+      target: "@Dataset & Document Group"
+      label: ""
+    - source: DatasetComment
+      target: Dataset
+      label: ""
+    - source: DefinedTerm
+      target: PublishingStatusDefinedTerm
+      label: ""
+    - source: PublishingStatusDefinedTerm
+      target: SoftwareSourceCode
+      label: ""
+    - source: SoftwareSourceCode
+      target: HowToStep
+      label: ""
+    - source: Service
+      target: HowToStep
+      label: ""
+    - source: SoftwareApplication
+      target: HowToStep
+      label: ""
+    - source: HowToTip
+      target: HowToStep
+      label: ""
+    - source: HowToStep
+      target: HowTo
+      label: ""
+    - source: HowTo
+      target: Action
+      label: ""
+    - source: MonetaryGrant
+      target: Organization
+      label: ""
+    - source: ContactPoint
+      target: Organization
+      label: ""
+    - source: ContactPoint
+      target: Person
+      label: ""
+    - source: "@People & Organizations Group"
+      target: "@Place Group"
+      label: ""
+    - source: GeoShape
+      target: Place
+      label: ""
+    - source: "@Place Group"
+      target: License
+      label: ""
+    - source: License
+      target: "@Dataset & Document Group"
+      label: ""
+    - source: DataDownload
+      target: License
+      label: ""
+    - source: DataDownload
+      target: SoftwareApplication
+      label: ""
+    - source: "@Dataset Details Group"
+      target: "@Dataset & Document Group"
+      label: ""
+    #- source: Dataset
+    #  target: Action
+    #  label: ""
+
+# Subgraph groupings
+subgraphs:
+  - name: "People & Organizations Group"
+    entities:
+      - Organization
+      - MonetaryGrant
+      - Person
+      - ContactPoint
+    position:
+      x: 500
+      y: 800
+      width: 500
+      height: 500
+  
+  - name: "Dataset Details Group"
+    entities:
+      - DataDownload
+      - PropertyValue
+      - Taxon
+      - Audience
+      - EmbargoStatement
+      
+    position:
+      x: 1250
+      y: 1400
+      width: 500
+      height: 800
+
+  - name: "Dataset & Document Group"
+    entities:
+      - Dataset
+      - Document
+    position:
+      x: 1250
+      y: 1400
+      width: 500
+      height: 600
+
+  - name: "Place Group"
+    entities:
+      - Place
+      - GeoShape
+    position:
+      x: 500
+      y: 1000
+      width: 500
+      height: 250
+
+# Layout zones for entities not in subgraphs
+layout_zones:
+  top:
+    - Action
+    - HowTo
+    - HowToStep
+    - HowToTip
+    - Service
+    - SoftwareSourceCode
+    - SoftwareApplication
+    - PublishingStatusDefinedTerm
+    - DefinedTerm
+    - Document
+  
+  middle:
+    - Place
+    - GeoShape
+  
+  bottom:
+    - License
+    - Dataset
+    - DatasetComment
+
+# Relationship display configuration
+#relationships:
+#  # Which slot patterns indicate relationships to display
+#  slot_patterns:
+#    - "*MboId"        # Single references
+#    - "*MboIds"       # Multiple references
+#    - "*Id"           # Generic IDs
+#    - "*Ids"          # Multiple generic IDs
+  
+#  # Slots to exclude from relationship drawing (too general)
+#  exclude_slots:
+#    - id
+#    - metadataPublisherId
+#    - metadataDescribedForActionId
+
+# Visual preferences
+styling:
+  entity_width: 220
+  entity_header_height: 25
+  field_height: 15
+  stroke_width: 2
+  border_radius: 3
+  canvas_width: 1800
+  canvas_height: 2600
+
+# Field display options
+field_display:
+  # Show all fields or only relationship fields?
+  show_all_fields: true
+  
+  # Maximum number of fields to show per entity (0 = unlimited)
+  max_fields: 0
+  
+  # Specific fields to always exclude from display
+  exclude_fields:
+    - metadataPublisherId
+    - metadataDescribedForActionId
