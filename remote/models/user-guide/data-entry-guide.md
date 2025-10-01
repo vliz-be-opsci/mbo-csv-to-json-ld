@@ -476,6 +476,43 @@ Standards will vary across data types and scientific communities, but the goal i
 
 </details>
 
+</details>
+<details>
+<summary><strong>Example 4: Meta-Analysis of Conservation Interventions</strong></summary>
+
+**Parent Action:** "Meta-Analysis of Marine Protected Area Effectiveness on Fish Biodiversity"
+
+### Child Action 1: "Literature Search and Screening"
+
+- People and Organizations: Research team, librarian
+- HowTo & Document: Search protocol, inclusion/exclusion criteria, PRISMA guidelines
+- Dataset: Bibliography of candidate studies, screening decisions database
+
+### Child Action 2: "Data Extraction from Publications"
+
+- People and Organizations: Research assistants, domain experts
+- HowTo & Document: Data extraction protocol, coding scheme
+- Dataset: Extracted effect sizes, study characteristics, intervention details
+
+### Child Action 3: "Data Quality Assessment and Harmonization"
+
+- People and Organizations: Lead researcher, statistician
+- HowTo & Document: Quality assessment criteria, data standardization protocols
+- Dataset: Quality-coded dataset, harmonized effect size measurements
+
+### Child Action 4: "Statistical Analysis and Synthesis"
+
+- People and Organizations: Statistician, meta-analysis specialist
+- HowTo & Document: Statistical analysis plan, software scripts, meta-analysis methods
+- Dataset: Pooled effect estimates, heterogeneity statistics, subgroup analyses
+
+### Child Action 5: "Results Publication and Data Archiving"
+
+- People and Organizations: Research team, data manager
+- HowTo & Document: Data Management Plan & Protocols
+- Dataset & Document: Published meta-analysis paper, archived analysis dataset with documentation
+
+</details>
 ---
 
 ## Metadata Structure Overview
