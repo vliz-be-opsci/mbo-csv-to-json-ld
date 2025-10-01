@@ -4,6 +4,8 @@
 
 This is a metadata publishing tool developed for **Work Package 1 (WP1)** of the [MARCO-BOLO project](https://marcobolo-project.eu/) (MARine COastal BiOdiversity Long-term Observations). The tool helps researchers transform marine biodiversity metadata into machine-readable formats that can be discovered and reused by global research catalogs.
 
+This system demonstrates that comprehensive metadata doesn't require expensive infrastructure - it uses standard tools and automated processing to produce publication-ready, semantically rich outputs that are easily shared across the internet.
+
 ## Why does this exist?
 
 The MARCO-BOLO project aims to align with IOC Data Architecture and ensure research outputs are discoverable through the [ODIS Catalog](https://catalog.odis.org/). Rather than requiring researchers to learn complex semantic web technologies, this tool provides:
@@ -17,11 +19,9 @@ The MARCO-BOLO project aims to align with IOC Data Architecture and ensure resea
 ## How it works (simplified)
 
 1. **Researchers enter data** into structured Google Sheets with built-in validation
-2. **Automated systems** sync the data and validate it against schemas
+2. **Semi-Automated systems** sync the data and validate it against schemas
 3. **Processing pipeline** converts data to semantic web formats (JSON-LD)
-4. **Published metadata** becomes discoverable by research catalogs worldwide
-
-The system demonstrates that comprehensive metadata doesn't require expensive infrastructure - it uses standard tools and automated processing to produce publication-ready, semantically rich outputs.
+4. **Published metadata** becomes discoverable by research catalogs worldwide (e.g. ODIS)
 
 ## Key Benefits
 
