@@ -1419,7 +1419,7 @@ slots:
       The full scientific name of the phylum or division in which the dwc:Taxon is classified.
 
       Actually represents dwc:phylum via a schema:PropertyValue (schema:additionalProperty/schema:value).
-    required: true
+    required: false
     multivalued: false
     range: string
     slot_uri: schema:value
@@ -1432,7 +1432,7 @@ slots:
       The full scientific name of the order in which the dwc:Taxon is classified.
 
       Actually represents dwc:order via a schema:PropertyValue (schema:additionalProperty/schema:value).
-    required: true
+    required: false
     multivalued: false
     range: string
     slot_uri: schema:value
@@ -1445,7 +1445,7 @@ slots:
       The full scientific name of the family in which the dwc:Taxon is classified.
 
       Actually represents dwc:family via a schema:PropertyValue (schema:additionalProperty/schema:value).
-    required: true
+    required: false
     multivalued: false
     range: string
     slot_uri: schema:value
@@ -1458,7 +1458,7 @@ slots:
       The full scientific name of the genus in which the dwc:Taxon is classified.
 
       Actually represents dwc:genus via a schema:PropertyValue (schema:additionalProperty/schema:value).
-    required: true
+    required: false
     multivalued: false
     range: string
     slot_uri: schema:value
@@ -1471,7 +1471,7 @@ slots:
       The name of the first or species epithet of the dwc:scientificName.
 
       Actually represents dwc:specificEpithet via a schema:PropertyValue (schema:additionalProperty/schema:value).
-    required: true
+    required: false
     multivalued: false
     range: string
     slot_uri: schema:value
