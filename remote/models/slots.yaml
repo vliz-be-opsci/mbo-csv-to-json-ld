@@ -235,18 +235,6 @@ slots:
     comments: |
       Should be an mPID from the first column of Person.csv
 
-  oceanExpertId:
-    title: "OceanExpert ID"
-    required: false
-    multivalued: false
-    description: |
-      Ocean Expert Identifier in URL form
-    range: uri
-    slot_uri: schema:URL
-    comments: |
-      For example: `https://oceanexpert.org/expert/54167`
-
-
   # PropertyValue slots
   propertyId:
     title: "Property ID (URL PID)"

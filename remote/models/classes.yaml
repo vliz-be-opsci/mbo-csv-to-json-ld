@@ -152,7 +152,7 @@ classes:
       - worksForOrganizationMboIds
       - affiliatedOrganizationMboIds
       - contactPointMboIds
-      - oceanExpertId
+      - identifiers
 
   Organization:
     is_a: PersonOrOrganization

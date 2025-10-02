@@ -138,19 +138,22 @@
             }
         },
         {
-            "name": "oceanExpertId",
+            "name": "identifiers",
             "titles": {
                 "en": [
-                    "OceanExpert ID"
+                    "Identifiers"
                 ]
             },
             "dc:description": {
                 "en": [
-                    "For example: `https://oceanexpert.org/expert/54167`"
+                    "Can include any kind on non-MBO identifiers like ROR, ORCID, DOI, ISBNs, IGSN, UUIDs, etc."
                 ]
             },
-            "propertyUrl": "https://schema.org/URL",
-            "valueUrl": "{+oceanExpertId}"
+            "propertyUrl": "https://schema.org/identifier",
+            "separator": "|",
+            "datatype": {
+                "base": "string"
+            }
         },
         {
             "virtual": true,
