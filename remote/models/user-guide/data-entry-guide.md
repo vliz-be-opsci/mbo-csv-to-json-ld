@@ -56,7 +56,7 @@ Answer these questions to help plan your data publishing and metadata creation:
      - An appropriate data publisher for your data type
      - Complete records of all required metadata fields (aim for comprehensive coverage)
      - A DOI minted, if available; permanent URLs are acceptable
-     - Open access licenses (CC 0 or CC BY) applied to your data (this is required by MBO)
+     - Open access licenses (CC0 or CCBY) applied to your data (this is required by MBO). Other licenses may meet the requirements of MBO. A good starting point for exploration is: https://spdx.org/licenses/
 
 _Please discuss exceptions with WP1_
 
