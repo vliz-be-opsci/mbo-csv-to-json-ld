@@ -40,7 +40,6 @@ jobs:
           import requests
           import gspread
           import pandas as pd
-          # Remove this line: from gspread_dataframe import get_as_dataframe
           token = "${{ steps.auth.outputs.access_token }}"
           session = requests.Session()
           session.headers.update({"Authorization": f"Bearer {token}"})
@@ -48,26 +47,32 @@ jobs:
           sh = gc.open_by_key("${{ env.SHEET_ID }}")
           os.makedirs("${{ env.CSV_DIR }}", exist_ok=True)
           for worksheet in sh.worksheets():
-              name = worksheet.title
-              try:
-                  # Get raw string values to avoid pandas type inference
-                  all_values = worksheet.get_all_values(value_render_option='FORMATTED_VALUE')
-                  if not all_values:
-                      print(f"Skipping empty sheet '{name}'")
-                      continue
-                  
-                  # Create DataFrame from raw strings  
-                  df = pd.DataFrame(all_values[1:], columns=all_values[0])
-                  
-                  # Remove completely empty rows
-                  df = df.replace('', pd.NA).dropna(how='all').fillna('')
-                  
-                  path = f"${{ env.CSV_DIR }}/{name}.csv"
-                  df.to_csv(path, index=False)
-                  print(f"Exported tab '{name}' to '{path}'")
-              except Exception as e:
-                  print(f"Failed to export tab '{name}': {e}")
-                  continue
+            name = worksheet.title
+            
+            # Skip hidden helper sheets (starting with underscore)
+            if name.startswith('_'):
+                print(f"Skipping helper sheet '{name}'")
+                continue
+            
+            try:
+                # Get raw string values to avoid pandas type inference
+                all_values = worksheet.get_all_values(value_render_option='FORMATTED_VALUE')
+                if not all_values:
+                    print(f"Skipping empty sheet '{name}'")
+                    continue
+                
+                # Create DataFrame from raw strings  
+                df = pd.DataFrame(all_values[1:], columns=all_values[0])
+                
+                # Remove completely empty rows
+                df = df.replace('', pd.NA).dropna(how='all').fillna('')
+                
+                path = f"${{ env.CSV_DIR }}/{name}.csv"
+                df.to_csv(path, index=False)
+                print(f"Exported tab '{name}' to '{path}'")
+            except Exception as e:
+                print(f"Failed to export tab '{name}': {e}")
+                continue
           EOF
       - name: Commit updated CSVs
         run: |
