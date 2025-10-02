@@ -6,6 +6,7 @@ nav:
   - User Guide:
       - Overview: overview.md
       - Data Entry Guide: data-entry-guide.md
+      - Workflow Diagram: workflow_diagram/workflow_diagram.html
       - Validation Reference: validation-reference.md
       - FAQs: faqs.md
   - Model Maintenance and Management: model_management.md

@@ -2,7 +2,7 @@
 
 **The goal of MBO is that all meta(data) should be published.**
 
-![](images/general_workflow.png)
+![](./images/general_workflow.png)
 
 ---
 
@@ -64,7 +64,7 @@ _Please discuss exceptions with WP1_
 
 ## What? Where? How does this work?
 
-You will enter the metadata on Google Sheets* [link], each tab covers a topic. For example:
+You will enter the metadata on Google Sheets* [link](https://docs.google.com/spreadsheets/d/1PBFK3LW3DAdvXdbk2v8bSdtTf87mBhabeeegwRjOBRg/edit?gid=690350717#gid=690350717), each tab covers a topic. For example:
 
 - Action: The research activities that led to specific data
 - Dataset: Information about your research datasets
