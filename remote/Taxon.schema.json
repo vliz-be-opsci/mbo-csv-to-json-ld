@@ -109,10 +109,9 @@
             "name": "taxonPhylum",
             "titles": {
                 "en": [
-                    "Phylum*"
+                    "Phylum"
                 ]
             },
-            "required": true,
             "propertyUrl": "https://schema.org/value",
             "aboutUrl": "https://w3id.org/marco-bolo/{+id}#Phylum",
             "datatype": {
@@ -123,10 +122,9 @@
             "name": "taxonOrder",
             "titles": {
                 "en": [
-                    "Order*"
+                    "Order"
                 ]
             },
-            "required": true,
             "propertyUrl": "https://schema.org/value",
             "aboutUrl": "https://w3id.org/marco-bolo/{+id}#Order",
             "datatype": {
@@ -137,10 +135,9 @@
             "name": "taxonFamily",
             "titles": {
                 "en": [
-                    "Family*"
+                    "Family"
                 ]
             },
-            "required": true,
             "propertyUrl": "https://schema.org/value",
             "aboutUrl": "https://w3id.org/marco-bolo/{+id}#Family",
             "datatype": {
@@ -151,10 +148,9 @@
             "name": "taxonGenus",
             "titles": {
                 "en": [
-                    "Genus*"
+                    "Genus"
                 ]
             },
-            "required": true,
             "propertyUrl": "https://schema.org/value",
             "aboutUrl": "https://w3id.org/marco-bolo/{+id}#Genus",
             "datatype": {
@@ -165,10 +161,9 @@
             "name": "taxonSpecificEpithet",
             "titles": {
                 "en": [
-                    "Specific Epithet*"
+                    "Specific Epithet"
                 ]
             },
-            "required": true,
             "propertyUrl": "https://schema.org/value",
             "aboutUrl": "https://w3id.org/marco-bolo/{+id}#SpecificEpithet",
             "datatype": {
