@@ -2,7 +2,7 @@
 
 **The goal of MBO is that all meta(data) should be published.**
 
-![](./images/general_workflow.png)
+![](images/general_workflow.png)
 
 ---
 
