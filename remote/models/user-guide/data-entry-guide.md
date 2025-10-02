@@ -2,43 +2,7 @@
 
 **The goal of MBO is that all meta(data) should be published.**
 
-## 1. List Your Data
-
-- Include all raw data (e.g., measurements, images, sequences) and processed data (e.g., computed values, analysis results, species lists)
-- Include any donated, unpublished data that may need publishing
-
-## 2. Describe Your Data (Complete All Steps Below)
-
-- Fill in your MBO metadata with the dataset's DOI/URL
-- Publish all data in a FAIR repository or metadata catalogue:
-  - Choose the appropriate data publisher for your data type
-  - Complete all required metadata fields (aim for comprehensive coverage)
-  - Obtain a DOI if available; permanent URLs are acceptable
-  - Use open access licenses (CC 0 or CC BY) by project end—this is required by MBO. Discuss exceptions with WP1
-
----
-
-## Workflow for Publishing and Creating MBO Metadata
-
-### For All New Data You Created:
-1. Publish your new MBO data
-2. Add the DOI to your metadata
-3. Create your MBO metadata
-
-### If You Used Previously Published Data:
-- Add the DOIs of all previously published data to your MBO metadata
-
-### If You Used Unpublished Data:
-
-**Option A: The data owner will publish it**
-- Wait for publication, then add the DOI to your metadata
-
-**Option B: You have permission to publish it**
-- Publish the unpublished data yourself
-- Add the new DOI to your metadata
-
-**Option C: The data cannot be published**
-- Add detailed information about the unpublished data to your MBO metadata (without publishing the data itself)
+![](images/general_workflow.png)
 
 ---
 
@@ -78,123 +42,62 @@ Answer these questions to help plan your data publishing and metadata creation:
 9. **Have you documented your workflow?**
    - *Why this matters:* Understanding your process helps us provide better guidance and makes metadata creation easier.
 
+## When you're done, you should have:
+
+   ### 1. A list of your data
+
+   - Includes all raw data (e.g., measurements, images, sequences) and processed data (e.g., computed values, analysis results, species lists)
+   - Includes any donated, unpublished data that may need publishing
+
+   ### 2. Publicly available metadata, including:
+
+   - All MBO metadata linked with dataset DOI/URL
+   - Published all data in a FAIR repository or metadata catalogue:
+     - An appropriate data publisher for your data type
+     - Complete records of all required metadata fields (aim for comprehensive coverage)
+     - A DOI minted, if available; permanent URLs are acceptable
+     - Open access licenses (CC 0 or CC BY) applied to your data (this is required by MBO)
+
+_Please discuss exceptions with WP1_
+
 ---
 
-## What Metadata Do You Have to Provide for MBO?
+## What? Where? How does this work?
 
 You will enter the metadata on Google Sheets* [link], each tab covers a topic. For example:
 
-- **Dataset:** Information about your research datasets
-- **Person:** Researchers, contributors, and other individuals
-- **Organization:** Institutions, research groups, agencies
-- **Action:** Description of the research activities that led to specific data
-- **Place:** Geographic locations and study sites
-- **Document:** Publications, reports, documentation
-- **HowTo:** Description of protocols
-- And more...
+- Action: The research activities that led to specific data
+- Dataset: Information about your research datasets
+- Person: Researchers, contributors, etc.  
+- Place: Geographic locations and study sites
+- Document: Publications, reports, documentation
+- HowTo: Description of protocols
+- _And more…_
+
 
 See https://lab.marcobolo-project.eu/csv-to-json-ld/ for the full list and documentation
 
-*Note that we are using Google Sheets, but in the model underlying the tool, these tabs are referred to as CSVs.
+_Note that we are using Google Sheets, but in the model underlying the tool, these tabs are referred to as CSVs._
 
 ---
 
-## Step-by-Step Data Entry Guide
+## Start with describing Actions
 
-### 1. Start with Core Information
+We recommend you start with [Actions](https://lab.marcobolo-project.eu/csv-to-json-ld/Action.html): 
 
-Before describing datasets, you'll need to establish:
 
-**Person record** (for yourself as metadata publisher):
-- Use the Person tab to create your researcher profile
-- Note your assigned ID (e.g., `mbo_person_001`) - you'll reference this elsewhere
-
-**Organization record** (for your institution):
-- Use the Organization tab for your research institution
-- Note the assigned ID for references
-
-**Action record** (for your research activity):
-- Use the Action tab to describe the project or task generating this metadata
-- Note the assigned ID - every other record will reference this
-
-### 2. Enter Dataset Information
-
-Once core records exist:
-- Go to the Dataset tab
-- Fill in required fields (marked with bold headers and yellow background)
-- Reference your Person ID in `metadataPublisherId`
-- Reference your Action ID in `metadataDescribedForActionId`
-
-### 3. Use Built-in Validation
-
-The sheets provide real-time help:
-- **Dropdown menus** for fields that reference other records
-- **Header tooltips** (hover over headers) with detailed guidance
-- **Format validation** for dates, emails, URLs
-- **Duplicate detection** highlights repeated IDs in red
-
-### 4. Required vs Optional Fields
-
-**Required fields** have:
-- Bold column headers
-- Yellow background color
-- Will cause validation errors if left empty
-
-**Optional fields** provide additional context and improve discoverability but aren't mandatory.
-
-## Field Relationships
-
-Many fields reference other records using IDs:
-- `authorId` → Person or Organization record
-- `spatialCoveragePlaceMboId` → Place record
-- `metadataDescribedForActionId` → Action record
-
-Use the dropdown menus to select valid references, or type the ID directly if you know it.
-
-## Data Quality Tips
-
-**Use consistent naming**: Keep terminology consistent across related records.
-
-**Provide examples in multivalued fields**: Use pipe separators (|) for multiple values: `Marine Biology|Climate Change|Biodiversity`
-
-**Include comprehensive descriptions**: Rich metadata helps others discover and understand your data.
-
-**Reference existing records**: Before creating new Person or Organization records, check if they already exist.
-
-## Getting Help
-
-**Column tooltips**: Hover over any column header for detailed guidance about that field.
-
-**Validation feedback**: If cells highlight in red or validation fails, read error messages carefully.
-
-**Contact support**: For questions about data entry, contact the MARCO-BOLO WP1 team.
-
-## After Data Entry
-
-Your data is automatically synchronized with the processing system nightly. The WP1 team monitors data validation and will contact you if any issues need resolution.
-
-Validated data becomes part of the MARCO-BOLO metadata catalog and is made discoverable through international research platforms.
-
----
-
-## How Will You Fill These In?
-
-We recommend you start with **Actions**:
-
-### Define the Series of Events That Generated These Data
+#### Actions describe the series of events that generated the data
 
 - Who did the actions
 - What inputs were used?
 - What outputs were created?
-- Your final action is the publishing of your MBO data
+- Your final action is the publishing of your MBO data.
 
-### What Exactly is an Action?
+#### What exactly is an Action?
 
-You decide. As a scientist, what are the blocks of information you would expect someone to convey about the process so you can understand the science?
+**You decide.** As a scientist, what are the blocks of information you would expect someone to convey about the process to so you can understand the science?
 
 Standards will vary across data types and scientific communities, but the goal in MBO is to describe as much metadata as possible.
-
----
 
 ## Examples of Actions
 
@@ -317,48 +220,100 @@ Standards will vary across data types and scientific communities, but the goal i
 </details>
 
 ---
+## Step-by-Step Data Entry Guide
+
+[Workflow Diagram](workflow_diagram/workflow_diagram.html)
+
+#### Required vs Optional Fields
+
+**Required fields** have:
+- Bold column headers
+- Yellow background color
+- Will cause validation errors if left empty
+
+**Optional fields** provide additional context and improve discoverability but aren't mandatory.
+
+##### Use Built-in Validation
+
+The sheets provide real-time help:
+- **Dropdown menus** for fields that reference other records
+- **Header tooltips** (hover over headers) with detailed guidance
+- **Format validation** for dates, emails, URLs
+- **Duplicate detection** red highlights flag IDs that already exist in a column
+
+#### Field Relationships
+
+Many fields reference other records using IDs:
+- `authorId` → Person or Organization record
+- `spatialCoveragePlaceMboId` → Place record
+- `metadataDescribedForActionId` → Action record
+
+Use the dropdown menus to select valid references, or type the ID directly if you know it.
+
+--- 
+
+### After you've drafted your Actions...
+
+Before describing datasets, you'll need to establish:
+
+**Action record** (for your research activity):
+- Use the Action tab to describe the project or task generating this metadata
+- Note the assigned ID - every other record will reference this
+- Don't worry if it's not perfect, you can always come back and revise it.
+
+**Person record** (for yourself as metadata publisher):
+- Use the Person tab to create your researcher profile
+- Note your assigned ID (e.g., `mbo_person_001`) - you'll reference this elsewhere
+
+**Organization record** (for your institution):
+- Use the Organization tab for your research institution
+- Note the assigned ID for references
+
+### If it makes sense...
+
+- Fill out information in the MonetaryGrant tab
+- Fill out information in the ContactPoint tab
+
+### Describe Geography
+
+- If relevant, fill out information in the Place tab
+- Same for the GeoShape tab
+
+### License should be pre-populated
+
+- Review the licenses listed on the License tab. If one is not siutable for your needs, add a new one.
+
+### Enter Dataset Information
+
+Once core records exist:
+- Go to the Dataset tab
+- Fill in required fields (marked with bold headers and yellow background)
+- Reference your Person ID in `metadataPublisherId`
+- Reference your Action ID in `metadataDescribedForActionId`
 
 
-### Key Tables and Their Relationships:
+## Data Quality Tips
 
-**Action-Related Tables:**
-- Action
-- HowTo → HowToStep → HowToTip
-- Service
-- SoftwareSourceCode
-- SoftwareApplication
-- PublishingStatusDefinedTerm
-- DefinedTerm
+**Use consistent naming**: Keep terminology consistent across related records.
 
-**People and Organizations:**
-- Organization → MonetaryGrant, ContactPoint
-- Person → ContactPoint
-- Place → GeoShape
+**Provide examples in multivalued fields**: Use pipe separators (|) for multiple values: `Marine Biology|Climate Change|Biodiversity`
 
-**Dataset Information:**
-- License
-- Dataset → DataDownload, PropertyValue, Taxon, EmbargoStatement, Audience, DatasetComment
+**Include comprehensive descriptions**: Rich metadata helps others discover and understand your data.
+
+**Reference existing records**: Before creating new Person or Organization records, check if they already exist.
+
+## Getting Help
+
+**Column tooltips**: Hover over any column header for detailed guidance about that field.
+
+**Validation feedback**: If cells highlight in red or validation fails, read error messages carefully.
+
+**Contact support**: For questions about data entry, contact the MARCO-BOLO WP1 team.
+
+## After Data Entry
+
+Your data is automatically synchronized with the processing system nightly. The WP1 team monitors data validation and will contact you if any issues need resolution.
+
+Validated data becomes part of the MARCO-BOLO metadata catalog and is made discoverable through international research platforms, beginning with ODIS.
 
 ---
-
-## What Information Should You Collect to Fill in Your Metadata?
-
-### For Each Action:
-
-1. Who were people and organizations who did the action
-2. What are and from where: any input data/physical objects to that action
-3. What are and from where: any output data/physical objects from the action
-4. Where and when did the activity take place?
-5. What activities/processes were undertaken in the action?
-   - This includes actions on samples (e.g., using instruments to process samples), manual actions on data (e.g., combining spreadsheets, filtering out bad data), and software actions (e.g., using existing code to process data, writing your own code to process data)
-   - Each action should be one activity, but how many actual steps that one activity includes—i.e., how you split up your task work into steps you describe as separate actions—is for you to decide
-   - This will include any protocols or software that were used
-
-### For the Final Dataset (presumably produced by the final action):
-
-1. Where are those data published? Give the DOI/URL
-2. The total geographical and temporal coverage of your data
-3. The type of E(OB)V you computed (where relevant), and any other parameters in your data
-4. The licence of the data (CC BY or CC 0 ideally)
-5. The taxonomy in your data (if any)
-6. Who were involved in creating the dataset, who owns it and is a contact point for it?
