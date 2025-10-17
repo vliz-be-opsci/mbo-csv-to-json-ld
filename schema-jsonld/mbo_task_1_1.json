@@ -5,10 +5,9 @@
   },
   "@id": "https://w3id.org/marco-bolo/mbo_task_1_1",
   "@type": "CreateAction",
-  "abstract": "Coordinate and advance standardised and quality-controlled data flows into regional and international long-term archives",
+  "abstract": "Action for general testing of database components.",
   "agent": {
-    "@id": "https://w3id.org/marco-bolo/mbo_11770"
+    "@id": "https://w3id.org/marco-bolo/mbo_54167"
   },
-  "description": "Test",
-  "name": "MBO Task 1.1"
+  "name": "General Testing"
 }

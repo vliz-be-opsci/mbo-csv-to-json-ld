@@ -5,9 +5,7 @@
   },
   "@id": "https://w3id.org/marco-bolo/mbo_58615",
   "@type": "Person",
-  "URL": {
-    "@id": "https://oceanexpert.org/expert/58615"
-  },
   "familyName": "Haase",
-  "givenName": "Peter"
+  "givenName": "Peter",
+  "identifier": "https://oceanexpert.org/expert/58615"
 }

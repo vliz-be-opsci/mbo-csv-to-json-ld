@@ -5,23 +5,9 @@
   },
   "@id": "https://w3id.org/marco-bolo/mbo_todo_dataset_2",
   "@type": "Dataset",
-  "schema:datePublished": "2025-10-13",
-  "description": "Some second description",
-  "distribution": {
-    "@id": "https://w3id.org/marco-bolo/mbo_todo_data_download_1"
-  },
-  "isBasedOn": [
-    "https://example.com/some-existing-dataset",
-    "https://w3id.org/marco-bolo/mbo_todo_dataset_1"
-  ],
-  "license": "https://w3id.org/marco-bolo/mbo_todo_license_1",
-  "name": "Some second title",
-  "temporalCoverage": "2012-05-01/2020-09-15",
-  "schema:url": {
-    "@type": "URL",
-    "@value": "https://example.com/some-further-landing-page"
-  },
+  "description": "Fake dataset for testing tool.",
+  "name": "Test Dataset",
   "variableMeasured": {
-    "@id": "https://w3id.org/marco-bolo/mbo_variable_measured_1"
+    "@id": "https://w3id.org/marco-bolo/mbo_propval_placeholder"
   }
 }

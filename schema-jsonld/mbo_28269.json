@@ -5,9 +5,7 @@
   },
   "@id": "https://w3id.org/marco-bolo/mbo_28269",
   "@type": "Person",
-  "URL": {
-    "@id": "https://oceanexpert.org/expert/28269"
-  },
   "familyName": "Beja",
-  "givenName": "Joana"
+  "givenName": "Joana",
+  "identifier": "https://oceanexpert.org/expert/28269"
 }

@@ -21,7 +21,7 @@
       },
       "description": "Grant agreement ID: 101082021",
       "funder": {
-        "@id": "https://w3id.org/marco-bolo/mbo_todo_organization_horizon_europe"
+        "@id": "https://w3id.org/marco-bolo/mbo_org_horizon_europe"
       },
       "name": "Horizon Europe Grant for MARCO-BOLO",
       "schema:url": {

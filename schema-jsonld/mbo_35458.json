@@ -5,9 +5,7 @@
   },
   "@id": "https://w3id.org/marco-bolo/mbo_35458",
   "@type": "Person",
-  "URL": {
-    "@id": "https://oceanexpert.org/expert/35458"
-  },
   "familyName": "Rodrigues",
-  "givenName": "João"
+  "givenName": "João",
+  "identifier": "https://oceanexpert.org/expert/35458"
 }

@@ -5,9 +5,7 @@
   },
   "@id": "https://w3id.org/marco-bolo/mbo_55091",
   "@type": "Person",
-  "URL": {
-    "@id": "https://oceanexpert.org/expert/55091"
-  },
   "familyName": "Giering",
-  "givenName": "Sarah Lou Carolin"
+  "givenName": "Sarah Lou Carolin",
+  "identifier": "https://oceanexpert.org/expert/55091"
 }

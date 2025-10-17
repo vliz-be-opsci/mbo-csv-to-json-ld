@@ -5,9 +5,7 @@
   },
   "@id": "https://w3id.org/marco-bolo/mbo_58464",
   "@type": "Person",
-  "URL": {
-    "@id": "https://oceanexpert.org/expert/58464"
-  },
   "familyName": "Exter",
-  "givenName": "Katrina"
+  "givenName": "Katrina",
+  "identifier": "https://oceanexpert.org/expert/58464"
 }

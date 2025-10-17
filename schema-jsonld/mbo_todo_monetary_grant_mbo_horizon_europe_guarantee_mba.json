@@ -12,7 +12,7 @@
       },
       "description": "Project number: 10063994",
       "funder": {
-        "@id": "https://w3id.org/marco-bolo/mbo_todo_organization_ukri"
+        "@id": "https://w3id.org/marco-bolo/mbo_org_ukri"
       },
       "name": "UKRI Horizon Europe Guarantee 2022 Marine Biological Association"
     },

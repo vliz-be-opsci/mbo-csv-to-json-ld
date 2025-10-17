@@ -7,7 +7,7 @@
   "@type": "CreateAction",
   "abstract": "Populated record for dataset WCO L4 timeseries 18S-V9",
   "agent": {
-    "@id": "https://w3id.org/marco-bolo/mbo_todo_person_jwarwickdugdale"
+    "@id": "https://w3id.org/marco-bolo/mbo_jwarwickdugdale"
   },
   "description": "Test",
   "name": "Testing With Joanna"

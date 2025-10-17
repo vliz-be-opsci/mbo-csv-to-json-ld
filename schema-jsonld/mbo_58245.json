@@ -5,9 +5,7 @@
   },
   "@id": "https://w3id.org/marco-bolo/mbo_58245",
   "@type": "Person",
-  "URL": {
-    "@id": "https://oceanexpert.org/expert/58245"
-  },
   "familyName": "Gough",
-  "givenName": "Charlie"
+  "givenName": "Charlie",
+  "identifier": "https://oceanexpert.org/expert/58245"
 }

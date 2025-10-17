@@ -5,9 +5,10 @@
   },
   "@id": "https://w3id.org/marco-bolo/mbo_34461",
   "@type": "Person",
-  "URL": {
-    "@id": "https://oceanexpert.org/expert/34461"
-  },
   "familyName": "Buttigieg",
-  "givenName": "Pier Luigi"
+  "givenName": "Pier Luigi",
+  "identifier": "https://oceanexpert.org/expert/34461",
+  "worksFor": {
+    "@id": "https://w3id.org/marco-bolo/mbo_org_awi"
+  }
 }

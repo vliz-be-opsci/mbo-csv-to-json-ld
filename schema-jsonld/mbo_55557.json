@@ -5,9 +5,7 @@
   },
   "@id": "https://w3id.org/marco-bolo/mbo_55557",
   "@type": "Person",
-  "URL": {
-    "@id": "https://oceanexpert.org/expert/55557"
-  },
   "familyName": "Mtwana Nordlund",
-  "givenName": "Lina"
+  "givenName": "Lina",
+  "identifier": "https://oceanexpert.org/expert/55557"
 }

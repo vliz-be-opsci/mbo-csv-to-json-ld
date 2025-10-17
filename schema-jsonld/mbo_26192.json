@@ -5,9 +5,7 @@
   },
   "@id": "https://w3id.org/marco-bolo/mbo_26192",
   "@type": "Person",
-  "URL": {
-    "@id": "https://oceanexpert.org/expert/26192"
-  },
   "familyName": "Provoost",
-  "givenName": "Pieter"
+  "givenName": "Pieter",
+  "identifier": "https://oceanexpert.org/expert/26192"
 }

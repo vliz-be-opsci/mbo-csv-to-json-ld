@@ -25,10 +25,10 @@
         },
         "schema:contentUrl": {
           "@type": "URL",
-          "@value": "https://w3id.org/marco-bolo/mbo_0000004#row=5"
+          "@value": "https://w3id.org/marco-bolo/mbo_0000004#row=1"
         },
         "creator": {
-          "@id": "https://w3id.org/marco-bolo/mbo_todo_person_jwarwickdugdale"
+          "@id": "https://w3id.org/marco-bolo/mbo_jwarwickdugdale"
         },
         "encodesCreativeWork": {
           "@id": "https://w3id.org/marco-bolo/mbo_task_jwd_test-input-metadata"
@@ -48,7 +48,7 @@
         "creator": {
           "@id": "https://w3id.org/marco-bolo/mbo_todo_organization_mbo"
         },
-        "dateModified": "2025-09-24",
+        "dateModified": "2025-10-17",
         "encodesCreativeWork": {
           "@id": "https://w3id.org/marco-bolo/mbo_task_jwd_test-input-metadata"
         },
@@ -56,9 +56,9 @@
       }
     ]
   },
-  "archivedAt": "https://github.com/marco-bolo/csv-to-json-ld/tree/b01b019e59cc5112f97f406f5200096666b0a0f3",
+  "archivedAt": "https://github.com/marco-bolo/csv-to-json-ld/tree/7aad6395f3712675509ab9d9191b72a1ae34cc9d",
   "creator": {
-    "@id": "https://w3id.org/marco-bolo/mbo_todo_person_jwarwickdugdale"
+    "@id": "https://w3id.org/marco-bolo/mbo_jwarwickdugdale"
   },
   "distribution": [
     {

@@ -5,9 +5,7 @@
   },
   "@id": "https://w3id.org/marco-bolo/mbo_59780",
   "@type": "Person",
-  "URL": {
-    "@id": "https://oceanexpert.org/expert/59780"
-  },
   "familyName": "Madon",
-  "givenName": "Bénédicte"
+  "givenName": "Bénédicte",
+  "identifier": "https://oceanexpert.org/expert/59780"
 }

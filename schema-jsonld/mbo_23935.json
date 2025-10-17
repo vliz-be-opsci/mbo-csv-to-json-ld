@@ -5,9 +5,7 @@
   },
   "@id": "https://w3id.org/marco-bolo/mbo_23935",
   "@type": "Person",
-  "URL": {
-    "@id": "https://oceanexpert.org/expert/23935"
-  },
   "familyName": "Sousa Pinto",
-  "givenName": "Isabel"
+  "givenName": "Isabel",
+  "identifier": "https://oceanexpert.org/expert/23935"
 }

@@ -5,9 +5,7 @@
   },
   "@id": "https://w3id.org/marco-bolo/mbo_58451",
   "@type": "Person",
-  "URL": {
-    "@id": "https://oceanexpert.org/expert/58451"
-  },
   "familyName": "Hanbidge",
-  "givenName": "Avril"
+  "givenName": "Avril",
+  "identifier": "https://oceanexpert.org/expert/58451"
 }

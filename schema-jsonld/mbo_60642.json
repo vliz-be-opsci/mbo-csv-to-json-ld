@@ -5,9 +5,7 @@
   },
   "@id": "https://w3id.org/marco-bolo/mbo_60642",
   "@type": "Person",
-  "URL": {
-    "@id": "https://oceanexpert.org/expert/60642"
-  },
   "familyName": "Vidal",
-  "givenName": "Mathilde"
+  "givenName": "Mathilde",
+  "identifier": "https://oceanexpert.org/expert/60642"
 }

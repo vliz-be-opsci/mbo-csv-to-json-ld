@@ -13,12 +13,12 @@
     "@id": "https://w3id.org/marco-bolo/mbo_11770"
   },
   "creativeWorkStatus": {
-    "@id": "https://w3id.org/marco-bolo/mbo_todo_status_published"
+    "@id": "https://w3id.org/marco-bolo/mbo_pub_status_published"
   },
   "schema:dateCreated": "2024-01-01",
   "schema:dateModified": [
-    "2024-01-02",
-    "2025-04-04"
+    "2025-04-04",
+    "2024-01-02"
   ],
   "schema:datePublished": "2025-01-01",
   "description": "Some second title available in ZIP format.",
@@ -26,7 +26,7 @@
     "@id": "https://w3id.org/marco-bolo/mbo_todo_dataset_2"
   },
   "encodingFormat": "application/zip",
-  "license": "https://w3id.org/marco-bolo/mbo_todo_license_1",
+  "license": "https://w3id.org/marco-bolo/mbo_license_cc0",
   "maintainer": {
     "@id": "https://w3id.org/marco-bolo/mbo_34461"
   },

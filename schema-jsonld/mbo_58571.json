@@ -5,9 +5,7 @@
   },
   "@id": "https://w3id.org/marco-bolo/mbo_58571",
   "@type": "Person",
-  "URL": {
-    "@id": "https://oceanexpert.org/expert/58571"
-  },
   "familyName": "Not",
-  "givenName": "Fabrice"
+  "givenName": "Fabrice",
+  "identifier": "https://oceanexpert.org/expert/58571"
 }

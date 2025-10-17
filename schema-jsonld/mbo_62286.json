@@ -5,9 +5,7 @@
   },
   "@id": "https://w3id.org/marco-bolo/mbo_62286",
   "@type": "Person",
-  "URL": {
-    "@id": "https://oceanexpert.org/expert/62286"
-  },
   "familyName": "Silva del Pozo",
-  "givenName": "Michelle"
+  "givenName": "Michelle",
+  "identifier": "https://oceanexpert.org/expert/62286"
 }
