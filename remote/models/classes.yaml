@@ -51,6 +51,9 @@ classes:
       - name
       - howToStepMboId
       - description
+      - citeDocumentMboIds
+      - url
+
 
   HowToStep:
     description: |
@@ -74,9 +77,11 @@ classes:
       - citeSourceCodeMboIds
       - citeSoftwareApplicationMboIds
       - citeServiceMboIds
+      - citeDocumentMboIds
       - childStepMboIds
       - howToImplementTipMboIds
       - audienceMboIds
+      - url
 
   HowToTip:
     description: |
@@ -122,7 +127,7 @@ classes:
       - dateCreated
       - dateModified
       - datePublished
-      - inProgressDataDate
+      - inProgressDate
       - licenseMboId
       - conditionsOfAccess
       - keywords
@@ -147,6 +152,7 @@ classes:
       - worksForOrganizationMboIds
       - affiliatedOrganizationMboIds
       - contactPointMboIds
+      - identifiers
 
   Organization:
     is_a: PersonOrOrganization
@@ -472,3 +478,41 @@ classes:
       - audienceType
       - name
       - audienceTypeDescription
+
+  Document:
+    description: |
+      A description of documents used, or produced in the generation of your dataset.
+    class_uri: schema:DigitalDocument
+    slots:
+      - id
+      - metadataPublisherId
+      - metadataDescribedForActionId
+      - name
+      - alternateName
+      - identifiers
+      - description
+      - abstract
+      - keywords
+      - availableLanguages
+      - aboutTaxonMboIds
+      - spatialCoveragePlaceMboId
+      - temporalCoverage
+      - basedOnIds
+      - audienceMboIds
+      - authorId
+      - contributorIds
+      - ownerId
+      - maintainerId
+      - publisherId
+      - publishingStatusMboId
+      - dateCreated
+      - dateModified
+      - datePublished
+      - inProgressDate
+      - licenseMboId
+      - embargoStatementMboId
+      - conditionsOfAccess
+      - url
+      - version
+      - landingPage
+

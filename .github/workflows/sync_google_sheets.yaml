@@ -1,0 +1,88 @@
+name: Sync Google Sheet to CSV
+on:  
+  workflow_dispatch:  # allows manual triggering
+  schedule:
+    - cron: "0 1 * * *"  # runs every day at 01:00 UTC (fixed)
+permissions:
+  id-token: write
+  contents: write  # Needed to commit CSVs
+env:
+  SHEET_ID: 1PBFK3LW3DAdvXdbk2v8bSdtTf87mBhabeeegwRjOBRg
+  CSV_DIR: data
+  GOOGLE_PROJECT_ID: mbo-wp1-csv-to-json-ld
+  GOOGLE_SERVICE_ACCOUNT: github-sheets-reader@mbo-wp1-csv-to-json-ld.iam.gserviceaccount.com
+jobs:
+  export-sheet-tabs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Authenticate with Google via WIF
+        id: auth
+        uses: google-github-actions/auth@v2
+        with:
+          token_format: 'access_token'
+          access_token_scopes: "https://www.googleapis.com/auth/spreadsheets.readonly"
+          create_credentials_file: true
+          workload_identity_provider: "projects/137568280356/locations/global/workloadIdentityPools/github/providers/github"
+          service_account: ${{ env.GOOGLE_SERVICE_ACCOUNT }} 
+      - name: Set up Python  # Fixed indentation here
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.11
+      - name: Install dependencies
+        run: |
+          pip install gspread pandas requests
+      - name: Export each sheet tab as CSV
+        run: |
+          python <<EOF
+          import os
+          import requests
+          import gspread
+          import pandas as pd
+          token = "${{ steps.auth.outputs.access_token }}"
+          session = requests.Session()
+          session.headers.update({"Authorization": f"Bearer {token}"})
+          gc = gspread.Client(auth=object(), session=session)
+          sh = gc.open_by_key("${{ env.SHEET_ID }}")
+          os.makedirs("${{ env.CSV_DIR }}", exist_ok=True)
+          for worksheet in sh.worksheets():
+            name = worksheet.title
+            
+            # Skip hidden helper sheets (starting with underscore)
+            if name.startswith('_'):
+                print(f"Skipping helper sheet '{name}'")
+                continue
+            
+            try:
+                # Get raw string values to avoid pandas type inference
+                all_values = worksheet.get_all_values(value_render_option='FORMATTED_VALUE')
+                if not all_values:
+                    print(f"Skipping empty sheet '{name}'")
+                    continue
+                
+                # Create DataFrame from raw strings  
+                df = pd.DataFrame(all_values[1:], columns=all_values[0])
+                
+                # Remove completely empty rows
+                df = df.replace('', pd.NA).dropna(how='all').fillna('')
+                
+                path = f"${{ env.CSV_DIR }}/{name}.csv"
+                df.to_csv(path, index=False)
+                print(f"Exported tab '{name}' to '{path}'")
+            except Exception as e:
+                print(f"Failed to export tab '{name}': {e}")
+                continue
+          EOF
+      - name: Commit updated CSVs
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add $CSV_DIR/*.csv
+          if git diff --cached --quiet; then
+            echo "🟢 No changes to commit."
+          else
+            TIMESTAMP=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
+            git commit -m "Sync Google Sheet tabs as CSV — $TIMESTAMP"
+            git push origin HEAD
+          fi

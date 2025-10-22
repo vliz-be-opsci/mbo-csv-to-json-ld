@@ -8,6 +8,11 @@
                     "MBO Permanent Identifier*"
                 ]
             },
+            "dc:description": {
+                "en": [
+                    "Note that when inputting into CSV files this should not be the full URI, \nbut just the last part, e.g. `mbo_0000001`.\nThis is the identifier (mPID) for this row of the spreadsheet \nand for whatever information is being described in this row. \nIt should be unique in this column."
+                ]
+            },
             "required": true,
             "suppressOutput": true,
             "datatype": {
@@ -22,6 +27,11 @@
                     "Data Entry Person (mPID - you)*"
                 ]
             },
+            "dc:description": {
+                "en": [
+                    "Should be an mPID from the first column of Person.csv"
+                ]
+            },
             "required": true,
             "propertyUrl": "https://schema.org/creator",
             "aboutUrl": "https://w3id.org/marco-bolo/{+id}#input-metadata",
@@ -34,6 +44,11 @@
                     "Data Entered for Action (mPID)*"
                 ]
             },
+            "dc:description": {
+                "en": [
+                    "The mPID from the first column of the Action.csv. \nNote that you can reference the same mPID in multiple rows.\n\nUses the <https://w3id.org/marco-bolo/isResultOf> predicate but ultimately ends up being \nrepresented as a triple in the form `<action> schema:result <this-entity>`."
+                ]
+            },
             "required": true,
             "propertyUrl": "https://w3id.org/marco-bolo/isResultOf",
             "aboutUrl": "https://w3id.org/marco-bolo/{+id}#input-metadata",
@@ -44,6 +59,11 @@
             "titles": {
                 "en": [
                     "Name*"
+                ]
+            },
+            "dc:description": {
+                "en": [
+                    "The commonly used name. \nFor example: `MBA` for Marine Biological Association"
                 ]
             },
             "required": true,
@@ -59,6 +79,11 @@
                     "Agent (mPID)*"
                 ]
             },
+            "dc:description": {
+                "en": [
+                    "This identifier must be defined in the CSV file Person.csv or Organization.csv"
+                ]
+            },
             "required": true,
             "propertyUrl": "https://schema.org/agent",
             "valueUrl": "https://w3id.org/marco-bolo/{+agentId}"
@@ -68,6 +93,11 @@
             "titles": {
                 "en": [
                     "Abstract"
+                ]
+            },
+            "dc:description": {
+                "en": [
+                    "A brief summary that captures the essence of this entity in ~ 1-5 sentences. \nThink of this as what would appear in search results or catalog listings,\nit should quickly convey the main purpose or key points without technical details."
                 ]
             },
             "propertyUrl": "https://schema.org/abstract",
@@ -82,6 +112,11 @@
                     "Description"
                 ]
             },
+            "dc:description": {
+                "en": [
+                    "A concise one-sentence summary of the main point or purpose."
+                ]
+            },
             "propertyUrl": "https://schema.org/description",
             "datatype": {
                 "base": "string"
@@ -94,6 +129,11 @@
                     "How To (mPID)"
                 ]
             },
+            "dc:description": {
+                "en": [
+                    "This identifier must be defined in the CSV file HowTo.csv"
+                ]
+            },
             "propertyUrl": "https://schema.org/actionProcess",
             "valueUrl": "https://w3id.org/marco-bolo/{+howToPerformActionMboId}"
         },
@@ -102,6 +142,11 @@
             "titles": {
                 "en": [
                     "Participants (mPIDs)"
+                ]
+            },
+            "dc:description": {
+                "en": [
+                    "mPID(s) from the first column of either Person.csv or Organization.csv\nPipe-delimited when there are multiple values"
                 ]
             },
             "propertyUrl": "https://schema.org/participant",
@@ -118,6 +163,11 @@
                     "Inputs (URL PIDs)"
                 ]
             },
+            "dc:description": {
+                "en": [
+                    "This should be a URL to a digital object (dataset, publication, etc)\nFor example: `https://example.com`, `http://example.com`, \n`ftp://ftp.example.org/data`, `doi:10.1000/example123`\n\nPipe-delimited when there are multiple values"
+                ]
+            },
             "propertyUrl": "https://schema.org/object",
             "separator": "|",
             "datatype": {
@@ -132,6 +182,11 @@
                     "Resulting Datasets (mPIDs)"
                 ]
             },
+            "dc:description": {
+                "en": [
+                    "mPID(s) from the first column of Dataset.csv\nPipe-delimited when there are multiple values"
+                ]
+            },
             "propertyUrl": "https://schema.org/result",
             "separator": "|",
             "datatype": {
@@ -144,6 +199,11 @@
             "titles": {
                 "en": [
                     "Child Actions (mPIDs)"
+                ]
+            },
+            "dc:description": {
+                "en": [
+                    "This child action must be defined in the CSV file Action.csv. \nWhat defines a child action vs a subsequent action is up to you: \nfor example, if you are creating your own datasets from published data, \nfor 2 different parameters, the parent action could be \n`collating physical parameters` and the child actions could be, `...for CO2`, `...for Chla`\n\nPipe-delimited when there are multiple values"
                 ]
             },
             "propertyUrl": "https://schema.org/result",
@@ -198,7 +258,7 @@
         {
             "columnReference": "metadataDescribedForActionId",
             "reference": {
-                "resource": "../Action.csv",
+                "resource": "../data/Action.csv",
                 "columnReference": "id"
             }
         },

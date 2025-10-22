@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MBO Metadata Structure Diagram</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        
+        .legend {
+            margin: 20px auto;
+            max-width: 800px;
+            padding: 15px;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .legend h3 {
+            margin-top: 0;
+        }
+        
+        .legend-item {
+            display: inline-block;
+            margin-right: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .legend-box {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 1px solid #333;
+            vertical-align: middle;
+            margin-right: 5px;
+        }
+        
+        #diagram {
+            background: white;
+            margin: 20px auto;
+            display: block;
+            border-radius: 5px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .entity {
+            cursor: pointer;
+        }
+        
+        .entity:hover {
+            opacity: 0.8;
+        }
+        
+        .entity-header {
+            font-weight: bold;
+            font-size: 14px;
+        }
+        
+        .entity-field {
+            font-size: 11px;
+            fill: #333;
+        }
+        
+        .relationship-line {
+            stroke: #666;
+            stroke-width: 1.5;
+            fill: none;
+        }
+        
+        .relationship-label {
+            font-size: 10px;
+            fill: #666;
+            text-anchor: middle;
+        }
+        
+        .subgraph-box {
+            fill: none;
+            stroke: #999;
+            stroke-width: 2;
+            stroke-dasharray: 5,5;
+        }
+        
+        .subgraph-label {
+            font-size: 12px;
+            font-weight: bold;
+            fill: #666;
+        }
+    </style>
+</head>
+<body>
+    <h1>MBO Metadata Structure Diagram</h1>
+    
+    <div class="legend">
+        <h3>Legend</h3>
+        <div class="legend-item">
+            <span class="legend-box" style="background: #fff9c4;"></span>
+            <span>Mandatory Tables</span>
+        </div>
+        <div class="legend-item">
+            <span class="legend-box" style="background: #b3e5fc;"></span>
+            <span>Conditional Tables</span>
+        </div>
+        <div class="legend-item">
+            <span class="legend-box" style="background: #c8e6c9;"></span>
+            <span>Optional Tables</span>
+        </div>
+    </div>
+    
+    <svg id="diagram" width="1800" height="2600">
+        <defs>
+            <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                <polygon points="0 0, 10 3.5, 0 7" fill="#666" />
+            </marker>
+        </defs>
+        
+        <!-- Subgraphs -->
+        
+    <rect class="subgraph-box" 
+          x="50" y="570" 
+          width="500" height="500" rx="5"/>
+    <text class="subgraph-label" x="70" y="595">People & Organizations Group</text>
+    
+    <rect class="subgraph-box" 
+          x="1250" y="1400" 
+          width="500" height="800" rx="5"/>
+    <text class="subgraph-label" x="1270" y="1425">Dataset Details Group</text>
+    
+    <rect class="subgraph-box" 
+          x="50" y="1575" 
+          width="500" height="600" rx="5"/>
+    <text class="subgraph-label" x="70" y="1600">Dataset & Document Group</text>
+    
+    <rect class="subgraph-box" 
+          x="50" y="1120" 
+          width="500" height="250" rx="5"/>
+    <text class="subgraph-label" x="70" y="1145">Place Group</text>
+    
+        
+        <!-- Relationships -->
+        
+    <line class="relationship-line" 
+          x1="194.33962264150944" y1="520" 
+          x2="211.9496855345912" y2="570"
+          marker-end="url(#arrowhead)"/>
+    
+    <line class="relationship-line" 
+          x1="180.0" y1="890" 
+          x2="180.0" y2="910"
+          marker-end="url(#arrowhead)"/>
+    
+    <line class="relationship-line" 
+          x1="178.2608695652174" y1="1525" 
+          x2="195.6521739130435" y2="1575"
+          marker-end="url(#arrowhead)"/>
+    
+    <line class="relationship-line" 
+          x1="162.41379310344828" y1="2225" 
+          x2="170.00000000000006" y2="2060"
+          marker-end="url(#arrowhead)"/>
+    
+    <line class="relationship-line" 
+          x1="1500" y1="409.72222222222223" 
+          x2="1450" y2="402.77777777777777"
+          marker-end="url(#arrowhead)"/>
+    
+    <line class="relationship-line" 
+          x1="1289.375" y1="410" 
+          x2="1180" y2="458.6111111111111"
+          marker-end="url(#arrowhead)"/>
+    
+    <line class="relationship-line" 
+          x1="960" y1="504.44444444444446" 
+          x2="910" y2="503.05555555555554"
+          marker-end="url(#arrowhead)"/>
+    
+    <line class="relationship-line" 
+          x1="877.5510204081633" y1="215" 
+          x2="836.734693877551" y2="365"
+          marker-end="url(#arrowhead)"/>
+    
+    <line class="relationship-line" 
+          x1="866.6666666666667" y1="800" 
+          x2="830.0" y2="635"
+          marker-end="url(#arrowhead)"/>
+    
+    <line class="relationship-line" 
+          x1="577.6470588235294" y1="185" 
+          x2="704.7058823529412" y2="365"
+          marker-end="url(#arrowhead)"/>
+    
+    <line class="relationship-line" 
+          x1="690" y1="472.5" 
+          x2="640" y2="460.0"
+          marker-end="url(#arrowhead)"/>
+    
+    <line class="relationship-line" 
+          x1="420" y1="429.52702702702703" 
+          x2="270" y2="425.47297297297297"
+          marker-end="url(#arrowhead)"/>
+    
+    <line class="relationship-line" 
+          x1="310" y1="726.5625" 
+          x2="290" y2="730.9375"
+          marker-end="url(#arrowhead)"/>
+    
+    <line class="relationship-line" 
+          x1="341.73913043478257" y1="910" 
+          x2="290" y2="860.4166666666666"
+          marker-end="url(#arrowhead)"/>
+    
+    <line class="relationship-line" 
+          x1="310" y1="981.5625" 
+          x2="290" y2="980.9375"
+          marker-end="url(#arrowhead)"/>
+    
+    <line class="relationship-line" 
+          x1="300.0" y1="1070" 
+          x2="300.0" y2="1120"
+          marker-end="url(#arrowhead)"/>
+    
+    <line class="relationship-line" 
+          x1="310" y1="1245.625" 
+          x2="290" y2="1244.375"
+          marker-end="url(#arrowhead)"/>
+    
+    <line class="relationship-line" 
+          x1="223.07692307692307" y1="1370" 
+          x2="192.30769230769226" y2="1420"
+          marker-end="url(#arrowhead)"/>
+    
+    <line class="relationship-line" 
+          x1="178.2608695652174" y1="1525" 
+          x2="195.6521739130435" y2="1575"
+          marker-end="url(#arrowhead)"/>
+    
+    <line class="relationship-line" 
+          x1="1270" y1="1608.9754098360656" 
+          x2="270" y2="1486.0245901639344"
+          marker-end="url(#arrowhead)"/>
+    
+    <line class="relationship-line" 
+          x1="1270" y1="1468.3854166666667" 
+          x2="1007.0631970260224" y2="1100"
+          marker-end="url(#arrowhead)"/>
+    
+    <line class="relationship-line" 
+          x1="1250" y1="1815.625" 
+          x2="550" y2="1859.375"
+          marker-end="url(#arrowhead)"/>
+    
+        
+        <!-- Entities -->
+        
+    <g class="entity" transform="translate(50, 325)">
+        <rect width="220" height="195" fill="#fff9c4" 
+              stroke="#333" stroke-width="2" rx="3"/>
+        <text class="entity-header" x="10" y="20">Action</text>
+        <line x1="0" y1="25" x2="220" y2="25" 
+              stroke="#333" stroke-width="1"/>
+        <text class="entity-field" x="10" y="40">id</text>
+    <text class="entity-field" x="10" y="55">name</text>
+    <text class="entity-field" x="10" y="70">agentId</text>
+    <text class="entity-field" x="10" y="85">abstract</text>
+    <text class="entity-field" x="10" y="100">description</text>
+    <text class="entity-field" x="10" y="115">howToPerformActionMboId</text>
+    <text class="entity-field" x="10" y="130">participantIds</text>
+    <text class="entity-field" x="10" y="145">actionInputPids</text>
+    <text class="entity-field" x="10" y="160">resultingDatasetMboIds</text>
+    <text class="entity-field" x="10" y="175">childActionMboIds</text>
+    </g>
+
+    <g class="entity" transform="translate(420, 365)">
+        <rect width="220" height="135" fill="#b3e5fc" 
+              stroke="#333" stroke-width="2" rx="3"/>
+        <text class="entity-header" x="10" y="20">HowTo</text>
+        <line x1="0" y1="25" x2="220" y2="25" 
+              stroke="#333" stroke-width="1"/>
+        <text class="entity-field" x="10" y="40">id</text>
+    <text class="entity-field" x="10" y="55">name</text>
+    <text class="entity-field" x="10" y="70">howToStepMboId</text>
+    <text class="entity-field" x="10" y="85">description</text>
+    <text class="entity-field" x="10" y="100">citeDocumentMboIds</text>
+    <text class="entity-field" x="10" y="115">url</text>
+    </g>
+
+    <g class="entity" transform="translate(690, 365)">
+        <rect width="220" height="270" fill="#b3e5fc" 
+              stroke="#333" stroke-width="2" rx="3"/>
+        <text class="entity-header" x="10" y="20">HowToStep</text>
+        <line x1="0" y1="25" x2="220" y2="25" 
+              stroke="#333" stroke-width="1"/>
+        <text class="entity-field" x="10" y="40">id</text>
+    <text class="entity-field" x="10" y="55">name</text>
+    <text class="entity-field" x="10" y="70">positionInParent</text>
+    <text class="entity-field" x="10" y="85">abstract</text>
+    <text class="entity-field" x="10" y="100">description</text>
+    <text class="entity-field" x="10" y="115">contributorIds</text>
+    <text class="entity-field" x="10" y="130">providerId</text>
+    <text class="entity-field" x="10" y="145">citeSourceCodeMboIds</text>
+    <text class="entity-field" x="10" y="160">citeSoftwareApplicationMboIds</text>
+    <text class="entity-field" x="10" y="175">citeServiceMboIds</text>
+    <text class="entity-field" x="10" y="190">citeDocumentMboIds</text>
+    <text class="entity-field" x="10" y="205">childStepMboIds</text>
+    <text class="entity-field" x="10" y="220">howToImplementTipMboIds</text>
+    <text class="entity-field" x="10" y="235">audienceMboIds</text>
+    <text class="entity-field" x="10" y="250">url</text>
+    </g>
+
+    <g class="entity" transform="translate(420, 50)">
+        <rect width="220" height="135" fill="#c8e6c9" 
+              stroke="#333" stroke-width="2" rx="3"/>
+        <text class="entity-header" x="10" y="20">HowToTip</text>
+        <line x1="0" y1="25" x2="220" y2="25" 
+              stroke="#333" stroke-width="1"/>
+        <text class="entity-field" x="10" y="40">id</text>
+    <text class="entity-field" x="10" y="55">name</text>
+    <text class="entity-field" x="10" y="70">positionInParent</text>
+    <text class="entity-field" x="10" y="85">description</text>
+    <text class="entity-field" x="10" y="100">supportingDocumentationUrls</text>
+    <text class="entity-field" x="10" y="115">audienceMboIds</text>
+    </g>
+
+    <g class="entity" transform="translate(70, 1625)">
+        <rect width="220" height="435" fill="#fff9c4" 
+              stroke="#333" stroke-width="2" rx="3"/>
+        <text class="entity-header" x="10" y="20">Dataset</text>
+        <line x1="0" y1="25" x2="220" y2="25" 
+              stroke="#333" stroke-width="1"/>
+        <text class="entity-field" x="10" y="40">id</text>
+    <text class="entity-field" x="10" y="55">name</text>
+    <text class="entity-field" x="10" y="70">containsVariablesMboIds</text>
+    <text class="entity-field" x="10" y="85">description</text>
+    <text class="entity-field" x="10" y="100">landingPage</text>
+    <text class="entity-field" x="10" y="115">aboutTaxonMboIds</text>
+    <text class="entity-field" x="10" y="130">spatialCoveragePlaceMboId</text>
+    <text class="entity-field" x="10" y="145">temporalCoverage</text>
+    <text class="entity-field" x="10" y="160">dataDownloadMboIds</text>
+    <text class="entity-field" x="10" y="175">authorId</text>
+    <text class="entity-field" x="10" y="190">contributorIds</text>
+    <text class="entity-field" x="10" y="205">ownerId</text>
+    <text class="entity-field" x="10" y="220">maintainerId</text>
+    <text class="entity-field" x="10" y="235">publisherId</text>
+    <text class="entity-field" x="10" y="250">basedOnIds</text>
+    <text class="entity-field" x="10" y="265">hasPartIds</text>
+    <text class="entity-field" x="10" y="280">publishingStatusMboId</text>
+    <text class="entity-field" x="10" y="295">embargoStatementMboId</text>
+    <text class="entity-field" x="10" y="310">dateCreated</text>
+    <text class="entity-field" x="10" y="325">dateModified</text>
+    <text class="entity-field" x="10" y="340">datePublished</text>
+    <text class="entity-field" x="10" y="355">inProgressDate</text>
+    <text class="entity-field" x="10" y="370">licenseMboId</text>
+    <text class="entity-field" x="10" y="385">conditionsOfAccess</text>
+    <text class="entity-field" x="10" y="400">keywords</text>
+    <text class="entity-field" x="10" y="415">audienceMboIds</text>
+    </g>
+
+    <g class="entity" transform="translate(70, 910)">
+        <rect width="220" height="135" fill="#fff9c4" 
+              stroke="#333" stroke-width="2" rx="3"/>
+        <text class="entity-header" x="10" y="20">Person</text>
+        <line x1="0" y1="25" x2="220" y2="25" 
+              stroke="#333" stroke-width="1"/>
+        <text class="entity-field" x="10" y="40">givenName</text>
+    <text class="entity-field" x="10" y="55">familyName</text>
+    <text class="entity-field" x="10" y="70">worksForOrganizationMboIds</text>
+    <text class="entity-field" x="10" y="85">affiliatedOrganizationMboIds</text>
+    <text class="entity-field" x="10" y="100">contactPointMboIds</text>
+    <text class="entity-field" x="10" y="115">oceanExpertId</text>
+    </g>
+
+    <g class="entity" transform="translate(70, 620)">
+        <rect width="220" height="270" fill="#fff9c4" 
+              stroke="#333" stroke-width="2" rx="3"/>
+        <text class="entity-header" x="10" y="20">Organization</text>
+        <line x1="0" y1="25" x2="220" y2="25" 
+              stroke="#333" stroke-width="1"/>
+        <text class="entity-field" x="10" y="40">organizationType</text>
+    <text class="entity-field" x="10" y="55">name</text>
+    <text class="entity-field" x="10" y="70">legalName</text>
+    <text class="entity-field" x="10" y="85">alternateName</text>
+    <text class="entity-field" x="10" y="100">identifiers</text>
+    <text class="entity-field" x="10" y="115">url</text>
+    <text class="entity-field" x="10" y="130">description</text>
+    <text class="entity-field" x="10" y="145">foundingDate</text>
+    <text class="entity-field" x="10" y="160">dissolutionDate</text>
+    <text class="entity-field" x="10" y="175">contactPointMboIds</text>
+    <text class="entity-field" x="10" y="190">parentOrganizationMboId</text>
+    <text class="entity-field" x="10" y="205">memberOfOrganizationMboIds</text>
+    <text class="entity-field" x="10" y="220">departmentMboIds</text>
+    <text class="entity-field" x="10" y="235">fundingGrantMboIds</text>
+    <text class="entity-field" x="10" y="250">keywords</text>
+    </g>
+
+    <g class="entity" transform="translate(310, 910)">
+        <rect width="220" height="150" fill="#b3e5fc" 
+              stroke="#333" stroke-width="2" rx="3"/>
+        <text class="entity-header" x="10" y="20">ContactPoint</text>
+        <line x1="0" y1="25" x2="220" y2="25" 
+              stroke="#333" stroke-width="1"/>
+        <text class="entity-field" x="10" y="40">id</text>
+    <text class="entity-field" x="10" y="55">contactType</text>
+    <text class="entity-field" x="10" y="70">name</text>
+    <text class="entity-field" x="10" y="85">email</text>
+    <text class="entity-field" x="10" y="100">telephone</text>
+    <text class="entity-field" x="10" y="115">availableLanguages</text>
+    <text class="entity-field" x="10" y="130">description</text>
+    </g>
+
+    <g class="entity" transform="translate(50, 1420)">
+        <rect width="220" height="105" fill="#fff9c4" 
+              stroke="#333" stroke-width="2" rx="3"/>
+        <text class="entity-header" x="10" y="20">License</text>
+        <line x1="0" y1="25" x2="220" y2="25" 
+              stroke="#333" stroke-width="1"/>
+        <text class="entity-field" x="10" y="40">id</text>
+    <text class="entity-field" x="10" y="55">name</text>
+    <text class="entity-field" x="10" y="70">licenseUrl</text>
+    <text class="entity-field" x="10" y="85">description</text>
+    </g>
+
+    <g class="entity" transform="translate(1510, 1450)">
+        <rect width="220" height="225" fill="#b3e5fc" 
+              stroke="#333" stroke-width="2" rx="3"/>
+        <text class="entity-header" x="10" y="20">PropertyValue</text>
+        <line x1="0" y1="25" x2="220" y2="25" 
+              stroke="#333" stroke-width="1"/>
+        <text class="entity-field" x="10" y="40">id</text>
+    <text class="entity-field" x="10" y="55">name</text>
+    <text class="entity-field" x="10" y="70">description</text>
+    <text class="entity-field" x="10" y="85">propertyId</text>
+    <text class="entity-field" x="10" y="100">measurementMethod</text>
+    <text class="entity-field" x="10" y="115">measurementTechnique</text>
+    <text class="entity-field" x="10" y="130">value</text>
+    <text class="entity-field" x="10" y="145">minValue</text>
+    <text class="entity-field" x="10" y="160">maxValue</text>
+    <text class="entity-field" x="10" y="175">unitId</text>
+    <text class="entity-field" x="10" y="190">unitText</text>
+    <text class="entity-field" x="10" y="205">isTypeOfPropertyValueMboId</text>
+    </g>
+
+    <g class="entity" transform="translate(1270, 1450)">
+        <rect width="220" height="345" fill="#b3e5fc" 
+              stroke="#333" stroke-width="2" rx="3"/>
+        <text class="entity-header" x="10" y="20">DataDownload</text>
+        <line x1="0" y1="25" x2="220" y2="25" 
+              stroke="#333" stroke-width="1"/>
+        <text class="entity-field" x="10" y="40">id</text>
+    <text class="entity-field" x="10" y="55">name</text>
+    <text class="entity-field" x="10" y="70">datasetMboId</text>
+    <text class="entity-field" x="10" y="85">downloadUrl</text>
+    <text class="entity-field" x="10" y="100">description</text>
+    <text class="entity-field" x="10" y="115">publishingStatusMboId</text>
+    <text class="entity-field" x="10" y="130">version</text>
+    <text class="entity-field" x="10" y="145">encodingFormat</text>
+    <text class="entity-field" x="10" y="160">dateCreated</text>
+    <text class="entity-field" x="10" y="175">dateModified</text>
+    <text class="entity-field" x="10" y="190">datePublished</text>
+    <text class="entity-field" x="10" y="205">authorId</text>
+    <text class="entity-field" x="10" y="220">contributorIds</text>
+    <text class="entity-field" x="10" y="235">ownerId</text>
+    <text class="entity-field" x="10" y="250">maintainerId</text>
+    <text class="entity-field" x="10" y="265">publisherId</text>
+    <text class="entity-field" x="10" y="280">licenseMboId</text>
+    <text class="entity-field" x="10" y="295">audienceMboIds</text>
+    <text class="entity-field" x="10" y="310">sha256</text>
+    <text class="entity-field" x="10" y="325">contentSize</text>
+    </g>
+
+    <g class="entity" transform="translate(50, 2225)">
+        <rect width="220" height="105" fill="#c8e6c9" 
+              stroke="#333" stroke-width="2" rx="3"/>
+        <text class="entity-header" x="10" y="20">DatasetComment</text>
+        <line x1="0" y1="25" x2="220" y2="25" 
+              stroke="#333" stroke-width="1"/>
+        <text class="entity-field" x="10" y="40">id</text>
+    <text class="entity-field" x="10" y="55">commentAboutDatasetMboId</text>
+    <text class="entity-field" x="10" y="70">authorId</text>
+    <text class="entity-field" x="10" y="85">commentText</text>
+    </g>
+
+    <g class="entity" transform="translate(960, 365)">
+        <rect width="220" height="285" fill="#b3e5fc" 
+              stroke="#333" stroke-width="2" rx="3"/>
+        <text class="entity-header" x="10" y="20">SoftwareSourceCode</text>
+        <line x1="0" y1="25" x2="220" y2="25" 
+              stroke="#333" stroke-width="1"/>
+        <text class="entity-field" x="10" y="40">id</text>
+    <text class="entity-field" x="10" y="55">name</text>
+    <text class="entity-field" x="10" y="70">codeRepositoryUrl</text>
+    <text class="entity-field" x="10" y="85">description</text>
+    <text class="entity-field" x="10" y="100">publishingStatusMboId</text>
+    <text class="entity-field" x="10" y="115">programmingLanguage</text>
+    <text class="entity-field" x="10" y="130">runtimePlatform</text>
+    <text class="entity-field" x="10" y="145">authorId</text>
+    <text class="entity-field" x="10" y="160">contributorIds</text>
+    <text class="entity-field" x="10" y="175">maintainerId</text>
+    <text class="entity-field" x="10" y="190">ownerId</text>
+    <text class="entity-field" x="10" y="205">publisherId</text>
+    <text class="entity-field" x="10" y="220">dateCreated</text>
+    <text class="entity-field" x="10" y="235">dateModified</text>
+    <text class="entity-field" x="10" y="250">datePublished</text>
+    <text class="entity-field" x="10" y="265">keywords</text>
+    </g>
+
+    <g class="entity" transform="translate(790, 800)">
+        <rect width="220" height="300" fill="#b3e5fc" 
+              stroke="#333" stroke-width="2" rx="3"/>
+        <text class="entity-header" x="10" y="20">SoftwareApplication</text>
+        <line x1="0" y1="25" x2="220" y2="25" 
+              stroke="#333" stroke-width="1"/>
+        <text class="entity-field" x="10" y="40">id</text>
+    <text class="entity-field" x="10" y="55">softwareApplicationType</text>
+    <text class="entity-field" x="10" y="70">name</text>
+    <text class="entity-field" x="10" y="85">softwareVersion</text>
+    <text class="entity-field" x="10" y="100">description</text>
+    <text class="entity-field" x="10" y="115">publishingStatusMboId</text>
+    <text class="entity-field" x="10" y="130">softwareDownloadUrl</text>
+    <text class="entity-field" x="10" y="145">authorId</text>
+    <text class="entity-field" x="10" y="160">contributorIds</text>
+    <text class="entity-field" x="10" y="175">maintainerId</text>
+    <text class="entity-field" x="10" y="190">ownerId</text>
+    <text class="entity-field" x="10" y="205">providerId</text>
+    <text class="entity-field" x="10" y="220">publisherId</text>
+    <text class="entity-field" x="10" y="235">dateCreated</text>
+    <text class="entity-field" x="10" y="250">dateModified</text>
+    <text class="entity-field" x="10" y="265">datePublished</text>
+    <text class="entity-field" x="10" y="280">keywords</text>
+    </g>
+
+    <g class="entity" transform="translate(790, 50)">
+        <rect width="220" height="165" fill="#b3e5fc" 
+              stroke="#333" stroke-width="2" rx="3"/>
+        <text class="entity-header" x="10" y="20">Service</text>
+        <line x1="0" y1="25" x2="220" y2="25" 
+              stroke="#333" stroke-width="1"/>
+        <text class="entity-field" x="10" y="40">id</text>
+    <text class="entity-field" x="10" y="55">serviceType</text>
+    <text class="entity-field" x="10" y="70">name</text>
+    <text class="entity-field" x="10" y="85">serviceProviderOrganizationMboId</text>
+    <text class="entity-field" x="10" y="100">description</text>
+    <text class="entity-field" x="10" y="115">url</text>
+    <text class="entity-field" x="10" y="130">audienceMboIds</text>
+    <text class="entity-field" x="10" y="145">placesServedMboIds</text>
+    </g>
+
+    <g class="entity" transform="translate(1270, 2075)">
+        <rect width="220" height="105" fill="#b3e5fc" 
+              stroke="#333" stroke-width="2" rx="3"/>
+        <text class="entity-header" x="10" y="20">EmbargoStatement</text>
+        <line x1="0" y1="25" x2="220" y2="25" 
+              stroke="#333" stroke-width="1"/>
+        <text class="entity-field" x="10" y="40">id</text>
+    <text class="entity-field" x="10" y="55">embargoedDatasetMboId</text>
+    <text class="entity-field" x="10" y="70">embargoExpires</text>
+    <text class="entity-field" x="10" y="85">embargoDescription</text>
+    </g>
+
+    <g class="entity" transform="translate(1500, 365)">
+        <rect width="220" height="120" fill="#c8e6c9" 
+              stroke="#333" stroke-width="2" rx="3"/>
+        <text class="entity-header" x="10" y="20">DefinedTerm</text>
+        <line x1="0" y1="25" x2="220" y2="25" 
+              stroke="#333" stroke-width="1"/>
+        <text class="entity-field" x="10" y="40">id</text>
+    <text class="entity-field" x="10" y="55">termCode</text>
+    <text class="entity-field" x="10" y="70">inDefinedTermSetId</text>
+    <text class="entity-field" x="10" y="85">existingTermId</text>
+    <text class="entity-field" x="10" y="100">description</text>
+    </g>
+
+    <g class="entity" transform="translate(1230, 365)">
+        <rect width="220" height="45" fill="#c8e6c9" 
+              stroke="#333" stroke-width="2" rx="3"/>
+        <text class="entity-header" x="10" y="20">PublishingStatusDefinedTerm</text>
+        <line x1="0" y1="25" x2="220" y2="25" 
+              stroke="#333" stroke-width="1"/>
+        </g>
+
+    <g class="entity" transform="translate(70, 1170)">
+        <rect width="220" height="135" fill="#fff9c4" 
+              stroke="#333" stroke-width="2" rx="3"/>
+        <text class="entity-header" x="10" y="20">Place</text>
+        <line x1="0" y1="25" x2="220" y2="25" 
+              stroke="#333" stroke-width="1"/>
+        <text class="entity-field" x="10" y="40">id</text>
+    <text class="entity-field" x="10" y="55">name</text>
+    <text class="entity-field" x="10" y="70">description</text>
+    <text class="entity-field" x="10" y="85">latitude</text>
+    <text class="entity-field" x="10" y="100">longitude</text>
+    <text class="entity-field" x="10" y="115">geoShapeMboId</text>
+    </g>
+
+    <g class="entity" transform="translate(310, 1170)">
+        <rect width="220" height="165" fill="#b3e5fc" 
+              stroke="#333" stroke-width="2" rx="3"/>
+        <text class="entity-header" x="10" y="20">GeoShape</text>
+        <line x1="0" y1="25" x2="220" y2="25" 
+              stroke="#333" stroke-width="1"/>
+        <text class="entity-field" x="10" y="40">id</text>
+    <text class="entity-field" x="10" y="55">name</text>
+    <text class="entity-field" x="10" y="70">description</text>
+    <text class="entity-field" x="10" y="85">box</text>
+    <text class="entity-field" x="10" y="100">circle</text>
+    <text class="entity-field" x="10" y="115">elevation</text>
+    <text class="entity-field" x="10" y="130">line</text>
+    <text class="entity-field" x="10" y="145">polygon</text>
+    </g>
+
+    <g class="entity" transform="translate(310, 620)">
+        <rect width="220" height="165" fill="#b3e5fc" 
+              stroke="#333" stroke-width="2" rx="3"/>
+        <text class="entity-header" x="10" y="20">MonetaryGrant</text>
+        <line x1="0" y1="25" x2="220" y2="25" 
+              stroke="#333" stroke-width="1"/>
+        <text class="entity-field" x="10" y="40">id</text>
+    <text class="entity-field" x="10" y="55">name</text>
+    <text class="entity-field" x="10" y="70">amount</text>
+    <text class="entity-field" x="10" y="85">currency</text>
+    <text class="entity-field" x="10" y="100">funderOrganizationMboIds</text>
+    <text class="entity-field" x="10" y="115">sponsorOrganizationMboIds</text>
+    <text class="entity-field" x="10" y="130">description</text>
+    <text class="entity-field" x="10" y="145">url</text>
+    </g>
+
+    <g class="entity" transform="translate(1270, 1815)">
+        <rect width="220" height="240" fill="#b3e5fc" 
+              stroke="#333" stroke-width="2" rx="3"/>
+        <text class="entity-header" x="10" y="20">Taxon</text>
+        <line x1="0" y1="25" x2="220" y2="25" 
+              stroke="#333" stroke-width="1"/>
+        <text class="entity-field" x="10" y="40">id</text>
+    <text class="entity-field" x="10" y="55">name</text>
+    <text class="entity-field" x="10" y="70">taxonScientificName</text>
+    <text class="entity-field" x="10" y="85">taxonKingdom</text>
+    <text class="entity-field" x="10" y="100">taxonPhylum</text>
+    <text class="entity-field" x="10" y="115">taxonOrder</text>
+    <text class="entity-field" x="10" y="130">taxonFamily</text>
+    <text class="entity-field" x="10" y="145">taxonGenus</text>
+    <text class="entity-field" x="10" y="160">taxonSpecificEpithet</text>
+    <text class="entity-field" x="10" y="175">taxonomicStatus</text>
+    <text class="entity-field" x="10" y="190">taxonVerbatimTaxonRank</text>
+    <text class="entity-field" x="10" y="205">taxonIdentifier</text>
+    <text class="entity-field" x="10" y="220">taxonLifeScienceIdentifier</text>
+    </g>
+
+    <g class="entity" transform="translate(1510, 1815)">
+        <rect width="220" height="105" fill="#c8e6c9" 
+              stroke="#333" stroke-width="2" rx="3"/>
+        <text class="entity-header" x="10" y="20">Audience</text>
+        <line x1="0" y1="25" x2="220" y2="25" 
+              stroke="#333" stroke-width="1"/>
+        <text class="entity-field" x="10" y="40">id</text>
+    <text class="entity-field" x="10" y="55">audienceType</text>
+    <text class="entity-field" x="10" y="70">name</text>
+    <text class="entity-field" x="10" y="85">audienceTypeDescription</text>
+    </g>
+
+    <g class="entity" transform="translate(310, 1625)">
+        <rect width="220" height="480" fill="#b3e5fc" 
+              stroke="#333" stroke-width="2" rx="3"/>
+        <text class="entity-header" x="10" y="20">Document</text>
+        <line x1="0" y1="25" x2="220" y2="25" 
+              stroke="#333" stroke-width="1"/>
+        <text class="entity-field" x="10" y="40">id</text>
+    <text class="entity-field" x="10" y="55">name</text>
+    <text class="entity-field" x="10" y="70">alternateName</text>
+    <text class="entity-field" x="10" y="85">identifiers</text>
+    <text class="entity-field" x="10" y="100">description</text>
+    <text class="entity-field" x="10" y="115">abstract</text>
+    <text class="entity-field" x="10" y="130">keywords</text>
+    <text class="entity-field" x="10" y="145">availableLanguages</text>
+    <text class="entity-field" x="10" y="160">aboutTaxonMboIds</text>
+    <text class="entity-field" x="10" y="175">spatialCoveragePlaceMboId</text>
+    <text class="entity-field" x="10" y="190">temporalCoverage</text>
+    <text class="entity-field" x="10" y="205">basedOnIds</text>
+    <text class="entity-field" x="10" y="220">audienceMboIds</text>
+    <text class="entity-field" x="10" y="235">authorId</text>
+    <text class="entity-field" x="10" y="250">contributorIds</text>
+    <text class="entity-field" x="10" y="265">ownerId</text>
+    <text class="entity-field" x="10" y="280">maintainerId</text>
+    <text class="entity-field" x="10" y="295">publisherId</text>
+    <text class="entity-field" x="10" y="310">publishingStatusMboId</text>
+    <text class="entity-field" x="10" y="325">dateCreated</text>
+    <text class="entity-field" x="10" y="340">dateModified</text>
+    <text class="entity-field" x="10" y="355">datePublished</text>
+    <text class="entity-field" x="10" y="370">inProgressDate</text>
+    <text class="entity-field" x="10" y="385">licenseMboId</text>
+    <text class="entity-field" x="10" y="400">embargoStatementMboId</text>
+    <text class="entity-field" x="10" y="415">conditionsOfAccess</text>
+    <text class="entity-field" x="10" y="430">url</text>
+    <text class="entity-field" x="10" y="445">version</text>
+    <text class="entity-field" x="10" y="460">landingPage</text>
+    </g>
+
+    </svg>
+</body>
+</html>

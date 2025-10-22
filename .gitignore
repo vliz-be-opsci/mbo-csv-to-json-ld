@@ -3,3 +3,10 @@ out
 __pycache__
 .DS_Store
 dev_scripts
+site/
+
+# Google Apps Script
+.clasp.json
+node_modules/
+package-lock.json
+package.json

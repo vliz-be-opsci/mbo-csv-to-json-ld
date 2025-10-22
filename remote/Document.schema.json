@@ -1,0 +1,573 @@
+{
+    "@context": "http://www.w3.org/ns/csvw",
+    "columns": [
+        {
+            "name": "id",
+            "titles": {
+                "en": [
+                    "MBO Permanent Identifier*"
+                ]
+            },
+            "dc:description": {
+                "en": [
+                    "Note that when inputting into CSV files this should not be the full URI, \nbut just the last part, e.g. `mbo_0000001`.\nThis is the identifier (mPID) for this row of the spreadsheet \nand for whatever information is being described in this row. \nIt should be unique in this column."
+                ]
+            },
+            "required": true,
+            "suppressOutput": true,
+            "datatype": {
+                "base": "string",
+                "format": "^mbo_[_0-9a-z]+$"
+            }
+        },
+        {
+            "name": "metadataPublisherId",
+            "titles": {
+                "en": [
+                    "Data Entry Person (mPID - you)*"
+                ]
+            },
+            "dc:description": {
+                "en": [
+                    "Should be an mPID from the first column of Person.csv"
+                ]
+            },
+            "required": true,
+            "propertyUrl": "https://schema.org/creator",
+            "aboutUrl": "https://w3id.org/marco-bolo/{+id}#input-metadata",
+            "valueUrl": "https://w3id.org/marco-bolo/{+metadataPublisherId}"
+        },
+        {
+            "name": "metadataDescribedForActionId",
+            "titles": {
+                "en": [
+                    "Data Entered for Action (mPID)*"
+                ]
+            },
+            "dc:description": {
+                "en": [
+                    "The mPID from the first column of the Action.csv. \nNote that you can reference the same mPID in multiple rows.\n\nUses the <https://w3id.org/marco-bolo/isResultOf> predicate but ultimately ends up being \nrepresented as a triple in the form `<action> schema:result <this-entity>`."
+                ]
+            },
+            "required": true,
+            "propertyUrl": "https://w3id.org/marco-bolo/isResultOf",
+            "aboutUrl": "https://w3id.org/marco-bolo/{+id}#input-metadata",
+            "valueUrl": "https://w3id.org/marco-bolo/{+metadataDescribedForActionId}"
+        },
+        {
+            "name": "name",
+            "titles": {
+                "en": [
+                    "Name*"
+                ]
+            },
+            "dc:description": {
+                "en": [
+                    "The commonly used name. \nFor example: `MBA` for Marine Biological Association"
+                ]
+            },
+            "required": true,
+            "propertyUrl": "https://schema.org/name",
+            "datatype": {
+                "base": "string"
+            }
+        },
+        {
+            "name": "alternateName",
+            "titles": {
+                "en": [
+                    "Alternate Name"
+                ]
+            },
+            "dc:description": {
+                "en": [
+                    "A less commonly used name for the same entity. \nFor example: \n`DASSH` for MBA\n`ICES Survey Protocol` for Manual for the International Bottom Trawl Surveys"
+                ]
+            },
+            "propertyUrl": "https://schema.org/alternateName",
+            "datatype": {
+                "base": "string"
+            }
+        },
+        {
+            "name": "identifiers",
+            "titles": {
+                "en": [
+                    "Identifiers"
+                ]
+            },
+            "dc:description": {
+                "en": [
+                    "Can include any kind on non-MBO identifiers like ROR, ORCID, DOI, ISBNs, IGSN, UUIDs, etc."
+                ]
+            },
+            "propertyUrl": "https://schema.org/identifier",
+            "separator": "|",
+            "datatype": {
+                "base": "string"
+            }
+        },
+        {
+            "name": "description",
+            "titles": {
+                "en": [
+                    "Description"
+                ]
+            },
+            "dc:description": {
+                "en": [
+                    "A concise one-sentence summary of the main point or purpose."
+                ]
+            },
+            "propertyUrl": "https://schema.org/description",
+            "datatype": {
+                "base": "string"
+            }
+        },
+        {
+            "name": "abstract",
+            "titles": {
+                "en": [
+                    "Abstract"
+                ]
+            },
+            "dc:description": {
+                "en": [
+                    "A brief summary that captures the essence of this entity in ~ 1-5 sentences. \nThink of this as what would appear in search results or catalog listings,\nit should quickly convey the main purpose or key points without technical details."
+                ]
+            },
+            "propertyUrl": "https://schema.org/abstract",
+            "datatype": {
+                "base": "string"
+            }
+        },
+        {
+            "name": "keywords",
+            "titles": {
+                "en": [
+                    "Keywords"
+                ]
+            },
+            "dc:description": {
+                "en": [
+                    "Separate multiple keyword with a '|'.\ne.g. Whales|Population Genetics"
+                ]
+            },
+            "propertyUrl": "https://schema.org/keywords",
+            "separator": "|",
+            "datatype": {
+                "base": "string"
+            }
+        },
+        {
+            "name": "availableLanguages",
+            "titles": {
+                "en": [
+                    "Available Languages (en)"
+                ]
+            },
+            "dc:description": {
+                "en": [
+                    "Languages should be supplied as [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language sub-tags.\nFor full list see: https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry\n\nFor example: `es` (Spanish)\nPipe-delimited when there are multiple values\n\nThere is no currently no validation performed on this field, please make sure it is accurate."
+                ]
+            },
+            "propertyUrl": "https://schema.org/availableLanguage",
+            "separator": "|",
+            "datatype": {
+                "base": "string"
+            }
+        },
+        {
+            "name": "aboutTaxonMboIds",
+            "titles": {
+                "en": [
+                    "Taxa (mPIDs)"
+                ]
+            },
+            "dc:description": {
+                "en": [
+                    "mPID(s) from the first column of the Taxon.csv\nPipe-delimited when there are multiple values"
+                ]
+            },
+            "propertyUrl": "https://schema.org/about",
+            "separator": "|",
+            "datatype": {
+                "@id": "https://w3id.org/marco-bolo/ConvertMboIdToNode",
+                "base": "string"
+            }
+        },
+        {
+            "name": "spatialCoveragePlaceMboId",
+            "titles": {
+                "en": [
+                    "Spatial Coverage (Place - mPID)"
+                ]
+            },
+            "propertyUrl": "https://schema.org/spatialCoverage",
+            "valueUrl": "https://w3id.org/marco-bolo/{+spatialCoveragePlaceMboId}"
+        },
+        {
+            "name": "temporalCoverage",
+            "titles": {
+                "en": [
+                    "Temporal Coverage"
+                ]
+            },
+            "dc:description": {
+                "en": [
+                    "For example: `2012-01/2013-02`.\n\nMust conform to the [ISO8601 time interal specification](https://en.wikipedia.org/wiki/ISO_8601#Time_intervals).\nThe MBO project only currently supports the start&end variety."
+                ]
+            },
+            "propertyUrl": "https://schema.org/temporalCoverage",
+            "datatype": {
+                "base": "string",
+                "format": "^([+-]?\\d{4}((-?(-?(W[0-5][0-9]|[0-1][0-9])|([0-3][0-9][0-9])|((W[0-5][0-9]-?[0-7]|[0-3][0-9][0-9]|[0-1][0-9]-?[0-3][0-9])(T[0-2][0-9](:?[0-5][0-9](:?[0-5][0-9](\\.\\d+)?)?)?(Z|([+-][0-2][0-9](:?[0-5][0-9])?))?)?)))?)?)/(\\.\\.|[+-]?\\d{4}((-?(-?(W[0-5][0-9]|[0-1][0-9])|([0-3][0-9][0-9])|((W[0-5][0-9]-?[0-7]|[0-3][0-9][0-9]|[0-1][0-9]-?[0-3][0-9])(T[0-2][0-9](:?[0-5][0-9](:?[0-5][0-9](\\.\\d+)?)?)?(Z|([+-][0-2][0-9](:?[0-5][0-9])?))?)?)))?)?)$"
+            }
+        },
+        {
+            "name": "basedOnIds",
+            "titles": {
+                "en": [
+                    "Based On (URL PIDs)"
+                ]
+            },
+            "dc:description": {
+                "en": [
+                    "WARNING: There are no foreign key checks.\n\nFor example: `https://example.com`, `http://example.com`, \n`ftp://ftp.example.org/data`, `doi:10.1000/example123`\n\nPipe-delimited when there are multiple values"
+                ]
+            },
+            "propertyUrl": "https://schema.org/isBasedOn",
+            "separator": "|",
+            "datatype": {
+                "@id": "https://w3id.org/marco-bolo/ConvertIriToNode",
+                "base": "string"
+            }
+        },
+        {
+            "name": "audienceMboIds",
+            "titles": {
+                "en": [
+                    "Audiences (mPIDs)"
+                ]
+            },
+            "dc:description": {
+                "en": [
+                    "Should be an mPID from the first column of Audience.csv"
+                ]
+            },
+            "propertyUrl": "https://schema.org/audience",
+            "separator": "|",
+            "datatype": {
+                "@id": "https://w3id.org/marco-bolo/ConvertMboIdToNode",
+                "base": "string"
+            }
+        },
+        {
+            "name": "authorId",
+            "titles": {
+                "en": [
+                    "Author (mPID)"
+                ]
+            },
+            "dc:description": {
+                "en": [
+                    "Should be an mPID from the first column of either Person.csv or Organization.csv"
+                ]
+            },
+            "propertyUrl": "https://schema.org/author",
+            "valueUrl": "https://w3id.org/marco-bolo/{+authorId}"
+        },
+        {
+            "name": "contributorIds",
+            "titles": {
+                "en": [
+                    "Contributors (mPIDs)"
+                ]
+            },
+            "dc:description": {
+                "en": [
+                    "Should be an mPID from the first column of either Person.csv or Organization.csv\nPipe-delimited when there are multiple values."
+                ]
+            },
+            "propertyUrl": "https://schema.org/contributor",
+            "separator": "|",
+            "datatype": {
+                "@id": "https://w3id.org/marco-bolo/ConvertMboIdToNode",
+                "base": "string"
+            }
+        },
+        {
+            "name": "ownerId",
+            "titles": {
+                "en": [
+                    "Owner (mPID)"
+                ]
+            },
+            "dc:description": {
+                "en": [
+                    "Should be an mPID from the first column of either Person.csv or Organization.csv"
+                ]
+            },
+            "propertyUrl": "https://schema.org/copyrightHolder",
+            "valueUrl": "https://w3id.org/marco-bolo/{+ownerId}"
+        },
+        {
+            "name": "maintainerId",
+            "titles": {
+                "en": [
+                    "Maintainer (mPID)"
+                ]
+            },
+            "dc:description": {
+                "en": [
+                    "Should be an mPID from the first column of either Person.csv or Organization.csv"
+                ]
+            },
+            "propertyUrl": "https://schema.org/maintainer",
+            "valueUrl": "https://w3id.org/marco-bolo/{+maintainerId}"
+        },
+        {
+            "name": "publisherId",
+            "titles": {
+                "en": [
+                    "Publisher (mPID)"
+                ]
+            },
+            "dc:description": {
+                "en": [
+                    "Should be an mPID from the first column of either Person.csv or Organization.csv"
+                ]
+            },
+            "propertyUrl": "https://schema.org/publisher",
+            "valueUrl": "https://w3id.org/marco-bolo/{+publisherId}"
+        },
+        {
+            "name": "publishingStatusMboId",
+            "titles": {
+                "en": [
+                    "Publishing Status (mPID)"
+                ]
+            },
+            "dc:description": {
+                "en": [
+                    "Should be an mPID from the first column of PublishingStatusDefinedTerm.csv"
+                ]
+            },
+            "propertyUrl": "https://schema.org/creativeWorkStatus",
+            "valueUrl": "https://w3id.org/marco-bolo/{+publishingStatusMboId}"
+        },
+        {
+            "name": "dateCreated",
+            "titles": {
+                "en": [
+                    "Date Created"
+                ]
+            },
+            "dc:description": {
+                "en": [
+                    "A date in ISO8601, YYYY, YYYY-MM, or YYYY-MM-DD format\nFor example: `2025`\n`2025-12`\n`2025-12-31`"
+                ]
+            },
+            "propertyUrl": "https://schema.org/dateCreated",
+            "datatype": {
+                "base": "string",
+                "format": "^(\\d{4}(-\\d{2}(-\\d{2})?)?)$"
+            }
+        },
+        {
+            "name": "dateModified",
+            "titles": {
+                "en": [
+                    "Dates Modified"
+                ]
+            },
+            "dc:description": {
+                "en": [
+                    "A date in ISO8601, YYYY, YYYY-MM, or YYYY-MM-DD format\nFor example: `2025`\n`2025-12`\n`2025-12-31`\n\nPipe-delimited when there are multiple values"
+                ]
+            },
+            "propertyUrl": "https://schema.org/dateModified",
+            "separator": "|",
+            "datatype": {
+                "base": "string",
+                "format": "^(\\d{4}(-\\d{2}(-\\d{2})?)?)$"
+            }
+        },
+        {
+            "name": "datePublished",
+            "titles": {
+                "en": [
+                    "Date Published"
+                ]
+            },
+            "dc:description": {
+                "en": [
+                    "A date in ISO8601, YYYY, YYYY-MM, or YYYY-MM-DD format\nFor example: `2025`\n`2025-12`\n`2025-12-31`"
+                ]
+            },
+            "propertyUrl": "https://schema.org/datePublished",
+            "datatype": {
+                "base": "string",
+                "format": "^(\\d{4}(-\\d{2}(-\\d{2})?)?)$"
+            }
+        },
+        {
+            "name": "inProgressDate",
+            "titles": {
+                "en": [
+                    "In Progress Date"
+                ]
+            },
+            "dc:description": {
+                "en": [
+                    "A date in ISO8601, YYYY, YYYY-MM, or YYYY-MM-DD format\nFor example: `2025`\n`2025-12`\n`2025-12-31`"
+                ]
+            },
+            "propertyUrl": "https://w3id.org/marco-bolo/inProgressDate",
+            "datatype": {
+                "base": "string",
+                "format": "^(\\d{4}(-\\d{2}(-\\d{2})?)?)$"
+            }
+        },
+        {
+            "name": "licenseMboId",
+            "titles": {
+                "en": [
+                    "License (mPID)"
+                ]
+            },
+            "dc:description": {
+                "en": [
+                    "If you are unsure, please use 'undefined' as a placeholder until\nyou can update it.\nIf restriction is needed, please use 'Restricted. Please contact product owner.'"
+                ]
+            },
+            "propertyUrl": "https://schema.org/license",
+            "valueUrl": "https://w3id.org/marco-bolo/{+licenseMboId}"
+        },
+        {
+            "name": "embargoStatementMboId",
+            "titles": {
+                "en": [
+                    "Embargo Statement (mPID)"
+                ]
+            },
+            "propertyUrl": "https://schema.org/usageInfo",
+            "valueUrl": "https://w3id.org/marco-bolo/{+embargoStatementMboId}"
+        },
+        {
+            "name": "conditionsOfAccess",
+            "titles": {
+                "en": [
+                    "Conditions of Access"
+                ]
+            },
+            "dc:description": {
+                "en": [
+                    "For example: `Access controlled by [Country] Fisheries Management Authority due to commercial sensitivity \nand resource management considerations. Contact [specific office/person] at [contact details]`"
+                ]
+            },
+            "propertyUrl": "https://schema.org/conditionsOfAccess",
+            "datatype": {
+                "base": "string"
+            }
+        },
+        {
+            "name": "url",
+            "titles": {
+                "en": [
+                    "URL"
+                ]
+            },
+            "dc:description": {
+                "en": [
+                    "Must include the protocol (scheme) and should follow RFC 3986 standards\n\nFor example: `https://example.com`, `http://example.com`\n`ftp://ftp.example.org/data`, `doi:10.1000/example123`, `urn:isbn:1234567890`, `mailto:contact@example.com`"
+                ]
+            },
+            "propertyUrl": "https://schema.org/url",
+            "datatype": {
+                "@id": "https://schema.org/URL",
+                "base": "string"
+            }
+        },
+        {
+            "name": "version",
+            "titles": {
+                "en": [
+                    "Version"
+                ]
+            },
+            "propertyUrl": "https://schema.org/version",
+            "datatype": {
+                "base": "string"
+            }
+        },
+        {
+            "name": "landingPage",
+            "titles": {
+                "en": [
+                    "Landing Pages (URLs)"
+                ]
+            },
+            "dc:description": {
+                "en": [
+                    "For example: `https://example.com`, `http://example.com`, \n`ftp://ftp.example.org/data`, `doi:10.1000/example123`\n\nPipe-delimited when there are multiple values"
+                ]
+            },
+            "propertyUrl": "https://schema.org/url",
+            "separator": "|",
+            "datatype": {
+                "@id": "https://schema.org/URL",
+                "base": "string"
+            }
+        },
+        {
+            "virtual": true,
+            "propertyUrl": "rdf:type",
+            "valueUrl": "https://schema.org/DigitalDocument"
+        },
+        {
+            "virtual": true,
+            "aboutUrl": "https://w3id.org/marco-bolo/{+id}#input-metadata",
+            "propertyUrl": "rdf:type",
+            "valueUrl": "https://schema.org/DataDownload"
+        },
+        {
+            "virtual": true,
+            "aboutUrl": "https://w3id.org/marco-bolo/{+id}#input-metadata",
+            "propertyUrl": "rdf:type",
+            "valueUrl": "https://w3id.org/marco-bolo/InputMetadataDescription"
+        },
+        {
+            "virtual": true,
+            "aboutUrl": "https://w3id.org/marco-bolo/{+id}#input-metadata",
+            "propertyUrl": "https://schema.org/about",
+            "valueUrl": "https://w3id.org/marco-bolo/{+id}"
+        },
+        {
+            "virtual": true,
+            "aboutUrl": "https://w3id.org/marco-bolo/{+id}#input-metadata",
+            "propertyUrl": "https://schema.org/contentUrl",
+            "valueUrl": "https://w3id.org/marco-bolo/mbo_0000027#row={_row}"
+        }
+    ],
+    "aboutUrl": "https://w3id.org/marco-bolo/{+id}",
+    "primaryKey": [
+        "id"
+    ],
+    "foreignKeys": [
+        {
+            "columnReference": "metadataPublisherId",
+            "reference": {
+                "resource": "../out/validation/person-or-organization.csv",
+                "columnReference": "id"
+            }
+        },
+        {
+            "columnReference": "metadataDescribedForActionId",
+            "reference": {
+                "resource": "../data/Action.csv",
+                "columnReference": "id"
+            }
+        }
+    ]
+}

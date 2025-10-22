@@ -3,7 +3,13 @@ theme:
   name: readthedocs
 use_directory_urls: false
 nav:
-  - User Guide: user-guide.md
+  - User Guide:
+      - Overview: overview.md
+      - Data Entry Guide: data-entry-guide.md
+      - Workflow Diagram: workflow_diagram/workflow_diagram.html
+      - Validation Reference: validation-reference.md
+      - FAQs: faqs.md
+  - Model Maintenance and Management: model_management.md
   - Model Overview: index.md
   - CSV files:
       - Action: Action.md
@@ -12,6 +18,7 @@ nav:
       - DataDownload: DataDownload.md
       - DatasetComment: DatasetComment.md
       - Dataset: Dataset.md
+      - Document: Document.md
       - EmbargoStatement: EmbargoStatement.md
       - GeoShape: GeoShape.md
       - HowTo: HowTo.md

@@ -8,6 +8,11 @@
                     "MBO Permanent Identifier*"
                 ]
             },
+            "dc:description": {
+                "en": [
+                    "Note that when inputting into CSV files this should not be the full URI, \nbut just the last part, e.g. `mbo_0000001`.\nThis is the identifier (mPID) for this row of the spreadsheet \nand for whatever information is being described in this row. \nIt should be unique in this column."
+                ]
+            },
             "required": true,
             "suppressOutput": true,
             "datatype": {
@@ -22,6 +27,11 @@
                     "Data Entry Person (mPID - you)*"
                 ]
             },
+            "dc:description": {
+                "en": [
+                    "Should be an mPID from the first column of Person.csv"
+                ]
+            },
             "required": true,
             "propertyUrl": "https://schema.org/creator",
             "aboutUrl": "https://w3id.org/marco-bolo/{+id}#input-metadata",
@@ -32,6 +42,11 @@
             "titles": {
                 "en": [
                     "Data Entered for Action (mPID)*"
+                ]
+            },
+            "dc:description": {
+                "en": [
+                    "The mPID from the first column of the Action.csv. \nNote that you can reference the same mPID in multiple rows.\n\nUses the <https://w3id.org/marco-bolo/isResultOf> predicate but ultimately ends up being \nrepresented as a triple in the form `<action> schema:result <this-entity>`."
                 ]
             },
             "required": true,
@@ -55,6 +70,11 @@
             "titles": {
                 "en": [
                     "Author (mPID)"
+                ]
+            },
+            "dc:description": {
+                "en": [
+                    "Should be an mPID from the first column of either Person.csv or Organization.csv"
                 ]
             },
             "propertyUrl": "https://schema.org/author",
@@ -118,14 +138,14 @@
         {
             "columnReference": "metadataDescribedForActionId",
             "reference": {
-                "resource": "../Action.csv",
+                "resource": "../data/Action.csv",
                 "columnReference": "id"
             }
         },
         {
             "columnReference": "commentAboutDatasetMboId",
             "reference": {
-                "resource": "../Dataset.csv",
+                "resource": "../data/Dataset.csv",
                 "columnReference": "id"
             }
         }

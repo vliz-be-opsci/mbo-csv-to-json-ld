@@ -8,6 +8,11 @@
                     "MBO Permanent Identifier*"
                 ]
             },
+            "dc:description": {
+                "en": [
+                    "Note that when inputting into CSV files this should not be the full URI, \nbut just the last part, e.g. `mbo_0000001`.\nThis is the identifier (mPID) for this row of the spreadsheet \nand for whatever information is being described in this row. \nIt should be unique in this column."
+                ]
+            },
             "required": true,
             "suppressOutput": true,
             "datatype": {
@@ -22,6 +27,11 @@
                     "Data Entry Person (mPID - you)*"
                 ]
             },
+            "dc:description": {
+                "en": [
+                    "Should be an mPID from the first column of Person.csv"
+                ]
+            },
             "required": true,
             "propertyUrl": "https://schema.org/creator",
             "aboutUrl": "https://w3id.org/marco-bolo/{+id}#input-metadata",
@@ -32,6 +42,11 @@
             "titles": {
                 "en": [
                     "Data Entered for Action (mPID)*"
+                ]
+            },
+            "dc:description": {
+                "en": [
+                    "The mPID from the first column of the Action.csv. \nNote that you can reference the same mPID in multiple rows.\n\nUses the <https://w3id.org/marco-bolo/isResultOf> predicate but ultimately ends up being \nrepresented as a triple in the form `<action> schema:result <this-entity>`."
                 ]
             },
             "required": true,
@@ -46,6 +61,11 @@
                     "Name*"
                 ]
             },
+            "dc:description": {
+                "en": [
+                    "The commonly used name. \nFor example: `MBA` for Marine Biological Association"
+                ]
+            },
             "required": true,
             "propertyUrl": "https://schema.org/name",
             "datatype": {
@@ -57,6 +77,11 @@
             "titles": {
                 "en": [
                     "Contains Variables (PropertyValue mPIDs)*"
+                ]
+            },
+            "dc:description": {
+                "en": [
+                    "mPID(s) from the first column of the PropertyValue.csv\nPipe-delimited when there are multiple values"
                 ]
             },
             "required": true,
@@ -74,6 +99,11 @@
                     "Description"
                 ]
             },
+            "dc:description": {
+                "en": [
+                    "A concise one-sentence summary of the main point or purpose."
+                ]
+            },
             "propertyUrl": "https://schema.org/description",
             "datatype": {
                 "base": "string"
@@ -84,6 +114,11 @@
             "titles": {
                 "en": [
                     "Landing Pages (URLs)"
+                ]
+            },
+            "dc:description": {
+                "en": [
+                    "For example: `https://example.com`, `http://example.com`, \n`ftp://ftp.example.org/data`, `doi:10.1000/example123`\n\nPipe-delimited when there are multiple values"
                 ]
             },
             "propertyUrl": "https://schema.org/url",
@@ -98,6 +133,11 @@
             "titles": {
                 "en": [
                     "Taxa (mPIDs)"
+                ]
+            },
+            "dc:description": {
+                "en": [
+                    "mPID(s) from the first column of the Taxon.csv\nPipe-delimited when there are multiple values"
                 ]
             },
             "propertyUrl": "https://schema.org/about",
@@ -124,6 +164,11 @@
                     "Temporal Coverage"
                 ]
             },
+            "dc:description": {
+                "en": [
+                    "For example: `2012-01/2013-02`.\n\nMust conform to the [ISO8601 time interal specification](https://en.wikipedia.org/wiki/ISO_8601#Time_intervals).\nThe MBO project only currently supports the start&end variety."
+                ]
+            },
             "propertyUrl": "https://schema.org/temporalCoverage",
             "datatype": {
                 "base": "string",
@@ -135,6 +180,11 @@
             "titles": {
                 "en": [
                     "Data Downloads (mPIDs)"
+                ]
+            },
+            "dc:description": {
+                "en": [
+                    "a list of Pipe-delimited mPIDs from the first column of DataDownload.csv"
                 ]
             },
             "propertyUrl": "https://schema.org/distribution",
@@ -151,6 +201,11 @@
                     "Author (mPID)"
                 ]
             },
+            "dc:description": {
+                "en": [
+                    "Should be an mPID from the first column of either Person.csv or Organization.csv"
+                ]
+            },
             "propertyUrl": "https://schema.org/author",
             "valueUrl": "https://w3id.org/marco-bolo/{+authorId}"
         },
@@ -159,6 +214,11 @@
             "titles": {
                 "en": [
                     "Contributors (mPIDs)"
+                ]
+            },
+            "dc:description": {
+                "en": [
+                    "Should be an mPID from the first column of either Person.csv or Organization.csv\nPipe-delimited when there are multiple values."
                 ]
             },
             "propertyUrl": "https://schema.org/contributor",
@@ -175,6 +235,11 @@
                     "Owner (mPID)"
                 ]
             },
+            "dc:description": {
+                "en": [
+                    "Should be an mPID from the first column of either Person.csv or Organization.csv"
+                ]
+            },
             "propertyUrl": "https://schema.org/copyrightHolder",
             "valueUrl": "https://w3id.org/marco-bolo/{+ownerId}"
         },
@@ -183,6 +248,11 @@
             "titles": {
                 "en": [
                     "Maintainer (mPID)"
+                ]
+            },
+            "dc:description": {
+                "en": [
+                    "Should be an mPID from the first column of either Person.csv or Organization.csv"
                 ]
             },
             "propertyUrl": "https://schema.org/maintainer",
@@ -195,6 +265,11 @@
                     "Publisher (mPID)"
                 ]
             },
+            "dc:description": {
+                "en": [
+                    "Should be an mPID from the first column of either Person.csv or Organization.csv"
+                ]
+            },
             "propertyUrl": "https://schema.org/publisher",
             "valueUrl": "https://w3id.org/marco-bolo/{+publisherId}"
         },
@@ -203,6 +278,11 @@
             "titles": {
                 "en": [
                     "Based On (URL PIDs)"
+                ]
+            },
+            "dc:description": {
+                "en": [
+                    "WARNING: There are no foreign key checks.\n\nFor example: `https://example.com`, `http://example.com`, \n`ftp://ftp.example.org/data`, `doi:10.1000/example123`\n\nPipe-delimited when there are multiple values"
                 ]
             },
             "propertyUrl": "https://schema.org/isBasedOn",
@@ -219,6 +299,11 @@
                     "Has Parts (URL PIDs)"
                 ]
             },
+            "dc:description": {
+                "en": [
+                    "WARNING: There are no foreign key checks.\nYou are required to use the full URI here to reference pre-existing Datasets.\n\nFor example: `https://example.com`, `http://example.com`, \n`ftp://ftp.example.org/data`, `doi:10.1000/example123`\n\nPipe-delimited when there are multiple values"
+                ]
+            },
             "propertyUrl": "https://schema.org/hasPart",
             "separator": "|",
             "datatype": {
@@ -231,6 +316,11 @@
             "titles": {
                 "en": [
                     "Publishing Status (mPID)"
+                ]
+            },
+            "dc:description": {
+                "en": [
+                    "Should be an mPID from the first column of PublishingStatusDefinedTerm.csv"
                 ]
             },
             "propertyUrl": "https://schema.org/creativeWorkStatus",
@@ -253,10 +343,15 @@
                     "Date Created"
                 ]
             },
+            "dc:description": {
+                "en": [
+                    "A date in ISO8601, YYYY, YYYY-MM, or YYYY-MM-DD format\nFor example: `2025`\n`2025-12`\n`2025-12-31`"
+                ]
+            },
             "propertyUrl": "https://schema.org/dateCreated",
             "datatype": {
-                "base": "date",
-                "@id": "https://schema.org/Date"
+                "base": "string",
+                "format": "^(\\d{4}(-\\d{2}(-\\d{2})?)?)$"
             }
         },
         {
@@ -266,11 +361,16 @@
                     "Dates Modified"
                 ]
             },
+            "dc:description": {
+                "en": [
+                    "A date in ISO8601, YYYY, YYYY-MM, or YYYY-MM-DD format\nFor example: `2025`\n`2025-12`\n`2025-12-31`\n\nPipe-delimited when there are multiple values"
+                ]
+            },
             "propertyUrl": "https://schema.org/dateModified",
             "separator": "|",
             "datatype": {
-                "base": "date",
-                "@id": "https://schema.org/Date"
+                "base": "string",
+                "format": "^(\\d{4}(-\\d{2}(-\\d{2})?)?)$"
             }
         },
         {
@@ -280,23 +380,33 @@
                     "Date Published"
                 ]
             },
+            "dc:description": {
+                "en": [
+                    "A date in ISO8601, YYYY, YYYY-MM, or YYYY-MM-DD format\nFor example: `2025`\n`2025-12`\n`2025-12-31`"
+                ]
+            },
             "propertyUrl": "https://schema.org/datePublished",
             "datatype": {
-                "base": "date",
-                "@id": "https://schema.org/Date"
+                "base": "string",
+                "format": "^(\\d{4}(-\\d{2}(-\\d{2})?)?)$"
             }
         },
         {
-            "name": "inProgressDataDate",
+            "name": "inProgressDate",
             "titles": {
                 "en": [
-                    "In Progress Data Date"
+                    "In Progress Date"
                 ]
             },
-            "propertyUrl": "https://w3id.org/marco-bolo/inProgressDataDate",
+            "dc:description": {
+                "en": [
+                    "A date in ISO8601, YYYY, YYYY-MM, or YYYY-MM-DD format\nFor example: `2025`\n`2025-12`\n`2025-12-31`"
+                ]
+            },
+            "propertyUrl": "https://w3id.org/marco-bolo/inProgressDate",
             "datatype": {
-                "base": "date",
-                "@id": "https://schema.org/Date"
+                "base": "string",
+                "format": "^(\\d{4}(-\\d{2}(-\\d{2})?)?)$"
             }
         },
         {
@@ -304,6 +414,11 @@
             "titles": {
                 "en": [
                     "License (mPID)"
+                ]
+            },
+            "dc:description": {
+                "en": [
+                    "If you are unsure, please use 'undefined' as a placeholder until\nyou can update it.\nIf restriction is needed, please use 'Restricted. Please contact product owner.'"
                 ]
             },
             "propertyUrl": "https://schema.org/license",
@@ -314,6 +429,11 @@
             "titles": {
                 "en": [
                     "Conditions of Access"
+                ]
+            },
+            "dc:description": {
+                "en": [
+                    "For example: `Access controlled by [Country] Fisheries Management Authority due to commercial sensitivity \nand resource management considerations. Contact [specific office/person] at [contact details]`"
                 ]
             },
             "propertyUrl": "https://schema.org/conditionsOfAccess",
@@ -328,6 +448,11 @@
                     "Keywords"
                 ]
             },
+            "dc:description": {
+                "en": [
+                    "Separate multiple keyword with a '|'.\ne.g. Whales|Population Genetics"
+                ]
+            },
             "propertyUrl": "https://schema.org/keywords",
             "separator": "|",
             "datatype": {
@@ -339,6 +464,11 @@
             "titles": {
                 "en": [
                     "Audiences (mPIDs)"
+                ]
+            },
+            "dc:description": {
+                "en": [
+                    "Should be an mPID from the first column of Audience.csv"
                 ]
             },
             "propertyUrl": "https://schema.org/audience",
@@ -393,7 +523,7 @@
         {
             "columnReference": "metadataDescribedForActionId",
             "reference": {
-                "resource": "../Action.csv",
+                "resource": "../data/Action.csv",
                 "columnReference": "id"
             }
         }

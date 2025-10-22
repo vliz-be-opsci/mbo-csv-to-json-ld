@@ -8,6 +8,11 @@
                     "MBO Permanent Identifier*"
                 ]
             },
+            "dc:description": {
+                "en": [
+                    "Note that when inputting into CSV files this should not be the full URI, \nbut just the last part, e.g. `mbo_0000001`.\nThis is the identifier (mPID) for this row of the spreadsheet \nand for whatever information is being described in this row. \nIt should be unique in this column."
+                ]
+            },
             "required": true,
             "suppressOutput": true,
             "datatype": {
@@ -22,6 +27,11 @@
                     "Data Entry Person (mPID - you)*"
                 ]
             },
+            "dc:description": {
+                "en": [
+                    "Should be an mPID from the first column of Person.csv"
+                ]
+            },
             "required": true,
             "propertyUrl": "https://schema.org/creator",
             "aboutUrl": "https://w3id.org/marco-bolo/{+id}#input-metadata",
@@ -32,6 +42,11 @@
             "titles": {
                 "en": [
                     "Data Entered for Action (mPID)*"
+                ]
+            },
+            "dc:description": {
+                "en": [
+                    "The mPID from the first column of the Action.csv. \nNote that you can reference the same mPID in multiple rows.\n\nUses the <https://w3id.org/marco-bolo/isResultOf> predicate but ultimately ends up being \nrepresented as a triple in the form `<action> schema:result <this-entity>`."
                 ]
             },
             "required": true,
@@ -46,6 +61,11 @@
                     "Embargo Dataset (mPID)*"
                 ]
             },
+            "dc:description": {
+                "en": [
+                    "A mPID from the first column of Dataset.csv"
+                ]
+            },
             "required": true,
             "propertyUrl": "https://schema.org/mainEntity",
             "valueUrl": "https://w3id.org/marco-bolo/{+embargoedDatasetMboId}"
@@ -57,11 +77,16 @@
                     "Embargo Expires*"
                 ]
             },
+            "dc:description": {
+                "en": [
+                    "A date in ISO8601, YYYY, YYYY-MM, or YYYY-MM-DD format\nFor example: `2025`\n`2025-12`\n`2025-12-31`"
+                ]
+            },
             "required": true,
             "propertyUrl": "https://schema.org/expires",
             "datatype": {
-                "base": "date",
-                "@id": "https://schema.org/Date"
+                "base": "string",
+                "format": "^(\\d{4}(-\\d{2}(-\\d{2})?)?)$"
             }
         },
         {
@@ -69,6 +94,11 @@
             "titles": {
                 "en": [
                     "Explanation/Description*"
+                ]
+            },
+            "dc:description": {
+                "en": [
+                    "For example: \n`Preliminary dataset undergoing quality control and validation procedures. \nEmbargo in place until data quality flags are finalized.`"
                 ]
             },
             "required": true,
@@ -122,14 +152,14 @@
         {
             "columnReference": "metadataDescribedForActionId",
             "reference": {
-                "resource": "../Action.csv",
+                "resource": "../data/Action.csv",
                 "columnReference": "id"
             }
         },
         {
             "columnReference": "embargoedDatasetMboId",
             "reference": {
-                "resource": "../Dataset.csv",
+                "resource": "../data/Dataset.csv",
                 "columnReference": "id"
             }
         }

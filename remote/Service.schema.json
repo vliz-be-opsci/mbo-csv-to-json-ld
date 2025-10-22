@@ -8,6 +8,11 @@
                     "MBO Permanent Identifier*"
                 ]
             },
+            "dc:description": {
+                "en": [
+                    "Note that when inputting into CSV files this should not be the full URI, \nbut just the last part, e.g. `mbo_0000001`.\nThis is the identifier (mPID) for this row of the spreadsheet \nand for whatever information is being described in this row. \nIt should be unique in this column."
+                ]
+            },
             "required": true,
             "suppressOutput": true,
             "datatype": {
@@ -22,6 +27,11 @@
                     "Data Entry Person (mPID - you)*"
                 ]
             },
+            "dc:description": {
+                "en": [
+                    "Should be an mPID from the first column of Person.csv"
+                ]
+            },
             "required": true,
             "propertyUrl": "https://schema.org/creator",
             "aboutUrl": "https://w3id.org/marco-bolo/{+id}#input-metadata",
@@ -32,6 +42,11 @@
             "titles": {
                 "en": [
                     "Service Type*"
+                ]
+            },
+            "dc:description": {
+                "en": [
+                    "For example:\n  `Data repository service`\n  `Laboratory analysis service`\n  `Field sampling service`\n  `Technical support service`\n  `Training and education service`\n  `Equipment calibration service`"
                 ]
             },
             "required": true,
@@ -47,6 +62,11 @@
                     "Name*"
                 ]
             },
+            "dc:description": {
+                "en": [
+                    "The commonly used name. \nFor example: `MBA` for Marine Biological Association"
+                ]
+            },
             "required": true,
             "propertyUrl": "https://schema.org/name",
             "datatype": {
@@ -60,6 +80,11 @@
                     "Service Provider Organization (mPID)*"
                 ]
             },
+            "dc:description": {
+                "en": [
+                    "A mPID from the first column of Organization.csv"
+                ]
+            },
             "required": true,
             "propertyUrl": "https://schema.org/provider",
             "valueUrl": "https://w3id.org/marco-bolo/{+serviceProviderOrganizationMboId}"
@@ -69,6 +94,11 @@
             "titles": {
                 "en": [
                     "Description"
+                ]
+            },
+            "dc:description": {
+                "en": [
+                    "A concise one-sentence summary of the main point or purpose."
                 ]
             },
             "propertyUrl": "https://schema.org/description",
@@ -81,6 +111,11 @@
             "titles": {
                 "en": [
                     "URL"
+                ]
+            },
+            "dc:description": {
+                "en": [
+                    "Must include the protocol (scheme) and should follow RFC 3986 standards\n\nFor example: `https://example.com`, `http://example.com`\n`ftp://ftp.example.org/data`, `doi:10.1000/example123`, `urn:isbn:1234567890`, `mailto:contact@example.com`"
                 ]
             },
             "propertyUrl": "https://schema.org/url",
@@ -96,6 +131,11 @@
                     "Audiences (mPIDs)"
                 ]
             },
+            "dc:description": {
+                "en": [
+                    "Should be an mPID from the first column of Audience.csv"
+                ]
+            },
             "propertyUrl": "https://schema.org/audience",
             "separator": "|",
             "datatype": {
@@ -108,6 +148,11 @@
             "titles": {
                 "en": [
                     "Places Served (mPIDs)"
+                ]
+            },
+            "dc:description": {
+                "en": [
+                    "mPID(s) from the first column of Place.csv\nPipe-delimited when there are multiple values"
                 ]
             },
             "propertyUrl": "https://schema.org/areaServed",
@@ -162,7 +207,7 @@
         {
             "columnReference": "serviceProviderOrganizationMboId",
             "reference": {
-                "resource": "../Organization.csv",
+                "resource": "../data/Organization.csv",
                 "columnReference": "id"
             }
         }

@@ -8,6 +8,11 @@
                     "MBO Permanent Identifier*"
                 ]
             },
+            "dc:description": {
+                "en": [
+                    "Note that when inputting into CSV files this should not be the full URI, \nbut just the last part, e.g. `mbo_0000001`.\nThis is the identifier (mPID) for this row of the spreadsheet \nand for whatever information is being described in this row. \nIt should be unique in this column."
+                ]
+            },
             "required": true,
             "suppressOutput": true,
             "datatype": {
@@ -22,6 +27,11 @@
                     "Data Entry Person (mPID - you)*"
                 ]
             },
+            "dc:description": {
+                "en": [
+                    "Should be an mPID from the first column of Person.csv"
+                ]
+            },
             "required": true,
             "propertyUrl": "https://schema.org/creator",
             "aboutUrl": "https://w3id.org/marco-bolo/{+id}#input-metadata",
@@ -34,6 +44,11 @@
                     "Data Entered for Action (mPID)*"
                 ]
             },
+            "dc:description": {
+                "en": [
+                    "The mPID from the first column of the Action.csv. \nNote that you can reference the same mPID in multiple rows.\n\nUses the <https://w3id.org/marco-bolo/isResultOf> predicate but ultimately ends up being \nrepresented as a triple in the form `<action> schema:result <this-entity>`."
+                ]
+            },
             "required": true,
             "propertyUrl": "https://w3id.org/marco-bolo/isResultOf",
             "aboutUrl": "https://w3id.org/marco-bolo/{+id}#input-metadata",
@@ -44,6 +59,11 @@
             "titles": {
                 "en": [
                     "Name*"
+                ]
+            },
+            "dc:description": {
+                "en": [
+                    "The commonly used name. \nFor example: `MBA` for Marine Biological Association"
                 ]
             },
             "required": true,
@@ -72,6 +92,11 @@
                     "Abstract"
                 ]
             },
+            "dc:description": {
+                "en": [
+                    "A brief summary that captures the essence of this entity in ~ 1-5 sentences. \nThink of this as what would appear in search results or catalog listings,\nit should quickly convey the main purpose or key points without technical details."
+                ]
+            },
             "propertyUrl": "https://schema.org/abstract",
             "datatype": {
                 "base": "string"
@@ -82,6 +107,11 @@
             "titles": {
                 "en": [
                     "Description"
+                ]
+            },
+            "dc:description": {
+                "en": [
+                    "A concise one-sentence summary of the main point or purpose."
                 ]
             },
             "propertyUrl": "https://schema.org/description",
@@ -96,6 +126,11 @@
                     "Contributors (mPIDs)"
                 ]
             },
+            "dc:description": {
+                "en": [
+                    "Should be an mPID from the first column of either Person.csv or Organization.csv\nPipe-delimited when there are multiple values."
+                ]
+            },
             "propertyUrl": "https://schema.org/contributor",
             "separator": "|",
             "datatype": {
@@ -108,6 +143,11 @@
             "titles": {
                 "en": [
                     "Provider (mPID)"
+                ]
+            },
+            "dc:description": {
+                "en": [
+                    "Should be an mPID from the first column of either Person.csv or Organization.csv"
                 ]
             },
             "propertyUrl": "https://schema.org/provider",
@@ -134,6 +174,11 @@
                     "Software Application Citations (mPIDs)"
                 ]
             },
+            "dc:description": {
+                "en": [
+                    "mPID(s) from the first column of SoftwareApplication.csv\nPipe-delimited when there are multiple values"
+                ]
+            },
             "propertyUrl": "https://schema.org/citation",
             "separator": "|",
             "datatype": {
@@ -148,6 +193,30 @@
                     "Service Citations (mPIDs)"
                 ]
             },
+            "dc:description": {
+                "en": [
+                    "mPID(s) from the first column of Service.csv\nPipe-delimited when there are multiple values"
+                ]
+            },
+            "propertyUrl": "https://schema.org/citation",
+            "separator": "|",
+            "datatype": {
+                "@id": "https://w3id.org/marco-bolo/ConvertMboIdToNode",
+                "base": "string"
+            }
+        },
+        {
+            "name": "citeDocumentMboIds",
+            "titles": {
+                "en": [
+                    "Document Citations (mPIDs)"
+                ]
+            },
+            "dc:description": {
+                "en": [
+                    "mPID(s) from the first column of Document.csv\nPipe-delimited when there are multiple values"
+                ]
+            },
             "propertyUrl": "https://schema.org/citation",
             "separator": "|",
             "datatype": {
@@ -160,6 +229,11 @@
             "titles": {
                 "en": [
                     "Child Steps (mPIDs)"
+                ]
+            },
+            "dc:description": {
+                "en": [
+                    "mPID(s) from the first column of HowToStep.csv\nPipe-delimited when there are multiple values"
                 ]
             },
             "propertyUrl": "https://schema.org/itemListElement",
@@ -190,10 +264,33 @@
                     "Audiences (mPIDs)"
                 ]
             },
+            "dc:description": {
+                "en": [
+                    "Should be an mPID from the first column of Audience.csv"
+                ]
+            },
             "propertyUrl": "https://schema.org/audience",
             "separator": "|",
             "datatype": {
                 "@id": "https://w3id.org/marco-bolo/ConvertMboIdToNode",
+                "base": "string"
+            }
+        },
+        {
+            "name": "url",
+            "titles": {
+                "en": [
+                    "URL"
+                ]
+            },
+            "dc:description": {
+                "en": [
+                    "Must include the protocol (scheme) and should follow RFC 3986 standards\n\nFor example: `https://example.com`, `http://example.com`\n`ftp://ftp.example.org/data`, `doi:10.1000/example123`, `urn:isbn:1234567890`, `mailto:contact@example.com`"
+                ]
+            },
+            "propertyUrl": "https://schema.org/url",
+            "datatype": {
+                "@id": "https://schema.org/URL",
                 "base": "string"
             }
         },
@@ -242,7 +339,7 @@
         {
             "columnReference": "metadataDescribedForActionId",
             "reference": {
-                "resource": "../Action.csv",
+                "resource": "../data/Action.csv",
                 "columnReference": "id"
             }
         }

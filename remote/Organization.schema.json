@@ -8,6 +8,11 @@
                     "MBO Permanent Identifier*"
                 ]
             },
+            "dc:description": {
+                "en": [
+                    "Note that when inputting into CSV files this should not be the full URI, \nbut just the last part, e.g. `mbo_0000001`.\nThis is the identifier (mPID) for this row of the spreadsheet \nand for whatever information is being described in this row. \nIt should be unique in this column."
+                ]
+            },
             "required": true,
             "suppressOutput": true,
             "datatype": {
@@ -22,6 +27,11 @@
                     "Data Entry Person (mPID - you)*"
                 ]
             },
+            "dc:description": {
+                "en": [
+                    "Should be an mPID from the first column of Person.csv"
+                ]
+            },
             "required": true,
             "propertyUrl": "https://schema.org/creator",
             "aboutUrl": "https://w3id.org/marco-bolo/{+id}#input-metadata",
@@ -34,6 +44,11 @@
                     "Data Entered for Action (mPID)*"
                 ]
             },
+            "dc:description": {
+                "en": [
+                    "The mPID from the first column of the Action.csv. \nNote that you can reference the same mPID in multiple rows.\n\nUses the <https://w3id.org/marco-bolo/isResultOf> predicate but ultimately ends up being \nrepresented as a triple in the form `<action> schema:result <this-entity>`."
+                ]
+            },
             "required": true,
             "propertyUrl": "https://w3id.org/marco-bolo/isResultOf",
             "aboutUrl": "https://w3id.org/marco-bolo/{+id}#input-metadata",
@@ -44,6 +59,11 @@
             "titles": {
                 "en": [
                     "Organization Type*"
+                ]
+            },
+            "dc:description": {
+                "en": [
+                    "There is a long list included in the pattern of this slot. \nSome types that likely apply to MBO organizations include:\n  Core research organizations:\n\n    ResearchOrganization\n    EducationalOrganization\n    CollegeOrUniversity\n    GovernmentOrganization\n\n  Funding and project types:\n\n    FundingAgency\n    FundingScheme\n    Project\n    ResearchProject\n    Consortium\n\n  Specialized organizations:\n\n    NGO\n    ArchiveOrganization (for data repositories)\n    Library (for data/information services)\n    MedicalOrganization (for health-related marine research)\n\n  Generic fallbacks:\n\n    Organization (base type for anything that doesn't fit other categories)\n    ProfessionalService (for consulting or specialized services)\n\n  Possibly relevant:\n\n    NewsMediaOrganization (for science communication partners)\n    GovernmentOffice (for specific agency departments)"
                 ]
             },
             "required": true,
@@ -61,6 +81,11 @@
                     "Name*"
                 ]
             },
+            "dc:description": {
+                "en": [
+                    "The commonly used name. \nFor example: `MBA` for Marine Biological Association"
+                ]
+            },
             "required": true,
             "propertyUrl": "https://schema.org/name",
             "datatype": {
@@ -72,6 +97,11 @@
             "titles": {
                 "en": [
                     "Legal Name"
+                ]
+            },
+            "dc:description": {
+                "en": [
+                    "For example: the legal name of MBA is `Marine Biological Association`."
                 ]
             },
             "propertyUrl": "https://schema.org/legalName",
@@ -86,6 +116,11 @@
                     "Alternate Name"
                 ]
             },
+            "dc:description": {
+                "en": [
+                    "A less commonly used name for the same entity. \nFor example: \n`DASSH` for MBA\n`ICES Survey Protocol` for Manual for the International Bottom Trawl Surveys"
+                ]
+            },
             "propertyUrl": "https://schema.org/alternateName",
             "datatype": {
                 "base": "string"
@@ -96,6 +131,11 @@
             "titles": {
                 "en": [
                     "Identifiers"
+                ]
+            },
+            "dc:description": {
+                "en": [
+                    "Can include any kind on non-MBO identifiers like ROR, ORCID, DOI, ISBNs, IGSN, UUIDs, etc."
                 ]
             },
             "propertyUrl": "https://schema.org/identifier",
@@ -111,6 +151,11 @@
                     "URL"
                 ]
             },
+            "dc:description": {
+                "en": [
+                    "Must include the protocol (scheme) and should follow RFC 3986 standards\n\nFor example: `https://example.com`, `http://example.com`\n`ftp://ftp.example.org/data`, `doi:10.1000/example123`, `urn:isbn:1234567890`, `mailto:contact@example.com`"
+                ]
+            },
             "propertyUrl": "https://schema.org/url",
             "datatype": {
                 "@id": "https://schema.org/URL",
@@ -122,6 +167,11 @@
             "titles": {
                 "en": [
                     "Description"
+                ]
+            },
+            "dc:description": {
+                "en": [
+                    "A concise one-sentence summary of the main point or purpose."
                 ]
             },
             "propertyUrl": "https://schema.org/description",
@@ -136,10 +186,15 @@
                     "Founding Date"
                 ]
             },
+            "dc:description": {
+                "en": [
+                    "A date in ISO8601, YYYY, YYYY-MM, or YYYY-MM-DD format\nFor example: `2025`\n`2025-12`\n`2025-12-31`"
+                ]
+            },
             "propertyUrl": "https://schema.org/foundingDate",
             "datatype": {
-                "base": "date",
-                "@id": "https://schema.org/Date"
+                "base": "string",
+                "format": "^(\\d{4}(-\\d{2}(-\\d{2})?)?)$"
             }
         },
         {
@@ -149,10 +204,15 @@
                     "Dissolution Date"
                 ]
             },
+            "dc:description": {
+                "en": [
+                    "A date in ISO8601, YYYY, YYYY-MM, or YYYY-MM-DD format\nFor example: `2025`\n`2025-12`\n`2025-12-31`"
+                ]
+            },
             "propertyUrl": "https://schema.org/dissolutionDate",
             "datatype": {
-                "base": "date",
-                "@id": "https://schema.org/Date"
+                "base": "string",
+                "format": "^(\\d{4}(-\\d{2}(-\\d{2})?)?)$"
             }
         },
         {
@@ -160,6 +220,11 @@
             "titles": {
                 "en": [
                     "Contact Points (mPIDs)"
+                ]
+            },
+            "dc:description": {
+                "en": [
+                    "mPID(s) from the first column of ContactPoint.csv\nPipe-delimited when there are multiple values"
                 ]
             },
             "propertyUrl": "https://schema.org/contactPoint",
@@ -176,6 +241,11 @@
                     "Parent Organization (mPID)"
                 ]
             },
+            "dc:description": {
+                "en": [
+                    "A mPID from the first column of Organization.csv"
+                ]
+            },
             "propertyUrl": "https://schema.org/parentOrganization",
             "valueUrl": "https://w3id.org/marco-bolo/{+parentOrganizationMboId}"
         },
@@ -184,6 +254,11 @@
             "titles": {
                 "en": [
                     "Member of Organizations (mPIDs)"
+                ]
+            },
+            "dc:description": {
+                "en": [
+                    "mPID(s) from the first column of Organization.csv\nPipe-delimited when there are multiple values"
                 ]
             },
             "propertyUrl": "https://schema.org/memberOf",
@@ -200,6 +275,11 @@
                     "Has Departments (mPIDs)"
                 ]
             },
+            "dc:description": {
+                "en": [
+                    "mPID(s) from the first column of Organization.csv\nPipe-delimited when there are multiple values"
+                ]
+            },
             "propertyUrl": "https://schema.org/department",
             "separator": "|",
             "datatype": {
@@ -214,6 +294,11 @@
                     "Grants (mPIDs)"
                 ]
             },
+            "dc:description": {
+                "en": [
+                    "mPID(s) from the first column of MonetaryGrant.csv\nPipe-delimited when there are multiple values"
+                ]
+            },
             "propertyUrl": "https://schema.org/funding",
             "separator": "|",
             "datatype": {
@@ -226,6 +311,11 @@
             "titles": {
                 "en": [
                     "Keywords"
+                ]
+            },
+            "dc:description": {
+                "en": [
+                    "Separate multiple keyword with a '|'.\ne.g. Whales|Population Genetics"
                 ]
             },
             "propertyUrl": "https://schema.org/keywords",
@@ -274,7 +364,7 @@
         {
             "columnReference": "metadataDescribedForActionId",
             "reference": {
-                "resource": "../Action.csv",
+                "resource": "../data/Action.csv",
                 "columnReference": "id"
             }
         }
