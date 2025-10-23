@@ -5,6 +5,14 @@
   },
   "@graph": [
     {
+      "@id": "https://w3id.org/marco-bolo/mbo_todo_monetary_grant_1",
+      "@type": "MonetaryGrant",
+      "amount": {
+        "@id": "https://w3id.org/marco-bolo/mbo_todo_monetary_grant_1#MonetaryAmount"
+      },
+      "name": "Some grant"
+    },
+    {
       "@id": "https://w3id.org/marco-bolo/mbo_todo_monetary_grant_1#MonetaryAmount",
       "@type": "MonetaryAmount",
       "currency": "Kudos",
@@ -12,14 +20,6 @@
         "@type": "xsd:decimal",
         "@value": "1.0"
       }
-    },
-    {
-      "@id": "https://w3id.org/marco-bolo/mbo_todo_monetary_grant_1",
-      "@type": "MonetaryGrant",
-      "amount": {
-        "@id": "https://w3id.org/marco-bolo/mbo_todo_monetary_grant_1#MonetaryAmount"
-      },
-      "name": "Some grant"
     }
   ]
 }

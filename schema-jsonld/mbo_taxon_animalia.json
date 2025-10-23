@@ -12,11 +12,12 @@
       }
     },
     {
-      "@id": "https://w3id.org/marco-bolo/mbo_taxon_animalia#Order",
+      "@id": "https://w3id.org/marco-bolo/mbo_taxon_animalia#VerbatimTaxonRank",
       "@type": "PropertyValue",
       "propertyID": {
-        "@id": "http://rs.tdwg.org/dwc/terms/order"
-      }
+        "@id": "http://rs.tdwg.org/dwc/terms/verbatimTaxonRank"
+      },
+      "value": "kingdom"
     },
     {
       "@id": "https://w3id.org/marco-bolo/mbo_taxon_animalia#Kingdom",
@@ -27,19 +28,26 @@
       "value": "Animalia"
     },
     {
+      "@id": "https://w3id.org/marco-bolo/mbo_taxon_animalia#SpecificEpithet",
+      "@type": "PropertyValue",
+      "propertyID": {
+        "@id": "http://rs.tdwg.org/dwc/terms/specificEpithet"
+      }
+    },
+    {
+      "@id": "https://w3id.org/marco-bolo/mbo_taxon_animalia#Order",
+      "@type": "PropertyValue",
+      "propertyID": {
+        "@id": "http://rs.tdwg.org/dwc/terms/order"
+      }
+    },
+    {
       "@id": "https://w3id.org/marco-bolo/mbo_taxon_animalia#Status",
       "@type": "PropertyValue",
       "propertyID": {
         "@id": "http://rs.tdwg.org/dwc/terms/taxonomicStatus"
       },
       "value": "accepted"
-    },
-    {
-      "@id": "https://w3id.org/marco-bolo/mbo_taxon_animalia#SpecificEpithet",
-      "@type": "PropertyValue",
-      "propertyID": {
-        "@id": "http://rs.tdwg.org/dwc/terms/specificEpithet"
-      }
     },
     {
       "@id": "https://w3id.org/marco-bolo/mbo_taxon_animalia#Genus",
@@ -49,43 +57,9 @@
       }
     },
     {
-      "@id": "https://w3id.org/marco-bolo/mbo_taxon_animalia#VerbatimTaxonRank",
-      "@type": "PropertyValue",
-      "propertyID": {
-        "@id": "http://rs.tdwg.org/dwc/terms/verbatimTaxonRank"
-      },
-      "value": "kingdom"
-    },
-    {
-      "@id": "https://w3id.org/marco-bolo/mbo_taxon_animalia#ScientificName",
-      "@type": "PropertyValue",
-      "propertyID": {
-        "@id": "http://rs.tdwg.org/dwc/terms/scientificName"
-      },
-      "value": "Animalia"
-    },
-    {
       "@id": "https://w3id.org/marco-bolo/mbo_taxon_animalia",
       "@type": "Taxon",
       "additionalProperty": [
-        {
-          "@id": "https://w3id.org/marco-bolo/mbo_taxon_animalia#Phylum"
-        },
-        {
-          "@id": "https://w3id.org/marco-bolo/mbo_taxon_animalia#SpecificEpithet"
-        },
-        {
-          "@id": "https://w3id.org/marco-bolo/mbo_taxon_animalia#Genus"
-        },
-        {
-          "@id": "https://w3id.org/marco-bolo/mbo_taxon_animalia#Kingdom"
-        },
-        {
-          "@id": "https://w3id.org/marco-bolo/mbo_taxon_animalia#VerbatimTaxonRank"
-        },
-        {
-          "@id": "https://w3id.org/marco-bolo/mbo_taxon_animalia#Order"
-        },
         {
           "@id": "https://w3id.org/marco-bolo/mbo_taxon_animalia#ScientificName"
         },
@@ -93,7 +67,25 @@
           "@id": "https://w3id.org/marco-bolo/mbo_taxon_animalia#Family"
         },
         {
+          "@id": "https://w3id.org/marco-bolo/mbo_taxon_animalia#Phylum"
+        },
+        {
+          "@id": "https://w3id.org/marco-bolo/mbo_taxon_animalia#VerbatimTaxonRank"
+        },
+        {
+          "@id": "https://w3id.org/marco-bolo/mbo_taxon_animalia#Genus"
+        },
+        {
+          "@id": "https://w3id.org/marco-bolo/mbo_taxon_animalia#SpecificEpithet"
+        },
+        {
+          "@id": "https://w3id.org/marco-bolo/mbo_taxon_animalia#Order"
+        },
+        {
           "@id": "https://w3id.org/marco-bolo/mbo_taxon_animalia#Status"
+        },
+        {
+          "@id": "https://w3id.org/marco-bolo/mbo_taxon_animalia#Kingdom"
         }
       ],
       "identifier": [
@@ -103,6 +95,14 @@
         "2"
       ],
       "name": "Animals"
+    },
+    {
+      "@id": "https://w3id.org/marco-bolo/mbo_taxon_animalia#ScientificName",
+      "@type": "PropertyValue",
+      "propertyID": {
+        "@id": "http://rs.tdwg.org/dwc/terms/scientificName"
+      },
+      "value": "Animalia"
     },
     {
       "@id": "https://w3id.org/marco-bolo/mbo_taxon_animalia#Phylum",

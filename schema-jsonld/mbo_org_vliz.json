@@ -5,5 +5,8 @@
   },
   "@id": "https://w3id.org/marco-bolo/mbo_org_vliz",
   "@type": "ResearchOrganization",
+  "alternateName": "VLIZ",
+  "identifier": "https://ror.org/0496vr396",
+  "legalName": "Flanders Marine Institute",
   "name": "VLIZ"
 }
