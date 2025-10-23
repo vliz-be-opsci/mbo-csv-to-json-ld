@@ -5,24 +5,10 @@
   },
   "@graph": [
     {
-      "@id": "https://w3id.org/marco-bolo/mbo_taxon_plants#Order",
+      "@id": "https://w3id.org/marco-bolo/mbo_taxon_plants#ScientificName",
       "@type": "PropertyValue",
       "propertyID": {
-        "@id": "http://rs.tdwg.org/dwc/terms/order"
-      }
-    },
-    {
-      "@id": "https://w3id.org/marco-bolo/mbo_taxon_plants#Genus",
-      "@type": "PropertyValue",
-      "propertyID": {
-        "@id": "http://rs.tdwg.org/dwc/terms/genus"
-      }
-    },
-    {
-      "@id": "https://w3id.org/marco-bolo/mbo_taxon_plants#Kingdom",
-      "@type": "PropertyValue",
-      "propertyID": {
-        "@id": "http://rs.tdwg.org/dwc/terms/kingdom"
+        "@id": "http://rs.tdwg.org/dwc/terms/scientificName"
       },
       "value": "Plantae"
     },
@@ -35,6 +21,14 @@
       "value": "accepted"
     },
     {
+      "@id": "https://w3id.org/marco-bolo/mbo_taxon_plants#Kingdom",
+      "@type": "PropertyValue",
+      "propertyID": {
+        "@id": "http://rs.tdwg.org/dwc/terms/kingdom"
+      },
+      "value": "Plantae"
+    },
+    {
       "@id": "https://w3id.org/marco-bolo/mbo_taxon_plants#SpecificEpithet",
       "@type": "PropertyValue",
       "propertyID": {
@@ -42,44 +36,26 @@
       }
     },
     {
-      "@id": "https://w3id.org/marco-bolo/mbo_taxon_plants",
-      "@type": "Taxon",
-      "additionalProperty": [
-        {
-          "@id": "https://w3id.org/marco-bolo/mbo_taxon_plants#SpecificEpithet"
-        },
-        {
-          "@id": "https://w3id.org/marco-bolo/mbo_taxon_plants#ScientificName"
-        },
-        {
-          "@id": "https://w3id.org/marco-bolo/mbo_taxon_plants#Genus"
-        },
-        {
-          "@id": "https://w3id.org/marco-bolo/mbo_taxon_plants#VerbatimTaxonRank"
-        },
-        {
-          "@id": "https://w3id.org/marco-bolo/mbo_taxon_plants#Status"
-        },
-        {
-          "@id": "https://w3id.org/marco-bolo/mbo_taxon_plants#Order"
-        },
-        {
-          "@id": "https://w3id.org/marco-bolo/mbo_taxon_plants#Phylum"
-        },
-        {
-          "@id": "https://w3id.org/marco-bolo/mbo_taxon_plants#Kingdom"
-        },
-        {
-          "@id": "https://w3id.org/marco-bolo/mbo_taxon_plants#Family"
-        }
-      ],
-      "identifier": [
-        {
-          "@id": "urn:lsid:marinespecies.org:taxname:3"
-        },
-        "3"
-      ],
-      "name": "Plants"
+      "@id": "https://w3id.org/marco-bolo/mbo_taxon_plants#Genus",
+      "@type": "PropertyValue",
+      "propertyID": {
+        "@id": "http://rs.tdwg.org/dwc/terms/genus"
+      }
+    },
+    {
+      "@id": "https://w3id.org/marco-bolo/mbo_taxon_plants#VerbatimTaxonRank",
+      "@type": "PropertyValue",
+      "propertyID": {
+        "@id": "http://rs.tdwg.org/dwc/terms/verbatimTaxonRank"
+      },
+      "value": "kingdom"
+    },
+    {
+      "@id": "https://w3id.org/marco-bolo/mbo_taxon_plants#Order",
+      "@type": "PropertyValue",
+      "propertyID": {
+        "@id": "http://rs.tdwg.org/dwc/terms/order"
+      }
     },
     {
       "@id": "https://w3id.org/marco-bolo/mbo_taxon_plants#Phylum",
@@ -89,20 +65,44 @@
       }
     },
     {
-      "@id": "https://w3id.org/marco-bolo/mbo_taxon_plants#ScientificName",
-      "@type": "PropertyValue",
-      "propertyID": {
-        "@id": "http://rs.tdwg.org/dwc/terms/scientificName"
-      },
-      "value": "Plantae"
-    },
-    {
-      "@id": "https://w3id.org/marco-bolo/mbo_taxon_plants#VerbatimTaxonRank",
-      "@type": "PropertyValue",
-      "propertyID": {
-        "@id": "http://rs.tdwg.org/dwc/terms/verbatimTaxonRank"
-      },
-      "value": "kingdom"
+      "@id": "https://w3id.org/marco-bolo/mbo_taxon_plants",
+      "@type": "Taxon",
+      "additionalProperty": [
+        {
+          "@id": "https://w3id.org/marco-bolo/mbo_taxon_plants#Order"
+        },
+        {
+          "@id": "https://w3id.org/marco-bolo/mbo_taxon_plants#Status"
+        },
+        {
+          "@id": "https://w3id.org/marco-bolo/mbo_taxon_plants#Family"
+        },
+        {
+          "@id": "https://w3id.org/marco-bolo/mbo_taxon_plants#Phylum"
+        },
+        {
+          "@id": "https://w3id.org/marco-bolo/mbo_taxon_plants#Kingdom"
+        },
+        {
+          "@id": "https://w3id.org/marco-bolo/mbo_taxon_plants#ScientificName"
+        },
+        {
+          "@id": "https://w3id.org/marco-bolo/mbo_taxon_plants#SpecificEpithet"
+        },
+        {
+          "@id": "https://w3id.org/marco-bolo/mbo_taxon_plants#VerbatimTaxonRank"
+        },
+        {
+          "@id": "https://w3id.org/marco-bolo/mbo_taxon_plants#Genus"
+        }
+      ],
+      "identifier": [
+        {
+          "@id": "urn:lsid:marinespecies.org:taxname:3"
+        },
+        "3"
+      ],
+      "name": "Plants"
     },
     {
       "@id": "https://w3id.org/marco-bolo/mbo_taxon_plants#Family",

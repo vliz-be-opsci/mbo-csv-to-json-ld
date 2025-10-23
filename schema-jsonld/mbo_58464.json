@@ -7,5 +7,8 @@
   "@type": "Person",
   "familyName": "Exter",
   "givenName": "Katrina",
-  "identifier": "https://oceanexpert.org/expert/58464"
+  "identifier": "https://oceanexpert.org/expert/58464",
+  "worksFor": {
+    "@id": "https://w3id.org/marco-bolo/mbo_org_vliz"
+  }
 }

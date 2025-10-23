@@ -7,5 +7,8 @@
   "@type": "Person",
   "familyName": "Muñiz",
   "givenName": "Carlota",
-  "identifier": "https://oceanexpert.org/expert/58452"
+  "identifier": "https://oceanexpert.org/expert/58452",
+  "worksFor": {
+    "@id": "https://w3id.org/marco-bolo/mbo_org_vliz"
+  }
 }

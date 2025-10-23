@@ -7,5 +7,8 @@
   "@type": "Person",
   "familyName": "Portier",
   "givenName": "Marc",
-  "identifier": "https://oceanexpert.org/expert/43716"
+  "identifier": "https://oceanexpert.org/expert/43716",
+  "worksFor": {
+    "@id": "https://w3id.org/marco-bolo/mbo_org_vliz"
+  }
 }

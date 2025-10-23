@@ -6,5 +6,9 @@
   "@id": "https://w3id.org/marco-bolo/mbo_henderickx",
   "@type": "Person",
   "familyName": "Heynderickx",
-  "givenName": "Hanneloor"
+  "givenName": "Hanneloor",
+  "identifier": "https://oceanexpert.org/expert/61691",
+  "worksFor": {
+    "@id": "https://w3id.org/marco-bolo/mbo_org_vliz"
+  }
 }
